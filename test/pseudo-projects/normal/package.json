@@ -1,0 +1,10 @@
+{
+  "name": "normal",
+  "version": "0.1.0",
+  "dependencies": {
+    "amelia": "^0.1.0",
+    "jacob": "^0.1.0",
+    "olivia": "^0.1.0",
+    "oscar": "^0.1.0"
+  }
+}
