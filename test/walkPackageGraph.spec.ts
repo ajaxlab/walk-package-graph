@@ -11,8 +11,6 @@ describe('walkPackageGraph(root: string, onResolve: (packageNode: IPackageNode) 
     });
     const model = {
       children: [],
-      path: './test/pseudo-projects/normal',
-      realpath: 'F:\\home\\walk-package-graph\\test\\pseudo-projects\\normal'
     };
     expect(graph).to.deep.equal(model);
   });
