@@ -1,18 +1,30 @@
 /* tslint:disable: max-line-length */
 
 import { expect, use } from 'chai';
+import { LogLevel } from '../src/types';
 import walkPackageGraph from '../src/walkPackageGraph';
 
-describe('walkPackageGraph(root: string, onResolve: (packageNode: IPackageNode) => void): Promise<IPackageNode>', function () {
+describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
 
-  it('traverses a normal project', async function () {
-    const graph = await walkPackageGraph('./test/pseudo-projects/normal', (node) => {
-      console.log(node);
-    });
+  it('traverses a normal project', function (done) {
     const model = {
-      children: [],
+      dependencies: [],
     };
-    expect(graph).to.deep.equal(model);
+    walkPackageGraph('./test/pseudo-projects/normal', {
+      onComplete(rootNode) {
+        console.info(rootNode);
+        // expect(graph).to.deep.equal(model);
+        done();
+      },
+      onVisit(node) {
+        console.info(node);
+      }
+    }, {
+    });
+  });
+
+  it('handles dir name ends with /', function () {
+    //
   });
 
 });

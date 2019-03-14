@@ -1,10 +1,16 @@
+import { PackageJson } from 'package-json';
 import { IPackageNode } from './types';
 
 class PackageNode implements IPackageNode {
 
-  children: IPackageNode[] = [];
+  dependencies: IPackageNode[] = [];
+  dependencyResolved: boolean = false;
+  id: string;
+  manifest: PackageJson;
 
-  constructor(public path: string) {
+  constructor(manifest: PackageJson) {
+    this.id = manifest.name + '@' + manifest.version;
+    this.manifest = manifest;
   }
 
 }

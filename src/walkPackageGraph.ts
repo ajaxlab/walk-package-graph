@@ -1,13 +1,9 @@
 import PackageNodeWalker from './PackageNodeWalker';
-import { IPackageNode, IVisitPackageHandler } from './types';
+import { IWalkHandlers, IWalkOptions } from './types';
 
-function walkPackageGraph(
-  root: string,
-  onVisitPackage: IVisitPackageHandler,
-  stopOnError: boolean = false
-): Promise<IPackageNode> {
-  const walker = new PackageNodeWalker(onVisitPackage, stopOnError);
-  return walker.getGraph(root);
+function walkPackageGraph(root: string,  walkHandlers: IWalkHandlers = {}, options: IWalkOptions = {}) {
+  const walker = new PackageNodeWalker(walkHandlers, options);
+  walker.start(root);
 }
 
 export default walkPackageGraph;
