@@ -1,13 +1,13 @@
 import fs from 'fs';
 import { PackageJson } from 'package-json';
 import p from 'path';
+import semver from 'semver';
 import Logger from './Logger';
 import PackageNode from './PackageNode';
 import {
   IBooleanRecord, IPackageNode, IPackageNodeHandler, IPackageNodeMap, IWalkHandlers, IWalkOptions
 } from './types';
 
-// TODO PackageNodeWalker > PackageWalker
 class PackageNodeWalker {
 
   private _logger: Logger;
@@ -15,6 +15,7 @@ class PackageNodeWalker {
   private _onComplete: IPackageNodeHandler | void;
   private _onVisit: IPackageNodeHandler | void;
   private _options: IWalkOptions;
+  private _reverseDependency: any = Object.create(null);
   private _rootNode!: IPackageNode;
   private _visited: IBooleanRecord = Object.create(null);
   private _visitJob: IBooleanRecord = Object.create(null);
@@ -32,11 +33,36 @@ class PackageNodeWalker {
     });
   }
 
+  private _addReverseDependency(node: IPackageNode) {
+    this._logger.debug('_addReverseDependency :', node.id, node.manifest.dependencies);
+    const { dependencies } = node.manifest;
+    if (dependencies) {
+      const depNames = Object.keys(dependencies);
+      const length = depNames.length;
+      if (length) {
+        const reverse = this._reverseDependency;
+        for (let i = 0; i < length; i++) {
+          const depName = depNames[i];
+          if (!reverse[depName]) {
+            reverse[depName] = {};
+          }
+          const version = dependencies[depName];
+          if (!reverse[depName][version]) {
+            reverse[depName][version] = {};
+          }
+          reverse[depName][version][node.id] = true;
+        }
+        this._logger.debug('reverse', reverse);
+      }
+    }
+  }
+
   private _finishVisitJob(path: string) {
     delete this._visitJob[path];
     if (Object.keys(this._visitJob).length === 0) {
       if (this._onComplete) {
         this._onComplete(this._rootNode);
+        console.log('_reverseDependency >>', this._reverseDependency);
       }
     }
   }
@@ -58,7 +84,36 @@ class PackageNodeWalker {
   }
 
   private _resolveDependency(node: IPackageNode) {
-    this._logger.debug('_resolveDependency :', node.id, node.manifest.dependencies);
+    console.log('_resolveDependency -----------', node.id);
+    const reverse = this._reverseDependency;
+    const { name, version } = node.manifest;
+    if (name && version && reverse[name]) {
+      console.log(name, 'reverse 있어', reverse[name]);
+      const versions = Object.keys(reverse[name]);
+      console.log(' -> versions', versions);
+      const length = versions.length;
+      for (let i = 0; i < length; i++) {
+        if (semver.satisfies(version, versions[i])) {
+          const dependantMap = reverse[name][versions[i]];
+          const dependants = Object.keys(dependantMap);
+          console.log(node.id, 'satisfy', versions[i], dependants);
+          const len = dependants.length;
+          for (let j = 0; j < len; j++) {
+            if (this._nodeMap[dependants[j]]) {
+              console.log('nodemap 있음', dependants[j]);
+              this._nodeMap[dependants[j]].dependencies.push(node);
+              console.log('here', reverse[name]);
+              delete reverse[name][versions[i]][dependants[j]];
+            } else {
+              console.log('nodemap 없음', dependants[j]);
+            }
+          }
+          break;
+        }
+      }
+    } else {
+      console.log(name, 'reverse 없어');
+    }
   }
 
   private _visit(path: string, cb?: (node: IPackageNode) => void) {
@@ -71,8 +126,9 @@ class PackageNodeWalker {
     this._readPackage(abs, (e, manifest) => {
       if (manifest) {
         const node = new PackageNode(manifest);
-        this._nodeMap[abs] = node;
-        // this._logger.debug('new PackageNode() :', node.id);
+        this._nodeMap[node.id] = node;
+        console.debug('new PackageNode() :', node.id);
+        this._addReverseDependency(node);
         this._resolveDependency(node);
         if (cb) {
           cb(node);
