@@ -20,6 +20,7 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
         console.info(node);
       }
     }, {
+      logLevel: LogLevel.debug
     });
   });
 

@@ -6,23 +6,32 @@ export interface IBooleanRecord {
 
 export interface IPackageNode {
   dependencies: IPackageNode[];
-  dependencyResolved: boolean;
+  dependencyResolved: boolean;  // TODO
   id: string;
   manifest: PackageJson;
 }
 
 export interface IPackageNodeMap {
-  [path: string]: IPackageNode;
+  [name: string]: {
+    [version: string]: IPackageNode
+  };
+}
+
+export interface IReverseDependency {
+  [name: string]: {
+    [versionRange: string]: IPackageNode[]
+  };
 }
 
 export interface IWalkHandlers {
   onComplete?: IPackageNodeHandler;
-  onVisit?: IPackageNodeHandler;
+  onVisit?: IPackageNodeHandler;  // TODO
 }
 
 export interface IWalkOptions {
   logLevel?: LogLevel;
-  stopOnError?: boolean;
+  stopOnError?: boolean;  // TODO
+  visitDuplicateNode?: boolean; // TODO
 }
 
 export type IPackageNodeHandler = (packageNode: IPackageNode) => void;
