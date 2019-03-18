@@ -9,6 +9,7 @@ export interface IPackageNode {
   dependencyResolved: boolean;  // TODO
   id: string;
   manifest: PackageJson;
+  toBeResolved: IBooleanRecord;
 }
 
 export interface IPackageNodeMap {
@@ -25,6 +26,7 @@ export interface IReverseDependency {
 
 export interface IWalkHandlers {
   onComplete?: IPackageNodeHandler;
+  onResolve?: IPackageNodeHandler;
   onVisit?: IPackageNodeHandler;  // TODO
 }
 

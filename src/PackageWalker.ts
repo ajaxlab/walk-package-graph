@@ -14,6 +14,7 @@ class PackageNodeWalker {
   private _logger: Logger;
   private _nodeMap: IPackageNodeMap = Object.create(null);
   private _onComplete: IPackageNodeHandler | void;
+  private _onResolve: IPackageNodeHandler | void;
   private _onVisit: IPackageNodeHandler | void;
   private _options: IWalkOptions;
   private _reverseDependency: IReverseDependency = Object.create(null);
@@ -23,6 +24,7 @@ class PackageNodeWalker {
 
   constructor(walkHandlers: IWalkHandlers, options: IWalkOptions) {
     this._onComplete = walkHandlers.onComplete;
+    this._onResolve = walkHandlers.onResolve;
     this._onVisit = walkHandlers.onVisit;
     this._options = options;
     this._logger = new Logger(options.logLevel);
@@ -32,6 +34,21 @@ class PackageNodeWalker {
     this._visit(rootPath, (rootNode) => {
       this._rootNode = rootNode;
     });
+  }
+
+  // TODO
+  // 1. delete when all deps resolved
+  // 2. propagate to upper deps
+  private _addDependency(node: IPackageNode, dependency: IPackageNode) {
+    console.log('_addDependency to', node.id, dependency.id);
+    node.dependencies.push(dependency);
+    if (dependency.manifest.name) {
+      delete node.toBeResolved[dependency.manifest.name];
+      console.log('toBeResolved', node.id, node.toBeResolved);
+      if (!Object.keys(node.toBeResolved).length) {
+        this._resolveDependency(node);
+      }
+    }
   }
 
   private _finishVisitJob(path: string) {
@@ -61,43 +78,49 @@ class PackageNodeWalker {
   }
 
   private _resolveDependency(node: IPackageNode) {
-    const { dependencies } = node.manifest;
-    this._logger.debug('_resolveDependency(' + node.id + ')', dependencies);
-    if (dependencies) {
-      const depNames = Object.keys(dependencies);
-      const depNamesLen = depNames.length;
-      if (depNamesLen) {
-        const nodeMap = this._nodeMap;
-        const reverse = this._reverseDependency;
-        depNamesLoop: for (let i = 0; i < depNamesLen; i++) {
-          const depName = depNames[i];
-          const depRange = dependencies[depName];
-          const depVersMap = nodeMap[depName];
-          if (depVersMap) {
-            const versions = Object.keys(depVersMap);
-            const versionsLen = versions.length;
-            for (let j = 0; j < versionsLen; j++) {
-              const depVer = versions[j];
-              if (semver.satisfies(depVer, depRange)) {
-                node.dependencies.push(depVersMap[depVer]);
-                // check all resolved
-                continue depNamesLoop;
-              }
-            }
-          }
-          if (!reverse[depName]) {
-            reverse[depName] = Object.create(null);
-          }
-          if (!reverse[depName][depRange]) {
-            reverse[depName][depRange] = [];
-          }
-          reverse[depName][depRange].push(node);
-        }
-      }
+    node.dependencyResolved = true;
+    if (this._onResolve) {
+      this._onResolve(node);
     }
   }
 
-  private _resolveReverseDependency(node: IPackageNode) {
+  private _tryResolveDependency(node: IPackageNode) {
+    const dependencies = node.manifest.dependencies || Object.create(null);
+    this._logger.debug('_tryResolveDependency(' + node.id + ')', dependencies);
+    const depNames = Object.keys(dependencies);
+    const depNamesLen = depNames.length;
+    if (depNamesLen) {
+      const nodeMap = this._nodeMap;
+      const reverse = this._reverseDependency;
+      depNamesLoop: for (let i = 0; i < depNamesLen; i++) {
+        const depName = depNames[i];
+        const depRange = dependencies[depName];
+        const depVersMap = nodeMap[depName];
+        if (depVersMap) {
+          const versions = Object.keys(depVersMap);
+          const versionsLen = versions.length;
+          for (let j = 0; j < versionsLen; j++) {
+            const depVer = versions[j];
+            if (semver.satisfies(depVer, depRange)) {
+              this._addDependency(node, depVersMap[depVer]);
+              continue depNamesLoop;
+            }
+          }
+        }
+        if (!reverse[depName]) {
+          reverse[depName] = Object.create(null);
+        }
+        if (!reverse[depName][depRange]) {
+          reverse[depName][depRange] = [];
+        }
+        reverse[depName][depRange].push(node);
+      }
+    } else {
+      this._resolveDependency(node);
+    }
+  }
+
+  private _tryResolveReverseDependency(node: IPackageNode) {
     this._logger.debug('_resolveReverseDependency(' + node.id + ')');
     const reverse = this._reverseDependency;
     const { name, version } = node.manifest;
@@ -111,9 +134,7 @@ class PackageNodeWalker {
           const dependantNodes = rangesMap[range];
           const len = dependantNodes.length;
           for (let j = 0; j < len; j++) {
-            const dependantNode = dependantNodes[j];
-            dependantNode.dependencies.push(node);
-            // check all resolved
+            this._addDependency(dependantNodes[j], node);
           }
           delete rangesMap[range];
           break;
@@ -141,8 +162,8 @@ class PackageNodeWalker {
           nodeMap[name][version] = node;
         }
         this._logger.debug('>>> new PackageNode() :', node.id);
-        this._resolveDependency(node);
-        this._resolveReverseDependency(node);
+        this._tryResolveDependency(node);
+        this._tryResolveReverseDependency(node);
         if (cb) {
           cb(node);
         }

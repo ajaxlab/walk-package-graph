@@ -12,15 +12,18 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
     };
     walkPackageGraph('./test/pseudo-projects/normal', {
       onComplete(rootNode) {
-        console.info(rootNode);
+        // console.info(rootNode);
         // expect(graph).to.deep.equal(model);
         done();
+      },
+      onResolve(node) {
+        console.info('--->>> resolved', node.id);
       },
       onVisit(node) {
         console.info(node);
       }
     }, {
-      logLevel: LogLevel.debug
+      logLevel: LogLevel.error
     });
   });
 
