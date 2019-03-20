@@ -1,5 +1,5 @@
 {
-  "name": "normal",
+  "name": "complex",
   "version": "0.1.0",
   "dependencies": {
     "amelia": "^0.1.0",

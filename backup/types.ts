@@ -4,16 +4,13 @@ export interface IBooleanRecord {
   [key: string]: boolean;
 }
 
-export interface IDepsToResolveMap {
-  [key: string]: IBooleanRecord;
-}
-
 export interface IPackageNode {
   dependencies: IPackageNode[];
   dependencyResolved: boolean;  // TODO
   id: string;
   manifest: PackageJson;
   path: string;
+  toBeResolved: IBooleanRecord;
 }
 
 export interface IPackageNodeMap {
@@ -27,9 +24,9 @@ export interface IReverseDependency {
 }
 
 export interface IWalkHandlers {
-  onComplete?: IWalkCompleteHandler;
-  onResolve?: IPackageResolveHandler;
-  onVisit?: IPackageVisitHandler;  // TODO
+  onComplete?: IPackageNodeHandler;
+  onResolve?: IPackageNodeHandler;
+  onVisit?: IPackageNodeHandler;  // TODO
 }
 
 export interface IWalkOptions {
@@ -38,11 +35,7 @@ export interface IWalkOptions {
   visitDuplicateNode?: boolean; // TODO
 }
 
-export type IPackageResolveHandler = (error?: Error, node?: IPackageNode) => void;
-
-export type IPackageVisitHandler = (error?: Error, manifest?: PackageJson, path?: string) => void;
-
-export type IWalkCompleteHandler = (node: IPackageNode) => void;
+export type IPackageNodeHandler = (packageNode: IPackageNode) => void;
 
 export enum LogLevel {
   error = 0,  // to user
