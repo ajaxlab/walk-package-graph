@@ -12,6 +12,7 @@ import {
 
 class PackageWalker {
 
+  private _clearCount: number = 0;
   private _logger: Logger;
   private _nodeMap: IPackageNodeMap = Object.create(null);
   private _onComplete: IWalkCompleteHandler | void;
@@ -55,9 +56,14 @@ class PackageWalker {
 
   private _clearVisitJob(path: string) {
     delete this._toVisit[path];
+    this._clearCount++;
     if (Object.keys(this._toVisit).length === 0) {
       if (this._onComplete) {
         this._onComplete(this._rootNode);
+        console.info('Object.keys(this._visited).length', Object.keys(this._visited).length);
+        fs.writeFile('./test/json/this_visited.json', JSON.stringify(this._visited, Object.keys(this._visited).sort()), () => {
+          console.info('./test/json/this_visited.json written');
+        });
       }
     }
   }
@@ -68,7 +74,9 @@ class PackageWalker {
     this._toVisit[abs] = true;
     fs.readFile(abs + p.sep + 'package.json', 'utf8', (readFileErr, txt) => {
       if (readFileErr) {
-        cb(readFileErr);
+        if (readFileErr.code !== 'ENOENT') {
+          cb(readFileErr);
+        }
         return;
       }
       try {
@@ -80,7 +88,7 @@ class PackageWalker {
   }
 
   private _visit(path: string, cb?: (node: IPackageNode) => void) {
-    const abs = p.resolve(path);
+    const abs = p.resolve(path); // TODO move to start()
     if (this._visited[abs]) {
       this._logger.debug('already visited :', abs);
       return;
@@ -99,19 +107,21 @@ class PackageWalker {
       if (this._onVisit) {
         this._onVisit(e, manifest, abs);
       }
+    });
+    this._visitNodeModules(abs, () => {
       this._clearVisitJob(abs);
     });
-    this._visitNodeModules(abs);
   }
 
   // c
-  private _visitNodeModules(abs: string) {
+  private _visitNodeModules(abs: string, onReadNM: () => void) {
     const nmPath = abs + p.sep + 'node_modules';
     fs.readdir(nmPath, (readdirErr, items) => {
       if (readdirErr) {
         if (readdirErr.code !== 'ENOENT') {
           this._logger.error(readdirErr);
         }
+        onReadNM();
         return;
       }
       this._logger.debug(abs, 'node_modules items', items.length);
@@ -127,6 +137,7 @@ class PackageWalker {
           this._visit(nmPath + p.sep + item);
         }
       }
+      onReadNM();
     });
   }
 

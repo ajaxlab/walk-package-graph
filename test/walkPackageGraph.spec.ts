@@ -38,6 +38,26 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
     visit('./test/pseudo-projects/scoped', dirs, done);
   });
 
+  it('traverses heavy npm node_modules in 500ms', function (done) {
+    this.timeout(500);
+    const rootPath = './test/pseudo-projects/heavy/npm';
+    walkPackageGraph(rootPath, {
+      onComplete() {
+        done();
+      }
+    });
+  });
+
+  it('traverses heavy yarn node_modules in 500ms', function (done) {
+    this.timeout(500);
+    const rootPath = './test/pseudo-projects/heavy/yarn';
+    walkPackageGraph(rootPath, {
+      onComplete() {
+        done();
+      }
+    });
+  });
+
   it('resolves nested dependency', function () {
     //
   });
