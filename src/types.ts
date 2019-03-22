@@ -29,7 +29,7 @@ export interface IReverseDependency {
 export interface IWalkHandlers {
   onComplete?: IWalkCompleteHandler;
   onResolve?: IPackageResolveHandler;
-  onVisit?: IPackageVisitHandler;  // TODO
+  onVisit?: IPackageVisitHandler;
 }
 
 export interface IWalkOptions {

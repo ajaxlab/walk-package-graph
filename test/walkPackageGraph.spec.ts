@@ -4,12 +4,12 @@ import { expect, use } from 'chai';
 import p from 'path';
 import { LogLevel } from '../src/types';
 import walkPackageGraph from '../src/walkPackageGraph';
+import { visit } from './common';
 
 describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
 
   it('traverses all packages', function (done) {
-    const regSep = /\\/g;
-    const packDirs = [
+    const dirs = [
       '',
       '/node_modules/amelia',
       '/node_modules/jacob',
@@ -18,22 +18,24 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
       '/node_modules/olivia/node_modules/amelia',
       '/node_modules/oscar/node_modules/amelia'
     ];
-    const rootPath = './test/pseudo-projects/complex';
-    const absRootPath = p.resolve(rootPath);
-    walkPackageGraph(rootPath, {
-      onVisit(e, manifest, path) {
-        if (path) {
-          const packPath = path.replace(absRootPath, '').replace(regSep, '/');
-          const index = packDirs.indexOf(packPath);
-          if (index > -1) {
-            packDirs.splice(index, 1);
-          }
-          if (packDirs.length === 0) {
-            done();
-          }
-        }
-      }
-    });
+    visit('./test/pseudo-projects/complex', dirs, done);
+  });
+
+  it('traverses scoped packages', function (done) {
+    const dirs = [
+      '',
+      '/node_modules/@birds/eagle',
+      '/node_modules/@birds/hawk',
+      '/node_modules/@birds/raven',
+      '/node_modules/@cats/norwegian',
+      '/node_modules/@cats/siamese',
+      '/node_modules/@cats/sphinx',
+      '/node_modules/amy',
+      '/node_modules/amy/node_modules/@birds/hawk',
+      '/node_modules/amy/node_modules/@cats/siamese',
+      '/node_modules/olive'
+    ];
+    visit('./test/pseudo-projects/scoped', dirs, done);
   });
 
   it('resolves nested dependency', function () {

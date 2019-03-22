@@ -122,11 +122,31 @@ class PackageWalker {
         if (itemPrefix === '.') {
           continue;
         } else if (itemPrefix === '@') {
-          // TODO
-          continue;
+          this._visitScopedPackages(nmPath + p.sep + item);
         } else {
           this._visit(nmPath + p.sep + item);
         }
+      }
+    });
+  }
+
+  /*
+  scopePath example:
+  '/home/walk-package-graph/node_modules/@types'
+  */
+  private _visitScopedPackages(scopePath: string) {
+    fs.readdir(scopePath, (readdirErr, items) => {
+      if (readdirErr) {
+        if (readdirErr.code !== 'ENOENT') {
+          this._logger.error(readdirErr);
+        }
+        return;
+      }
+      this._logger.debug(scopePath, 'items', items.length);
+      const { length } = items;
+      for (let i = 0; i < length; i++ ) {
+        const item = items[i];
+        this._visit(scopePath + p.sep + item);
       }
     });
   }

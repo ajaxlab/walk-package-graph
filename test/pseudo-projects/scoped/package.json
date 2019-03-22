@@ -1,0 +1,14 @@
+{
+  "name": "scoped",
+  "version": "1.0.0",
+  "dependencies": {
+    "@birds/eagle": "^1.0.0",
+    "@birds/hawk": "^1.0.0",
+    "@birds/raven": "^1.0.0",
+    "@cats/norwegian": "^1.0.0",
+    "@cats/siamese": "^1.0.0",
+    "@cats/sphinx": "^1.0.0",
+    "amy": "^0.1.0",
+    "olive": "^1.0.0"
+  }
+}
