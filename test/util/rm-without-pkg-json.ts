@@ -1,17 +1,20 @@
-const fs = require('fs');
-const readDir = require('./readDir');
+import fs from 'fs';
+import readDir from '../common/readDir';
 
 let count = 0;
 
 readDir('./test/pseudo-projects/heavy/npm', {
-  onFileFound(path, item, stats) {
+  onEnd() {
+    console.info('finished');
+  },
+  onFile(path, item, stats) {
     if (!stats.isSymbolicLink() && (item !== 'package.json')) {
       fs.unlink(path, (unlinkErr) => {
         if (unlinkErr) {
           console.error(unlinkErr);
           return;
         }
-        console.info(++count, path, 'removed');
+        console.info(++count, path, 'removed'); // 2267
       });
     }
   }

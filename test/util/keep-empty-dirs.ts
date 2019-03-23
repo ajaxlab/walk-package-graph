@@ -1,12 +1,12 @@
-const fs = require('fs');
-const p = require('path');
-const readDir = require('./readDir');
+import fs from 'fs';
+import p from 'path';
+import readDir from '../common/readDir';
 
 let count = 0;
 
 readDir('./test/pseudo-projects/heavy/npm', {
-  onDirFound(dirPath, item, stats) {
-    if (!stats.isSymbolicLink() && (item !== 'node_modules')) {
+  onDir(dirPath, item, stats) {
+    if (item !== 'node_modules') {
       fs.readFile(dirPath + p.sep + 'package.json', (readFileErr) => {
         if (readFileErr) {
           if (readFileErr.code === 'ENOENT') {
@@ -16,7 +16,7 @@ readDir('./test/pseudo-projects/heavy/npm', {
                 console.error(writeFileErr);
                 return;
               }
-              console.info(++count, filePath, 'written');
+              console.info(++count, filePath, 'written'); // 2267
             });
           } else {
             console.error(readFileErr);
