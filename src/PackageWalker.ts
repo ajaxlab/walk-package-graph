@@ -1,27 +1,22 @@
 import fs from 'fs';
 import { PackageJson } from 'package-json';
 import p from 'path';
-import semver from 'semver';
 import Logger from './Logger';
 import PackageNode from './PackageNode';
 import {
-  IBooleanRecord, IPackageNode, IPackageNodeMap, IPackageResolveHandler,
-  IPackageVisitHandler, IReverseDependency, IWalkCompleteHandler,
+  IPackageNode, IPackageNodeMap, IPackageResolveHandler,
+  IPackageVisitHandler, IWalkCompleteHandler,
   IWalkHandlers, IWalkOptions
 } from './types';
 
 class PackageWalker {
 
-  private _clearCount: number = 0;
   private _logger: Logger;
   private _nodeMap: IPackageNodeMap = Object.create(null);
   private _onComplete: IWalkCompleteHandler | void;
   private _onResolve: IPackageResolveHandler | void;
   private _onVisit: IPackageVisitHandler | void;
   private _options: IWalkOptions;
-  private _rootNode!: IPackageNode;
-  private _toVisit: IBooleanRecord = Object.create(null);
-  private _visited: IBooleanRecord = Object.create(null);
 
   constructor(walkHandlers: IWalkHandlers, options: IWalkOptions) {
     this._onComplete = walkHandlers.onComplete;
@@ -31,9 +26,11 @@ class PackageWalker {
     this._logger = new Logger(options.logLevel);
   }
 
-  start(rootPath: string) {
-    this._visit(rootPath, (rootNode) => {
-      this._rootNode = rootNode;
+  start(path: string) {
+    this._visit(p.resolve(path), (err, node) => {
+      if (this._onComplete) {
+        this._onComplete(err, node);
+      }
     });
   }
 
@@ -54,30 +51,13 @@ class PackageWalker {
     }
   }
 
-  private _clearVisitJob(path: string) {
-    delete this._toVisit[path];
-    this._clearCount++;
-    if (Object.keys(this._toVisit).length === 0) {
-      if (this._onComplete) {
-        this._onComplete(this._rootNode);
-        console.info('Object.keys(this._visited).length', Object.keys(this._visited).length);
-        fs.writeFile('./test/json/this_visited.json', JSON.stringify(this._visited, Object.keys(this._visited).sort()), () => {
-          console.info('./test/json/this_visited.json written');
-        });
-      }
-    }
-  }
-
-  // c
   private _readPackage(abs: string, cb: (err?: Error, manifest?: PackageJson) => void) {
-    this._logger.debug('_readPackage(' + abs + ', cb)');
-    this._toVisit[abs] = true;
     fs.readFile(abs + p.sep + 'package.json', 'utf8', (readFileErr, txt) => {
       if (readFileErr) {
-        if (readFileErr.code !== 'ENOENT') {
-          cb(readFileErr);
+        if (readFileErr.code === 'ENOENT') {
+          return cb();
         }
-        return;
+        return cb(readFileErr);
       }
       try {
         cb(void 0, JSON.parse(txt));
@@ -87,57 +67,64 @@ class PackageWalker {
     });
   }
 
-  private _visit(path: string, cb?: (node: IPackageNode) => void) {
-    const abs = p.resolve(path); // TODO move to start()
-    if (this._visited[abs]) {
-      this._logger.debug('already visited :', abs);
-      return;
+  private _visit(abs: string, cb: (err?: Error, node?: IPackageNode) => void) {
+    let node: IPackageNode;
+    let resolved = 0;
+    function resolve(err?: Error) {
+      if (err) { return cb(err); }
+      if (++resolved > 1) {
+        cb(void 0, node);
+      }
     }
-    this._visited[abs] = true;
     this._readPackage(abs, (e, manifest) => {
       if (manifest) {
-        const node = new PackageNode(manifest, abs);
+        node = new PackageNode(manifest, abs);
         this._addToNodeMap(node);
-        if (cb) {
-          cb(node);
+        if (this._onVisit) {
+          this._onVisit(e, manifest, abs);
         }
-      } else if (e) {
-        this._logger.error(e);
       }
-      if (this._onVisit) {
-        this._onVisit(e, manifest, abs);
-      }
+      resolve(e);
     });
-    this._visitNodeModules(abs, () => {
-      this._clearVisitJob(abs);
+    this._visitNodeModules(abs, (e) => {
+      resolve(e);
     });
   }
 
-  // c
-  private _visitNodeModules(abs: string, onReadNM: () => void) {
+  private _visitNodeModules(abs: string, cb: (err?: Error) => void) {
     const nmPath = abs + p.sep + 'node_modules';
     fs.readdir(nmPath, (readdirErr, items) => {
       if (readdirErr) {
-        if (readdirErr.code !== 'ENOENT') {
-          this._logger.error(readdirErr);
+        if (readdirErr.code === 'ENOENT') {
+          return cb();
         }
-        onReadNM();
-        return;
+        return cb(readdirErr);
       }
-      this._logger.debug(abs, 'node_modules items', items.length);
       const { length } = items;
-      for (let i = 0; i < length; i++ ) {
+      let pending = length;
+      if (!pending) { return cb(); }
+      for (let i = 0; i < length; i++) {
         const item = items[i];
         const itemPrefix = item[0];
         if (itemPrefix === '.') {
+          if (!--pending) cb();
           continue;
         } else if (itemPrefix === '@') {
-          this._visitScopedPackages(nmPath + p.sep + item);
+          this._visitScopedPackages(nmPath + p.sep + item, (visitScopeErr) => {
+            if (visitScopeErr) {
+              return cb(visitScopeErr);
+            }
+            if (!--pending) cb();
+          });
         } else {
-          this._visit(nmPath + p.sep + item);
+          this._visit(nmPath + p.sep + item, (visitErr) => {
+            if (visitErr) {
+              return cb(visitErr);
+            }
+            if (!--pending) cb();
+          });
         }
       }
-      onReadNM();
     });
   }
 
@@ -145,19 +132,27 @@ class PackageWalker {
   scopePath example:
   '/home/walk-package-graph/node_modules/@types'
   */
-  private _visitScopedPackages(scopePath: string) {
+  private _visitScopedPackages(scopePath: string, cb: (err?: Error) => void) {
     fs.readdir(scopePath, (readdirErr, items) => {
       if (readdirErr) {
-        if (readdirErr.code !== 'ENOENT') {
-          this._logger.error(readdirErr);
+        if (readdirErr.code === 'ENOENT') {
+          return cb();
         }
-        return;
+        return cb(readdirErr);
       }
-      this._logger.debug(scopePath, 'items', items.length);
       const { length } = items;
-      for (let i = 0; i < length; i++ ) {
+      let pending = length;
+      if (!pending) { return cb(); }
+      for (let i = 0; i < length; i++) {
         const item = items[i];
-        this._visit(scopePath + p.sep + item);
+        this._visit(scopePath + p.sep + item, (visitErr) => {
+          if (visitErr) {
+            return cb(visitErr);
+          }
+          if (!--pending) {
+            cb();
+          }
+        });
       }
     });
   }
