@@ -54,9 +54,7 @@ class PackageWalker {
   private _readPackage(abs: string, cb: (err?: Error, manifest?: PackageJson) => void) {
     fs.readFile(abs + p.sep + 'package.json', 'utf8', (readFileErr, txt) => {
       if (readFileErr) {
-        if (readFileErr.code === 'ENOENT') {
-          return cb();
-        }
+        if (readFileErr.code === 'ENOENT') return cb();
         return cb(readFileErr);
       }
       try {
@@ -71,10 +69,8 @@ class PackageWalker {
     let node: IPackageNode;
     let resolved = 0;
     function resolve(err?: Error) {
-      if (err) { return cb(err); }
-      if (++resolved > 1) {
-        cb(void 0, node);
-      }
+      if (err) return cb(err);
+      if (++resolved > 1) cb(void 0, node);
     }
     this._readPackage(abs, (e, manifest) => {
       if (manifest) {
@@ -102,7 +98,7 @@ class PackageWalker {
       }
       const { length } = items;
       let pending = length;
-      if (!pending) { return cb(); }
+      if (!pending) return cb();
       for (let i = 0; i < length; i++) {
         const item = items[i];
         const itemPrefix = item[0];
@@ -110,17 +106,13 @@ class PackageWalker {
           if (!--pending) cb();
           continue;
         } else if (itemPrefix === '@') {
-          this._visitScopedPackages(nmPath + p.sep + item, (visitScopeErr) => {
-            if (visitScopeErr) {
-              return cb(visitScopeErr);
-            }
+          this._visitScopedPackages(nmPath + p.sep + item, (scopeErr) => {
+            if (scopeErr) return cb(scopeErr);
             if (!--pending) cb();
           });
         } else {
           this._visit(nmPath + p.sep + item, (visitErr) => {
-            if (visitErr) {
-              return cb(visitErr);
-            }
+            if (visitErr) return cb(visitErr);
             if (!--pending) cb();
           });
         }
@@ -135,23 +127,17 @@ class PackageWalker {
   private _visitScopedPackages(scopePath: string, cb: (err?: Error) => void) {
     fs.readdir(scopePath, (readdirErr, items) => {
       if (readdirErr) {
-        if (readdirErr.code === 'ENOENT') {
-          return cb();
-        }
+        if (readdirErr.code === 'ENOENT') return cb();
         return cb(readdirErr);
       }
       const { length } = items;
       let pending = length;
-      if (!pending) { return cb(); }
+      if (!pending) return cb();
       for (let i = 0; i < length; i++) {
         const item = items[i];
         this._visit(scopePath + p.sep + item, (visitErr) => {
-          if (visitErr) {
-            return cb(visitErr);
-          }
-          if (!--pending) {
-            cb();
-          }
+          if (visitErr) return cb(visitErr);
+          if (!--pending) cb();
         });
       }
     });

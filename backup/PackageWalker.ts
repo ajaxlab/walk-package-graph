@@ -167,7 +167,7 @@ class PackageWalker {
               return a.path.length - b.path.length;
             });
           } else {
-            nodeMap[name] = [node];
+            nodeMap[name] = [ node ];
           }
         }
         // this._tryResolveDependency(node);
