@@ -11,6 +11,7 @@ import {
 
 class PackageWalker {
 
+  private _dependentsMap: IPackageNodeMap = Object.create(null);
   private _logger: Logger;
   private _nodeMap: IPackageNodeMap = Object.create(null);
   private _onEnd: IWalkEndHandler | void;
@@ -27,11 +28,28 @@ class PackageWalker {
   }
 
   start(path: string) {
-    this._visit(p.resolve(path), (err, node) => {
-      if (this._onEnd) {
-        this._onEnd(err, node);
+    const abs = p.resolve(path);
+    fs.readFile(abs + p.sep + 'package.json', 'utf8', (readFileErr) => {
+      if (readFileErr) {
+        if (this._onEnd) {
+          this._onEnd(readFileErr);
+        }
+        if (this._onVisit) {
+          this._onVisit(readFileErr);
+        }
+        return;
       }
+      this._visit(abs, (err, node) => {
+        if (this._onEnd) {
+          this._onEnd(err, node);
+        }
+      });
     });
+  }
+
+  private _addToDependentsMap(node: IPackageNode) {
+    // _dependentsMap
+    // console.log(node.manifest.dependencies);
   }
 
   private _addToNodeMap(node: IPackageNode) {
@@ -76,6 +94,7 @@ class PackageWalker {
       if (manifest) {
         node = new PackageNode(manifest, abs);
         this._addToNodeMap(node);
+        this._addToDependentsMap(node);
         if (this._onVisit) {
           this._onVisit(e, manifest, abs);
         }
