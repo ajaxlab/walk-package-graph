@@ -42,7 +42,7 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
     this.timeout(500);
     const rootPath = './test/pseudo-projects/heavy/npm';
     walkPackageGraph(rootPath, {
-      onComplete() {
+      onEnd() {
         done();
       }
     });
@@ -52,7 +52,7 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
     this.timeout(500);
     const rootPath = './test/pseudo-projects/heavy/yarn';
     walkPackageGraph(rootPath, {
-      onComplete() {
+      onEnd() {
         done();
       }
     });

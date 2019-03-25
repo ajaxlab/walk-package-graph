@@ -13,7 +13,7 @@ class PackageWalker {
 
   private _logger: Logger;
   private _nodeMap: IPackageNodeMap = Object.create(null);
-  private _onComplete: IPackageNodeHandler | void;
+  private _onEnd: IPackageNodeHandler | void;
   private _onResolve: IPackageNodeHandler | void;
   private _onVisit: IPackageNodeHandler | void;
   private _options: IWalkOptions;
@@ -23,7 +23,7 @@ class PackageWalker {
   private _visited: IBooleanRecord = Object.create(null);
 
   constructor(walkHandlers: IWalkHandlers, options: IWalkOptions) {
-    this._onComplete = walkHandlers.onComplete;
+    this._onEnd = walkHandlers.onEnd;
     this._onResolve = walkHandlers.onResolve;
     this._onVisit = walkHandlers.onVisit;
     this._options = options;
@@ -54,8 +54,8 @@ class PackageWalker {
   private _clearVisitJob(path: string) {
     delete this._toVisit[path];
     if (Object.keys(this._toVisit).length === 0) {
-      if (this._onComplete) {
-        this._onComplete(this._rootNode);
+      if (this._onEnd) {
+        this._onEnd(this._rootNode);
         this._logger.debug('reverseDependency', this._reverseDependency);
       }
     }

@@ -1,0 +1,6 @@
+{
+  "extends": "../",
+  "rules": {
+    "no-console": [true, "log"]
+  }
+}

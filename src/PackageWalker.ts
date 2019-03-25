@@ -5,7 +5,7 @@ import Logger from './Logger';
 import PackageNode from './PackageNode';
 import {
   IPackageNode, IPackageNodeMap, IPackageResolveHandler,
-  IPackageVisitHandler, IWalkCompleteHandler,
+  IPackageVisitHandler, IWalkEndHandler,
   IWalkHandlers, IWalkOptions
 } from './types';
 
@@ -13,13 +13,13 @@ class PackageWalker {
 
   private _logger: Logger;
   private _nodeMap: IPackageNodeMap = Object.create(null);
-  private _onComplete: IWalkCompleteHandler | void;
+  private _onEnd: IWalkEndHandler | void;
   private _onResolve: IPackageResolveHandler | void;
   private _onVisit: IPackageVisitHandler | void;
   private _options: IWalkOptions;
 
   constructor(walkHandlers: IWalkHandlers, options: IWalkOptions) {
-    this._onComplete = walkHandlers.onComplete;
+    this._onEnd = walkHandlers.onEnd;
     this._onResolve = walkHandlers.onResolve;
     this._onVisit = walkHandlers.onVisit;
     this._options = options;
@@ -28,8 +28,8 @@ class PackageWalker {
 
   start(path: string) {
     this._visit(p.resolve(path), (err, node) => {
-      if (this._onComplete) {
-        this._onComplete(err, node);
+      if (this._onEnd) {
+        this._onEnd(err, node);
       }
     });
   }

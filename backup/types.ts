@@ -24,7 +24,7 @@ export interface IReverseDependency {
 }
 
 export interface IWalkHandlers {
-  onComplete?: IPackageNodeHandler;
+  onEnd?: IPackageNodeHandler;
   onResolve?: IPackageNodeHandler;
   onVisit?: IPackageNodeHandler;  // TODO
 }

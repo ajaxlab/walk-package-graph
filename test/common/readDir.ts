@@ -1,5 +1,3 @@
-/* tslint:disable: no-console */
-
 import fs from 'fs';
 import p from 'path';
 

@@ -1,10 +1,9 @@
+import fs from 'fs';
 import { IBooleanRecord } from '../../src/types';
 import walkPackageGraph from '../../src/walkPackageGraph';
 import pkgs from '../json/packages.json';
-import p from 'path';
-import fs from 'fs';
 
-console.log('pkgs0', pkgs);
+console.info('pkgs0', pkgs);
 
 let count = 0;
 const pkgMap: IBooleanRecord = Object.assign(Object.create(null), pkgs);
@@ -13,7 +12,7 @@ const cwd = process.cwd();
 const regSep = /\\/g;
 
 walkPackageGraph('./test/pseudo-projects/heavy/npm', {
-  onComplete() {
+  onEnd() {
     const notVisitedJsonPath = './test/json/not-visited.json';
     const notVisitedContents = JSON.stringify(pkgMap, Object.keys(pkgMap).sort(), 2);
     fs.writeFile(notVisitedJsonPath, notVisitedContents, (err) => {

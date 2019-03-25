@@ -27,7 +27,7 @@ export interface IReverseDependency {
 }
 
 export interface IWalkHandlers {
-  onComplete?: IWalkCompleteHandler;
+  onEnd?: IWalkEndHandler;
   onResolve?: IPackageResolveHandler;
   onVisit?: IPackageVisitHandler;
 }
@@ -42,7 +42,7 @@ export type IPackageResolveHandler = (error?: Error, node?: IPackageNode) => voi
 
 export type IPackageVisitHandler = (error?: Error, manifest?: PackageJson, path?: string) => void;
 
-export type IWalkCompleteHandler = (error?: Error, rootNode?: IPackageNode) => void;
+export type IWalkEndHandler = (error?: Error, rootNode?: IPackageNode) => void;
 
 export enum LogLevel {
   error = 0,  // to user

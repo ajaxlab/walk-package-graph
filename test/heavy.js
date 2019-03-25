@@ -9,7 +9,7 @@ let count = 0;
 const visited = {};
 const hrstart = process.hrtime();
 walkPackageGraph('./test/pseudo-projects/heavy/npm', {
-  onComplete() {
+  onEnd() {
     hrend = process.hrtime(hrstart);
     console.info('%d visits : %ds %dms', count, hrend[0], hrend[1] / 1000000);
   },
