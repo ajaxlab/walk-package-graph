@@ -27,9 +27,10 @@ export interface IReverseDependency {
 }
 
 export interface IWalkHandlers {
-  onEnd?: (error?: NodeJS.ErrnoException, rootNode?: IPackageNode) => void;
-  onResolve?: (error?: NodeJS.ErrnoException, node?: IPackageNode) => void;
-  onVisit?: (error?: NodeJS.ErrnoException, manifest?: PackageJson, path?: string) => void;
+  onEnd?: (rootNode?: IPackageNode) => void;
+  onError?: (error: NodeJS.ErrnoException, path: string) => void;
+  onResolve?: (node: IPackageNode) => void;
+  onVisit?: (node: IPackageNode) => void;
 }
 
 export interface IWalkOptions {
@@ -38,11 +39,13 @@ export interface IWalkOptions {
   visitDuplicateNode?: boolean; // TODO
 }
 
-export type IPackageResolveHandler = (error?: NodeJS.ErrnoException, node?: IPackageNode) => void;
+export type IPackageResolveHandler = (node: IPackageNode) => void;
 
-export type IPackageVisitHandler = (error?: NodeJS.ErrnoException, manifest?: PackageJson, path?: string) => void;
+export type IPackageVisitHandler = (node: IPackageNode) => void;
 
-export type IWalkEndHandler = (error?: NodeJS.ErrnoException, rootNode?: IPackageNode) => void;
+export type IWalkEndHandler = (rootNode?: IPackageNode) => void;
+
+export type IWalkErrorHandler = (error: NodeJS.ErrnoException, path: string) => void;
 
 export enum LogLevel {
   error = 0,  // to user

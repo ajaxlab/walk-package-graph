@@ -20,6 +20,9 @@ class PackageNode implements IPackageNode {
       : Object.create(null);
   }
 
+  toString() {
+    return '<PackageNode>' + this.id;
+  }
 }
 
 export default PackageNode;

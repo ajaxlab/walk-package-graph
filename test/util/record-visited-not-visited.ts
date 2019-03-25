@@ -34,12 +34,10 @@ walkPackageGraph('./test/pseudo-projects/heavy/npm', {
       }
     });
   },
-  onVisit(e, manifest, abs) {
-    if (abs) {
-      const pkgPath = abs.replace(cwd, '').replace(regSep, '/');
-      visited[pkgPath] = true;
-      delete pkgMap[pkgPath];
-      count++;
-    }
+  onVisit(node) {
+    const pkgPath = node.path.replace(cwd, '').replace(regSep, '/');
+    visited[pkgPath] = true;
+    delete pkgMap[pkgPath];
+    count++;
   }
 });

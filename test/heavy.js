@@ -13,7 +13,7 @@ walkPackageGraph('./test/pseudo-projects/heavy/npm', {
     hrend = process.hrtime(hrstart);
     console.info('%d visits : %ds %dms', count, hrend[0], hrend[1] / 1000000);
   },
-  onVisit(e, manifest, abs) {
-    console.info(++count, abs);
+  onVisit(node) {
+    console.info(++count, node.path);
   }
 });

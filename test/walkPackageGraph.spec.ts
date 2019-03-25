@@ -60,16 +60,22 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
 
   it('throws an error with a nonexistent project path', function (done) {
     const rootPath = './test/pseudo-projects/not-exists';
-    let count = 0;
-    function resolve() {
-      if (++count === 2) done();
-    }
     walkPackageGraph(rootPath, {
-      onEnd(err) {
-        if (err && err.code === 'ENOENT') resolve();
-      },
-      onVisit(err) {
-        if (err && err.code === 'ENOENT') resolve();
+      onError(err, path) {
+        if (path === p.resolve(rootPath) && err.code === 'ENOENT') {
+          done();
+        }
+      }
+    });
+  });
+
+  it('throws an error with an invalid project', function (done) {
+    const rootPath = './test/pseudo-projects/invalid';
+    walkPackageGraph(rootPath, {
+      onError(err, path) {
+        if (path === p.resolve(rootPath)) {
+          done();
+        }
       }
     });
   });

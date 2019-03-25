@@ -4,8 +4,8 @@ walkPackageGraph('./', {
   onEnd(rootNode) {
     console.log(rootNode);
   },
-  onVisit(e, manifest, path) {
-    console.log(path);
+  onVisit(node) {
+    console.log(node.path);
   }
 }, {
   logLevel: LogLevel.debug

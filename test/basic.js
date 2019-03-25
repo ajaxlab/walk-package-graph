@@ -1,11 +1,11 @@
 const { LogLevel, walkPackageGraph } = require('../dist/cjs');
 
 walkPackageGraph('./test/pseudo-projects/complex', {
-  onEnd(err, rootNode) {
+  onEnd(rootNode) {
     console.log('rootNode', rootNode);
   },
-  onVisit(e, manifest, path) {
-    console.log(path);
+  onVisit(node) {
+    console.log(node.path);
   }
 }, {
   logLevel: LogLevel.debug
