@@ -1,11 +1,11 @@
 {
-  "extends": "tslint-eslint-rules",
+  "extends": "tslint:recommended",
   "rulesDirectory": [
     "node_modules/tslint-lines-between-class-members"
   ],
   "rules": {
     "align": [true, "elements", "members", "statements"],
-    "array-bracket-spacing": [true, "always"],
+    "curly": [true, "ignore-same-line"],
     "eofline": true,
     "lines-between-class-members": [true, 1],
     "member-access": [true, "no-public"],

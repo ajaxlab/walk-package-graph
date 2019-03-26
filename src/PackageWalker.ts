@@ -75,6 +75,23 @@ class PackageWalker {
     if (this._onError) this._onError(err, path);
   }
 
+  private _linkPhysical(node: IPackageNode, nodeModules: IPackageNode[]) {
+    const { nodeModulesMap } = node;
+    const { length } = nodeModules;
+    for (let i = 0; i < length; i++) {
+      const subNode = nodeModules[i];
+      const { name } = subNode.manifest;
+      if (name) {
+        nodeModulesMap[name] = subNode;
+        subNode.upperModule = node;
+        console.info(subNode + '.upperModule = ', node.id);
+        process.nextTick(() => {
+          subNode.validate();
+        });
+      }
+    }
+  }
+
   private _readPackage(abs: string, cb: (err?: Error, manifest?: PackageJson) => void) {
     fs.readFile(abs + p.sep + 'package.json', 'utf8', (readFileErr, txt) => {
       if (readFileErr) {
@@ -89,7 +106,8 @@ class PackageWalker {
     });
   }
 
-  private _validate(node: IPackageNode) {
+  /*
+  private _validate0(node: IPackageNode) {
     const nodeMap = this._nodeMap;
     node.validate((depName, depRange) => {
       const depNodes = nodeMap[depName];
@@ -110,14 +128,22 @@ class PackageWalker {
       return false;
     });
   }
+  */
 
   private _visit(abs: string, cb: (node?: IPackageNode) => void) {
-    let node: IPackageNode;
+    let node: IPackageNode | undefined;
+    let nodeModules: IPackageNode[] | undefined;
     let resolved = 0;
     const resolve = () => {
-      this._validate(node);
-      if (++resolved > 1) cb(node);
-    }
+      if (++resolved > 1) {
+        if (node && node.manifest.name === 'b') {
+          console.info(' - nodeModules', node.manifest.name, nodeModules);
+        }
+        if (node && nodeModules) this._linkPhysical(node, nodeModules);
+        if (node) node.validate();
+        cb(node);
+      }
+    };
     this._readPackage(abs, (e, manifest) => {
       if (manifest) {
         node = new PackageNode(manifest, abs);
@@ -129,12 +155,14 @@ class PackageWalker {
       }
       resolve();
     });
-    this._visitNodeModules(abs, () => {
+    this._visitNodeModules(abs, (nodes) => {
+      console.info('abs', abs, nodes ? nodes.length : 0);
+      nodeModules = nodes;
       resolve();
     });
   }
 
-  private _visitNodeModules(abs: string, cb: () => void) {
+  private _visitNodeModules(abs: string, cb: (nodes?: IPackageNode[]) => void) {
     const nmPath = abs + p.sep + 'node_modules';
     fs.readdir(nmPath, (readdirErr, items) => {
       if (readdirErr) {
@@ -146,19 +174,22 @@ class PackageWalker {
       const { length } = items;
       if (!length) return cb();
       let pending = length;
+      const nodes: IPackageNode[] = [];
       for (let i = 0; i < length; i++) {
         const item = items[i];
         const itemPrefix = item[0];
         if (itemPrefix === '.') {
-          if (!--pending) cb();
+          if (!--pending) cb(nodes);
           continue;
         } else if (itemPrefix === '@') {
-          this._visitScopedPackages(nmPath + p.sep + item, () => {
-            if (!--pending) cb();
+          this._visitScopedPackages(nmPath + p.sep + item, (snodes) => {
+            if (snodes) nodes.concat(snodes);
+            if (!--pending) cb(nodes);
           });
         } else {
-          this._visit(nmPath + p.sep + item, () => {
-            if (!--pending) cb();
+          this._visit(nmPath + p.sep + item, (node) => {
+            if (node) nodes.push(node);
+            if (!--pending) cb(nodes);
           });
         }
       }
@@ -169,7 +200,7 @@ class PackageWalker {
   scopePath example:
   '/home/walk-package-graph/node_modules/@types'
   */
-  private _visitScopedPackages(scopePath: string, cb: () => void) {
+  private _visitScopedPackages(scopePath: string, cb: (nodes?: IPackageNode[]) => void) {
     fs.readdir(scopePath, (readdirErr, items) => {
       if (readdirErr) {
         this._handleError(scopePath, readdirErr);
@@ -178,10 +209,12 @@ class PackageWalker {
       const { length } = items;
       if (!length) return cb();
       let pending = length;
+      const nodes: IPackageNode[] = [];
       for (let i = 0; i < length; i++) {
         const item = items[i];
-        this._visit(scopePath + p.sep + item, () => {
-          if (!--pending) cb();
+        this._visit(scopePath + p.sep + item, (node) => {
+          if (node) nodes.push(node);
+          if (!--pending) cb(nodes);
         });
       }
     });
