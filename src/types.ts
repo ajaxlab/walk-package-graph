@@ -9,11 +9,13 @@ export interface IDepsToResolveMap {
 }
 
 export interface IPackageNode {
+  children: IPackageNode[];
   dependencies: IPackageNode[];
   dependencyResolved: boolean;  // TODO
   id: string;
   manifest: PackageJson;
   path: string;
+  validate: (cb: (name: string, range: string) => boolean) => void;
 }
 
 export interface IPackageNodeMap {
@@ -24,6 +26,10 @@ export interface IReverseDependency {
   [name: string]: {
     [versionRange: string]: IPackageNode[]
   };
+}
+
+export interface IStringRecord {
+  [key: string]: string;
 }
 
 export interface IWalkHandlers {

@@ -14,6 +14,6 @@ walkPackageGraph('./test/pseudo-projects/heavy/npm', {
     console.info('%d visits : %ds %dms', count, hrend[0], hrend[1] / 1000000);
   },
   onVisit(node) {
-    console.info(++count, node.path);
+    // console.info(++count, node.path);
   }
 });

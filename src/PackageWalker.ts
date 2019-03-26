@@ -1,6 +1,8 @@
 import fs from 'fs';
 import { PackageJson } from 'package-json';
 import p from 'path';
+import semver from 'semver';
+import canRequire from './canRequire';
 import Logger from './Logger';
 import PackageNode from './PackageNode';
 import {
@@ -65,6 +67,10 @@ class PackageWalker {
     }
   }
 
+  private _findDependencyNodes(node: IPackageNode) {
+    //
+  }
+
   private _handleError(path: string, err: Error) {
     if (this._onError) this._onError(err, path);
   }
@@ -83,9 +89,35 @@ class PackageWalker {
     });
   }
 
+  private _validate(node: IPackageNode) {
+    const nodeMap = this._nodeMap;
+    node.validate((depName, depRange) => {
+      const depNodes = nodeMap[depName];
+      if (depNodes) {
+        const { length } = depNodes;
+        for (let i = length - 1; i > -1; i--) {
+          const depNode = depNodes[i];
+          const depVer = depNode.manifest.version;
+          if (
+            depVer
+            && semver.satisfies(depVer, depRange)
+            // && canRequire(this._rootPath, node, depNode)
+          ) {
+            return true;
+          }
+        }
+      }
+      return false;
+    });
+  }
+
   private _visit(abs: string, cb: (node?: IPackageNode) => void) {
     let node: IPackageNode;
     let resolved = 0;
+    const resolve = () => {
+      this._validate(node);
+      if (++resolved > 1) cb(node);
+    }
     this._readPackage(abs, (e, manifest) => {
       if (manifest) {
         node = new PackageNode(manifest, abs);
@@ -95,10 +127,10 @@ class PackageWalker {
       } else if (e) {
         this._handleError(abs, e);
       }
-      if (++resolved > 1) cb(node);
+      resolve();
     });
     this._visitNodeModules(abs, () => {
-      if (++resolved > 1) cb(node);
+      resolve();
     });
   }
 

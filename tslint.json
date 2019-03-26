@@ -28,6 +28,7 @@
     ],
     "no-bitwise": false,
     "no-console": [true, "log", "error"],
+    "no-empty": [true],
     "only-arrow-functions": false,
     "ordered-imports": true,
     "quotemark": [true, "single", "avoid-escape"],
