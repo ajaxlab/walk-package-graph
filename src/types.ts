@@ -9,16 +9,16 @@ export interface IDepsToResolveMap {
 }
 
 export interface IPackageNode {
+  children: {
+    [name: string]: IPackageNode
+  };
   dependencies: IPackageNode[];
   dependencyResolved: boolean;  // TODO
   id: string;
   manifest: PackageJson;
-  nodeModulesMap: {
-    [name: string]: IPackageNode
-  };
+  parent: IPackageNode | undefined;
   path: string;
-  upperModule: IPackageNode | void;
-  validate: () => void;
+  validate: (cb?: (node: IPackageNode, unresolved?: string[]) => void) => void;
 }
 
 export interface IPackageNodeMap {

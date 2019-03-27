@@ -16,10 +16,10 @@ class PackageWalker {
   private _dependentsMap: IPackageNodeMap = Object.create(null);
   private _logger: Logger;
   private _nodeMap: IPackageNodeMap = Object.create(null);
-  private _onEnd: IWalkEndHandler | void;
-  private _onError: IWalkErrorHandler | void;
-  private _onResolve: IPackageResolveHandler | void;
-  private _onVisit: IPackageVisitHandler | void;
+  private _onEnd: IWalkEndHandler | undefined;
+  private _onError: IWalkErrorHandler | undefined;
+  private _onResolve: IPackageResolveHandler | undefined;
+  private _onVisit: IPackageVisitHandler | undefined;
   private _options: IWalkOptions;
 
   constructor(walkHandlers: IWalkHandlers, options: IWalkOptions) {
@@ -40,6 +40,18 @@ class PackageWalker {
       } else {
         this._visit(abs, (node) => {
           if (this._onEnd) this._onEnd(node);
+          setTimeout(() => {
+            const keys = Object.keys(this._dependentsMap);
+            console.info('_dependentsMap');
+            keys.forEach((key) => {
+              if (this._dependentsMap[key].length) {
+                console.info(
+                  key,
+                  this._dependentsMap[key].length
+                );
+              }
+            });
+          }, 3000);
         });
       }
     });
@@ -76,18 +88,21 @@ class PackageWalker {
   }
 
   private _linkPhysical(node: IPackageNode, nodeModules: IPackageNode[]) {
-    const { nodeModulesMap } = node;
+    const { children } = node;
     const { length } = nodeModules;
     for (let i = 0; i < length; i++) {
       const subNode = nodeModules[i];
       const { name } = subNode.manifest;
       if (name) {
-        nodeModulesMap[name] = subNode;
-        subNode.upperModule = node;
-        console.info(subNode + '.upperModule = ', node.id);
-        process.nextTick(() => {
-          subNode.validate();
-        });
+        children[name] = subNode;
+        subNode.parent = node;
+        if (
+          subNode.path.endsWith('import-fresh\\node_modules\\caller-path')
+          || subNode.path.endsWith('webpack-cli\\node_modules\\import-local')
+        ) {
+          console.info( ' - ' + subNode.id + ' . parent = ', node.id);
+        }
+        this._validate(subNode);
       }
     }
   }
@@ -102,6 +117,45 @@ class PackageWalker {
         cb(void 0, JSON.parse(txt));
       } catch (jsonErr) {
         cb(jsonErr);
+      }
+    });
+  }
+
+  private _validate(node: IPackageNode) {
+    node.validate((target, missing) => {
+      if (missing) {
+        const unresolvedLen = missing.length;
+        for (let j = 0; j < unresolvedLen; j++) {
+          if (!this._dependentsMap[missing[j]]) {
+            this._dependentsMap[missing[j]] = [];
+          }
+          // TODO performance
+          if (this._dependentsMap[missing[j]].indexOf(target) === -1) {
+            this._dependentsMap[missing[j]].push(target);
+          }
+        }
+        if (
+          node.path.endsWith('import-fresh\\node_modules\\caller-path')
+          || node.path.endsWith('webpack-cli\\node_modules\\import-local')
+        ) {
+          console.info( ' - ' + node.id + ' . unresolved = ', missing);
+          // console.info( ' - this._dependentsMap = ', this._dependentsMap);
+        }
+      } else if (this._onResolve) {
+        this._onResolve(target);
+        if (target.manifest.name && this._dependentsMap[target.manifest.name]) {
+          const dependents = this._dependentsMap[target.manifest.name];
+          if (dependents.length > 5) console.info('dependents.length', target.id, '(', dependents.length, ')');
+          while (dependents.length) {
+            const dep = dependents.pop();
+            if (dep) this._validate(dep);
+          }
+          if (this._dependentsMap[target.manifest.name].length) {
+            console.info('hm............');
+          } else {
+            console.info('>>>>>>>', target.manifest.name, this._dependentsMap[target.manifest.name].length);
+          }
+        }
       }
     });
   }
@@ -136,19 +190,23 @@ class PackageWalker {
     let resolved = 0;
     const resolve = () => {
       if (++resolved > 1) {
-        if (node && node.manifest.name === 'b') {
-          console.info(' - nodeModules', node.manifest.name, nodeModules);
+        if (node && (
+          node.path.endsWith('\\anymatch\\node_modules\\normalize-path')
+          || node.path.endsWith('node_modules\\anymatch')
+        )) {
+          console.info('>>>', node ? node.path : 'no node');
+          console.info(' - nodeModules', nodeModules ? nodeModules.length : 0);
         }
         if (node && nodeModules) this._linkPhysical(node, nodeModules);
-        if (node) node.validate();
+        // if (node) node.validate(this._onResolve);
         cb(node);
       }
     };
     this._readPackage(abs, (e, manifest) => {
       if (manifest) {
         node = new PackageNode(manifest, abs);
-        this._addToNodeMap(node);
-        this._addToDependentsMap(node);
+        // this._addToNodeMap(node);
+        // this._addToDependentsMap(node);
         if (this._onVisit) this._onVisit(node);
       } else if (e) {
         this._handleError(abs, e);
@@ -156,7 +214,7 @@ class PackageWalker {
       resolve();
     });
     this._visitNodeModules(abs, (nodes) => {
-      console.info('abs', abs, nodes ? nodes.length : 0);
+      // console.info('abs', abs, nodes ? nodes.length : 0);
       nodeModules = nodes;
       resolve();
     });
@@ -183,7 +241,7 @@ class PackageWalker {
           continue;
         } else if (itemPrefix === '@') {
           this._visitScopedPackages(nmPath + p.sep + item, (snodes) => {
-            if (snodes) nodes.concat(snodes);
+            if (snodes) nodes.push(...snodes);
             if (!--pending) cb(nodes);
           });
         } else {

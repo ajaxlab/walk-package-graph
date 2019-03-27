@@ -26,6 +26,17 @@
         "--recursive", "test/**/*.spec.ts"
       ],
       "internalConsoleOptions": "openOnSessionStart"
+    },
+
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Resolve Tests",
+      "program": "${workspaceFolder}/node_modules/ts-node/dist/bin",
+      "args": [
+        "./test/util/record-resolved.ts"
+      ],
+      "internalConsoleOptions": "openOnSessionStart"
     }
   ]
 }
