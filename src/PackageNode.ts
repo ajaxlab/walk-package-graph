@@ -18,12 +18,21 @@ class PackageNode implements IPackageNode {
   };
 
   constructor(manifest: PackageJson, path: string) {
+    const { optionalDependencies } = manifest;
     this.id = manifest.name + '/' + manifest.version;
     this.manifest = manifest;
     this.path = path;
     this._unresolvedDeps = manifest.dependencies
       ? Object.assign(Object.create(null), manifest.dependencies)
       : Object.create(null);
+    if (optionalDependencies) {
+      const optionalNames = Object.keys(optionalDependencies);
+      const { length } = optionalNames;
+      for (let i = 0; i < length; i++) {
+        delete this._unresolvedDeps[optionalNames[i]];
+        // TODO warn
+      }
+    }
   }
 
   toString() {
