@@ -40,12 +40,5 @@ walkPackageGraph('./test/pseudo-projects/heavy/npm', {
     resolved[pkgPath] = true;
     delete notResolved[pkgPath];
     count++;
-    if (
-      node.path.endsWith('anymatch\\node_modules\\normalize-path')
-      || node.path.endsWith('node_modules\\anymatch')
-      || node.path.endsWith('node_modules\\remove-trailing-separator')
-    ) {
-      console.info(count, pkgPath);
-    }
   }
 });
