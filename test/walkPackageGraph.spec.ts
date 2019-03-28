@@ -2,7 +2,6 @@
 
 import { expect, use } from 'chai';
 import p from 'path';
-import { LogLevel } from '../src/types';
 import walkPackageGraph from '../src/walkPackageGraph';
 import { visit } from './common';
 

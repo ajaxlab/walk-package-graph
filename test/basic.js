@@ -1,4 +1,4 @@
-const { LogLevel, walkPackageGraph } = require('../dist/cjs');
+const { walkPackageGraph } = require('../dist/cjs');
 
 walkPackageGraph('./test/pseudo-projects/complex', {
   onEnd(rootNode) {
@@ -7,6 +7,4 @@ walkPackageGraph('./test/pseudo-projects/complex', {
   onVisit(node) {
     console.log(node.path);
   }
-}, {
-  logLevel: LogLevel.debug
 });

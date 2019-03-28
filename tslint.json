@@ -27,7 +27,7 @@
       }
     ],
     "no-bitwise": false,
-    "no-console": [true, "log", "error"],
+    "no-console": [true, "log"],
     "no-empty": [true],
     "only-arrow-functions": false,
     "ordered-imports": true,

@@ -47,8 +47,6 @@
     "typescript": "^3.3.3"
   },
   "dependencies": {
-    "@types/package-json": "^5.0.0",
-    "@types/semver": "^5.5.0",
-    "semver": "^5.6.0"
+    "@types/package-json": "^5.0.0"
   }
 }

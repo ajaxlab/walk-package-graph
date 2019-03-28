@@ -1,8 +1,8 @@
 import PackageWalker from './PackageWalker';
-import { IWalkHandlers, IWalkOptions } from './types';
+import { IWalkHandlers } from './types';
 
-function walkPackageGraph(root: string,  walkHandlers: IWalkHandlers = {}, options: IWalkOptions = {}) {
-  const walker = new PackageWalker(walkHandlers, options);
+function walkPackageGraph(root: string,  walkHandlers: IWalkHandlers = {}) {
+  const walker = new PackageWalker(walkHandlers);
   walker.start(root);
 }
 

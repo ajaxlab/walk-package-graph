@@ -1,4 +1,4 @@
-const { LogLevel, walkPackageGraph } = require('../dist/cjs');
+const { walkPackageGraph } = require('../dist/cjs');
 const pkgs = require('./json/packages.json');
 const p = require('path');
 const fs = require('fs');

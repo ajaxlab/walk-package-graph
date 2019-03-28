@@ -1,34 +1,26 @@
 import fs from 'fs';
 import { PackageJson } from 'package-json';
 import p from 'path';
-import semver from 'semver';
-import canRequire from './canRequire';
-import Logger from './Logger';
 import PackageNode from './PackageNode';
 import {
   IPackageNode, IPackageNodeMap, IPackageResolveHandler,
   IPackageVisitHandler, IWalkEndHandler, IWalkErrorHandler,
-  IWalkHandlers, IWalkOptions
+  IWalkHandlers
 } from './types';
 
 class PackageWalker {
 
   private _dependentsMap: IPackageNodeMap = Object.create(null);
-  private _logger: Logger;
-  private _nodeMap: IPackageNodeMap = Object.create(null);
   private _onEnd: IWalkEndHandler | undefined;
   private _onError: IWalkErrorHandler | undefined;
   private _onResolve: IPackageResolveHandler | undefined;
   private _onVisit: IPackageVisitHandler | undefined;
-  private _options: IWalkOptions;
 
-  constructor(walkHandlers: IWalkHandlers, options: IWalkOptions) {
+  constructor(walkHandlers: IWalkHandlers) {
     this._onEnd = walkHandlers.onEnd;
     this._onError = walkHandlers.onError;
     this._onResolve = walkHandlers.onResolve;
     this._onVisit = walkHandlers.onVisit;
-    this._options = options;
-    this._logger = new Logger(options.logLevel);
   }
 
   start(path: string) {
@@ -40,47 +32,9 @@ class PackageWalker {
       } else {
         this._visit(abs, (node) => {
           if (this._onEnd) this._onEnd(node);
-          setTimeout(() => {
-            const keys = Object.keys(this._dependentsMap);
-            console.info('_dependentsMap');
-            keys.forEach((key) => {
-              if (this._dependentsMap[key].length) {
-                console.info(
-                  key,
-                  this._dependentsMap[key].length
-                );
-              }
-            });
-          }, 3000);
         });
       }
     });
-  }
-
-  private _addToDependentsMap(node: IPackageNode) {
-    // _dependentsMap
-    // console.log(node.manifest.dependencies);
-  }
-
-  private _addToNodeMap(node: IPackageNode) {
-    const { name, version } = node.manifest;
-    if (name && version) {
-      const nodeMap = this._nodeMap;
-      if (nodeMap[name]) {
-        // push & sort by path.length ascend
-        const nodesByName = nodeMap[name];
-        nodesByName[nodesByName.length] = node;
-        nodesByName.sort((a, b) => {
-          return a.path.length - b.path.length;
-        });
-      } else {
-        nodeMap[name] = [ node ];
-      }
-    }
-  }
-
-  private _findDependencyNodes(node: IPackageNode) {
-    //
   }
 
   private _handleError(path: string, err: Error) {
@@ -96,12 +50,6 @@ class PackageWalker {
       if (name) {
         children[name] = subNode;
         subNode.parent = node;
-        if (
-          subNode.path.endsWith('import-fresh\\node_modules\\caller-path')
-          || subNode.path.endsWith('webpack-cli\\node_modules\\import-local')
-        ) {
-          console.info( ' - ' + subNode.id + ' . parent = ', node.id);
-        }
         this._validate(subNode);
       }
     }
@@ -134,55 +82,18 @@ class PackageWalker {
             this._dependentsMap[missing[j]].push(target);
           }
         }
-        if (
-          node.path.endsWith('import-fresh\\node_modules\\caller-path')
-          || node.path.endsWith('webpack-cli\\node_modules\\import-local')
-        ) {
-          console.info( ' - ' + node.id + ' . unresolved = ', missing);
-          // console.info( ' - this._dependentsMap = ', this._dependentsMap);
-        }
       } else if (this._onResolve) {
         this._onResolve(target);
         if (target.manifest.name && this._dependentsMap[target.manifest.name]) {
           const dependents = this._dependentsMap[target.manifest.name];
-          if (dependents.length > 5) console.info('dependents.length', target.id, '(', dependents.length, ')');
           while (dependents.length) {
             const dep = dependents.pop();
             if (dep) this._validate(dep);
           }
-          if (this._dependentsMap[target.manifest.name].length) {
-            console.info('hm............');
-          } else {
-            console.info('>>>>>>>', target.manifest.name, this._dependentsMap[target.manifest.name].length);
-          }
         }
       }
     });
   }
-
-  /*
-  private _validate0(node: IPackageNode) {
-    const nodeMap = this._nodeMap;
-    node.validate((depName, depRange) => {
-      const depNodes = nodeMap[depName];
-      if (depNodes) {
-        const { length } = depNodes;
-        for (let i = length - 1; i > -1; i--) {
-          const depNode = depNodes[i];
-          const depVer = depNode.manifest.version;
-          if (
-            depVer
-            && semver.satisfies(depVer, depRange)
-            // && canRequire(this._rootPath, node, depNode)
-          ) {
-            return true;
-          }
-        }
-      }
-      return false;
-    });
-  }
-  */
 
   private _visit(abs: string, cb: (node?: IPackageNode) => void) {
     let node: IPackageNode | undefined;
@@ -190,23 +101,13 @@ class PackageWalker {
     let resolved = 0;
     const resolve = () => {
       if (++resolved > 1) {
-        if (node && (
-          node.path.endsWith('\\anymatch\\node_modules\\normalize-path')
-          || node.path.endsWith('node_modules\\anymatch')
-        )) {
-          console.info('>>>', node ? node.path : 'no node');
-          console.info(' - nodeModules', nodeModules ? nodeModules.length : 0);
-        }
         if (node && nodeModules) this._linkPhysical(node, nodeModules);
-        // if (node) node.validate(this._onResolve);
         cb(node);
       }
     };
     this._readPackage(abs, (e, manifest) => {
       if (manifest) {
         node = new PackageNode(manifest, abs);
-        // this._addToNodeMap(node);
-        // this._addToDependentsMap(node);
         if (this._onVisit) this._onVisit(node);
       } else if (e) {
         this._handleError(abs, e);
@@ -214,7 +115,6 @@ class PackageWalker {
       resolve();
     });
     this._visitNodeModules(abs, (nodes) => {
-      // console.info('abs', abs, nodes ? nodes.length : 0);
       nodeModules = nodes;
       resolve();
     });

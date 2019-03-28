@@ -1,5 +1,5 @@
 import { PackageJson } from 'package-json';
-import { IPackageNode, IPackageResolveHandler } from './types';
+import { IPackageNode } from './types';
 
 class PackageNode implements IPackageNode {
 
@@ -42,33 +42,16 @@ class PackageNode implements IPackageNode {
   validate(cb?: (node: IPackageNode, unresolved?: string[]) => void) {
     process.nextTick(() => {
       if (this.dependencyResolved) return;
-///      console.info(' - ' + this.id + ' . validate()');
-///      console.info(' - ' + this.id + ' . this._unresolvedDeps', this._unresolvedDeps);
       const deps = this._unresolvedDeps;
       const depNames = Object.keys(deps);
       const { length } = depNames;
-      if (
-        this.path.endsWith('import-fresh\\node_modules\\caller-path')
-        || this.path.endsWith('webpack-cli\\node_modules\\import-local')
-      ) {
-        console.info(' - ' + this.id + ' . validate()', depNames);
-      }
       for (let i = 0; i < length; i++) {
         const depName = depNames[i];
         const depNode = this._getDependency(depName);
-        if (this.manifest.name === 'b') {
-///          console.info(' - depNode', depName, depNode ? depNode.id : '');
-        }
         if (depNode) {
           this.dependencies.push(depNode);
           delete deps[depName];
         }
-      }
-      if (
-        this.path.endsWith('import-fresh\\node_modules\\caller-path')
-        || this.path.endsWith('webpack-cli\\node_modules\\import-local')
-      ) {
-        console.info(' - ' + this.id + ' deps = ', deps);
       }
       const unresolved = Object.keys(deps);
       if (unresolved.length) {
@@ -77,10 +60,7 @@ class PackageNode implements IPackageNode {
         this.dependencyResolved = true;
         if (cb) cb(this);
         if (this.parent) {
-//          console.info(' = ' + this.id + ' has parent');
           this.parent.validate(cb);
-        } else {
-//          console.info(' - ' + this.id + ' has no parent');
         }
       }
     });

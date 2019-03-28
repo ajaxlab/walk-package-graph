@@ -42,12 +42,6 @@ export interface IWalkHandlers {
   onVisit?: (node: IPackageNode) => void;
 }
 
-export interface IWalkOptions {
-  logLevel?: LogLevel;
-  stopOnError?: boolean;  // TODO
-  visitDuplicateNode?: boolean; // TODO
-}
-
 export type IPackageResolveHandler = (node: IPackageNode) => void;
 
 export type IPackageVisitHandler = (node: IPackageNode) => void;
@@ -55,11 +49,3 @@ export type IPackageVisitHandler = (node: IPackageNode) => void;
 export type IWalkEndHandler = (rootNode?: IPackageNode) => void;
 
 export type IWalkErrorHandler = (error: NodeJS.ErrnoException, path: string) => void;
-
-export enum LogLevel {
-  error = 0,  // to user
-  warn = 1,   // to user
-  info = 2,   // to user
-  debug = 3,  // to dev
-  trace = 3   // to dev
-}
