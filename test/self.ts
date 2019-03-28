@@ -1,4 +1,4 @@
-const { walkPackageGraph } = require('../dist/cjs');
+import { walkPackageGraph } from '../src/';
 
 walkPackageGraph('./', {
   onEnd(rootNode) {
