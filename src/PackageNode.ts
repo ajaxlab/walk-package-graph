@@ -40,30 +40,24 @@ class PackageNode implements IPackageNode {
   }
 
   validate(cb?: (node: IPackageNode, unresolved?: string[]) => void) {
-    process.nextTick(() => {
-      if (this.dependencyResolved) return;
-      const deps = this._unresolvedDeps;
-      const depNames = Object.keys(deps);
-      const { length } = depNames;
-      for (let i = 0; i < length; i++) {
-        const depName = depNames[i];
-        const depNode = this._getDependency(depName);
-        if (depNode) {
-          this.dependencies.push(depNode);
-          delete deps[depName];
-        }
+    const unresolvedDeps = this._unresolvedDeps;
+    const unresolvedDepNames = Object.keys(unresolvedDeps);
+    const { length } = unresolvedDepNames;
+    for (let i = 0; i < length; i++) {
+      const unresolvedDepName = unresolvedDepNames[i];
+      const unresolvedDepNode = this._getDependency(unresolvedDepName);
+      if (unresolvedDepNode) {
+        this.dependencies.push(unresolvedDepNode);
+        delete unresolvedDeps[unresolvedDepName];
       }
-      const unresolved = Object.keys(deps);
-      if (unresolved.length) {
-        if (cb) cb(this, unresolved);
-      } else {
-        this.dependencyResolved = true;
-        if (cb) cb(this);
-        if (this.parent) {
-          this.parent.validate(cb);
-        }
-      }
-    });
+    }
+    const stillUnresolved = Object.keys(unresolvedDeps);
+    if (stillUnresolved.length) {
+      if (cb) cb(this, stillUnresolved);
+    } else {
+      this.dependencyResolved = true;
+      if (cb) cb(this);
+    }
   }
 
   private _getDependency(depName: string): IPackageNode | undefined {

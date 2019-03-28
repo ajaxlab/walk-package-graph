@@ -3,23 +3,22 @@ import { PackageJson } from 'package-json';
 import p from 'path';
 import PackageNode from './PackageNode';
 import {
-  IPackageNode, IPackageNodeMap, IPackageResolveHandler,
-  IPackageVisitHandler, IWalkEndHandler, IWalkErrorHandler,
-  IWalkHandlers
+  IPackageNode, IWalkHandlers
 } from './types';
 
 class PackageWalker {
 
-  private _dependentsMap: IPackageNodeMap = Object.create(null);
-  private _onEnd: IWalkEndHandler | undefined;
-  private _onError: IWalkErrorHandler | undefined;
-  private _onResolve: IPackageResolveHandler | undefined;
-  private _onVisit: IPackageVisitHandler | undefined;
+  private _onEnd: ((rootNode?: IPackageNode) => void) | undefined;
+  private _onError: ((error: NodeJS.ErrnoException, path: string) => void) | undefined;
+  private _onResolve: ((node: IPackageNode) => void) | undefined;
+  private _onUnresolve: ((unresolvedNames: string[]) => void) | undefined;
+  private _onVisit: ((node: IPackageNode) => void) | undefined;
 
   constructor(walkHandlers: IWalkHandlers) {
     this._onEnd = walkHandlers.onEnd;
     this._onError = walkHandlers.onError;
     this._onResolve = walkHandlers.onResolve;
+    this._onUnresolve = walkHandlers.onUnresolve;
     this._onVisit = walkHandlers.onVisit;
   }
 
@@ -30,8 +29,9 @@ class PackageWalker {
         this._handleError(abs, readFileErr);
         if (this._onEnd) this._onEnd(void 0);
       } else {
-        this._visit(abs, (node) => {
-          if (this._onEnd) this._onEnd(node);
+        this._visit(abs, (rootNode) => {
+          if (rootNode) this._resolve(rootNode);
+          if (this._onEnd) this._onEnd(rootNode);
         });
       }
     });
@@ -41,16 +41,19 @@ class PackageWalker {
     if (this._onError) this._onError(err, path);
   }
 
-  private _linkPhysical(node: IPackageNode, nodeModules: IPackageNode[]) {
-    const { children } = node;
-    const { length } = nodeModules;
+  /*
+  @parentNode : a package
+  @childNodes : the above package's node_modules's packages
+  */
+  private _linkFamilyTree(parentNode: IPackageNode, childNodes: IPackageNode[]) {
+    const { children } = parentNode;
+    const { length } = childNodes;
     for (let i = 0; i < length; i++) {
-      const subNode = nodeModules[i];
-      const { name } = subNode.manifest;
+      const childNode = childNodes[i];
+      const { name } = childNode.manifest;
       if (name) {
-        children[name] = subNode;
-        subNode.parent = node;
-        this._validate(subNode);
+        children[name] = childNode;
+        childNode.parent = parentNode;
       }
     }
   }
@@ -69,30 +72,35 @@ class PackageWalker {
     });
   }
 
-  private _validate(node: IPackageNode) {
-    node.validate((target, missing) => {
-      if (missing) {
-        const unresolvedLen = missing.length;
-        for (let j = 0; j < unresolvedLen; j++) {
-          if (!this._dependentsMap[missing[j]]) {
-            this._dependentsMap[missing[j]] = [];
-          }
-          // TODO performance
-          if (this._dependentsMap[missing[j]].indexOf(target) === -1) {
-            this._dependentsMap[missing[j]].push(target);
-          }
-        }
-      } else if (this._onResolve) {
-        this._onResolve(target);
-        if (target.manifest.name && this._dependentsMap[target.manifest.name]) {
-          const dependents = this._dependentsMap[target.manifest.name];
-          while (dependents.length) {
-            const dep = dependents.pop();
-            if (dep) this._validate(dep);
-          }
-        }
+  /*
+   * DFS
+   */
+  private _resolve(root: IPackageNode) {
+    const stack: IPackageNode[] = [];
+    function traverse(node: IPackageNode) {
+      stack.push(node);
+      const { children } = node;
+      const childNames = Object.keys(children);
+      const childrenLen = childNames.length;
+      for (let i = 0; i < childrenLen; i++) {
+        const name = childNames[i];
+        const child = children[name];
+        traverse(child);
       }
-    });
+    }
+    traverse(root);
+    while (stack.length) {
+      const node = stack.pop();
+      if (node) {
+        node.validate((resolvedNode, unresolvedNodeNames) => {
+          if (resolvedNode && this._onResolve) {
+            this._onResolve(node);
+          } else if (unresolvedNodeNames && this._onUnresolve) {
+            this._onUnresolve(unresolvedNodeNames);
+          }
+        });
+      }
+    }
   }
 
   private _visit(abs: string, cb: (node?: IPackageNode) => void) {
@@ -101,7 +109,7 @@ class PackageWalker {
     let resolved = 0;
     const resolve = () => {
       if (++resolved > 1) {
-        if (node && nodeModules) this._linkPhysical(node, nodeModules);
+        if (node && nodeModules) this._linkFamilyTree(node, nodeModules);
         cb(node);
       }
     };
