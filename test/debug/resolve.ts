@@ -1,4 +1,4 @@
-import walkPackageGraph from '../../src/walkPackageGraph';
+import { walkPackageGraph } from '../../src/';
 
 let count = 0;
 

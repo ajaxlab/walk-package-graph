@@ -2,9 +2,9 @@
   "name": "walk-package-graph",
   "version": "0.1.0",
   "description": "Traverse a Node.js package's dependency graph using Node.js module resolution algorithm",
-  "main": "dist/cjs/walkPackageGraph.js",
-  "module": "dist/esm/walkPackageGraph.js",
-  "types": "dist/types/walkPackageGraph.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
   "scripts": {
     "clean": "rimraf dist",
     "dev:cjs": "tsc -b --watch config/tsconfig.cjs.json",

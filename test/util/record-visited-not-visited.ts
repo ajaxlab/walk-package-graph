@@ -1,6 +1,6 @@
 import fs from 'fs';
+import { walkPackageGraph } from '../../src/';
 import { IBooleanRecord } from '../../src/types';
-import walkPackageGraph from '../../src/walkPackageGraph';
 import pkgs from '../json/packages.json';
 
 console.info('pkgs0', pkgs);

@@ -1,5 +1,5 @@
 import p from 'path';
-import walkPackageGraph from '../../src/walkPackageGraph';
+import { walkPackageGraph } from '../../src/';
 
 function visit(rootPath: string, packDirs: string[], onResolve: () => void) {
 

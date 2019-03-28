@@ -2,7 +2,7 @@
 
 import { expect, use } from 'chai';
 import p from 'path';
-import walkPackageGraph from '../src/walkPackageGraph';
+import { walkPackageGraph } from '../src/';
 import { visit } from './common';
 
 describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {

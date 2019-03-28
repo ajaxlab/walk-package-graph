@@ -1,5 +1,7 @@
-import walkPackageGraph from './walkPackageGraph';
+import PackageWalker from './PackageWalker';
+import { IWalkHandlers } from './types';
 
-export {
-  walkPackageGraph
-};
+export function walkPackageGraph(root: string,  walkHandlers: IWalkHandlers = {}) {
+  const walker = new PackageWalker(walkHandlers);
+  walker.start(root);
+}
