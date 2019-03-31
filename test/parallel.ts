@@ -1,11 +1,10 @@
-import fs from 'fs';
 import { walkPackageGraph } from '../src/';
 
-walkPackageGraph('./pseudo-projects/paralel', {
+walkPackageGraph('./test/pseudo-projects/parallel', {
   onEnd(rootNode) {
-    console.info(rootNode);
+    // console.info(rootNode);
   },
-  onVisit(node) {
-    console.info(node.path);
+  onResolve(node) {
+    console.info(node.id, node.path, node.dependencies.map((n) => n.id));
   }
 });

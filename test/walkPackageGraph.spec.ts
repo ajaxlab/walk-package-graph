@@ -113,8 +113,42 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
     });
   });
 
-  it('resolves duplicate parallel dependency', function () {
-    //
+  it('resolves duplicate parallel dependency', function (done) {
+    const rootPath = './test/pseudo-projects/parallel';
+    walkPackageGraph(rootPath, {
+      onEnd(rootNode) {
+        if (rootNode
+          && rootNode.children['b']
+          && rootNode.children['b'].id === 'b/1.1.0'
+          && rootNode.children['b'].children['e']
+          && rootNode.children['b'].children['e'].id === 'e/2.3.0'
+          && rootNode.children['c']
+          && rootNode.children['c'].id === 'c/1.1.0'
+          && rootNode.children['d']
+          && rootNode.children['d'].id === 'd/1.1.0'
+          && rootNode.children['d'].children['e']
+          && rootNode.children['d'].children['e'].id === 'e/3.1.0'
+          && rootNode.children['e']
+          && rootNode.children['e'].id === 'e/1.1.0'
+        ) {
+          const nodeB = rootNode.getDependency('b');
+          const nodeD = rootNode.getDependency('d');
+          if (
+            rootNode.hasDependency('b', '1.1.0')
+            && rootNode.hasDependency('d', '1.1.0')
+            && rootNode.hasDependency('e', '1.1.0')
+            && !rootNode.hasDependency('c', '1.1.0')
+            && nodeB && nodeD
+            && nodeB.hasDependency('c', '1.1.0')
+            && nodeB.hasDependency('e', '2.3.0')
+            && nodeD.hasDependency('c', '1.1.0')
+            && nodeD.hasDependency('e', '3.1.0')
+          ) {
+            done();
+          }
+        }
+      }
+    });
   });
 
   it('handles dir name ends with /', function () {
