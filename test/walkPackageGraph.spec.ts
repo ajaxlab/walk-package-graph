@@ -57,6 +57,36 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
     });
   });
 
+  it('visits valid packages', function (done) {
+    let count = 0;
+    const rootPath = './test/pseudo-projects/heavy/npm';
+    walkPackageGraph(rootPath, {
+      onEnd() {
+        if (count === 1937) {
+          done();
+        }
+      },
+      onVisit() {
+        count++;
+      }
+    });
+  });
+
+  it('resolves valid packages', function (done) {
+    let count = 0;
+    const rootPath = './test/pseudo-projects/heavy/npm';
+    walkPackageGraph(rootPath, {
+      onEnd() {
+        if (count === 1937) {
+          done();
+        }
+      },
+      onResolve() {
+        count++;
+      }
+    });
+  });
+
   it('throws an error with a nonexistent project path', function (done) {
     const rootPath = './test/pseudo-projects/not-exists';
     walkPackageGraph(rootPath, {
