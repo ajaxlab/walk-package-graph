@@ -35,6 +35,16 @@ class PackageNode implements IPackageNode {
     }
   }
 
+  getDependency(depName: string): IPackageNode | void {
+    let node: IPackageNode | void = this;
+    while (node) {
+      if (node.children[depName]) {
+        return node.children[depName];
+      }
+      node = node.parent;
+    }
+  }
+
   hasDependency(name: string, version?: string): boolean {
     if (version) {
       const target = name + '/' + version;
@@ -57,7 +67,7 @@ class PackageNode implements IPackageNode {
     const { length } = unresolvedDepNames;
     for (let i = 0; i < length; i++) {
       const unresolvedDepName = unresolvedDepNames[i];
-      const unresolvedDepNode = this._getDependency(unresolvedDepName);
+      const unresolvedDepNode = this.getDependency(unresolvedDepName);
       if (unresolvedDepNode) {
         this.dependencies.push(unresolvedDepNode);
         delete unresolvedDeps[unresolvedDepName];
@@ -69,16 +79,6 @@ class PackageNode implements IPackageNode {
     } else {
       this.dependencyResolved = true;
       if (cb) cb(this);
-    }
-  }
-
-  private _getDependency(depName: string): IPackageNode | undefined {
-    let node: IPackageNode | void = this;
-    while (node) {
-      if (node.children[depName]) {
-        return node.children[depName];
-      }
-      node = node.parent;
     }
   }
 }
