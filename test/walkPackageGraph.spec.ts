@@ -151,8 +151,17 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
     });
   });
 
-  it('handles dir name ends with /', function () {
-    //
+  it('handles dir name ends with /', function (done) {
+    const dirs = [
+      '',
+      '/node_modules/amelia',
+      '/node_modules/jacob',
+      '/node_modules/olivia',
+      '/node_modules/oscar',
+      '/node_modules/olivia/node_modules/amelia',
+      '/node_modules/oscar/node_modules/amelia'
+    ];
+    visit('./test/pseudo-projects/complex/', dirs, done);
   });
 
 });
