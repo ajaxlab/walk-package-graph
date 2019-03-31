@@ -14,7 +14,8 @@ export interface IPackageNode {
   manifest: PackageJson;
   parent: IPackageNode | undefined;
   path: string;
-  validate: (cb?: (node: IPackageNode, unresolved?: string[]) => void) => void;
+  hasDependency(name: string, version?: string): boolean;
+  validate(cb?: (node: IPackageNode, unresolved?: string[]) => void): void;
 }
 
 export interface IWalkHandlers {

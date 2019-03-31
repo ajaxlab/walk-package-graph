@@ -35,6 +35,18 @@ class PackageNode implements IPackageNode {
     }
   }
 
+  hasDependency(name: string, version?: string): boolean {
+    if (version) {
+      const target = name + '/' + version;
+      return this.dependencies.some((dep) => {
+        return dep.id === target;
+      });
+    }
+    return this.dependencies.some((dep) => {
+      return dep.manifest.name === name;
+    });
+  }
+
   toString() {
     return '<PackageNode>' + this.id;
   }
