@@ -1,9 +1,8 @@
 import fs from 'fs';
-import { PackageJson } from 'package-json';
 import p from 'path';
 import PackageNode from './PackageNode';
 import {
-  IPackageNode, IWalkHandlers
+  IPackageJson, IPackageNode, IWalkHandlers
 } from './types';
 
 class PackageWalker {
@@ -58,7 +57,7 @@ class PackageWalker {
     }
   }
 
-  private _readPackage(abs: string, cb: (err?: Error, manifest?: PackageJson) => void) {
+  private _readPackage(abs: string, cb: (err?: Error, manifest?: IPackageJson) => void) {
     fs.readFile(abs + p.sep + 'package.json', 'utf8', (readFileErr, txt) => {
       if (readFileErr) {
         if (readFileErr.code === 'ENOENT') return cb();

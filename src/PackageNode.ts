@@ -1,5 +1,4 @@
-import { PackageJson } from 'package-json';
-import { IPackageNode } from './types';
+import { IPackageJson, IPackageNode } from './types';
 
 class PackageNode implements IPackageNode {
 
@@ -9,7 +8,7 @@ class PackageNode implements IPackageNode {
   dependencies: IPackageNode[] = [];
   dependencyResolved: boolean = false;
   id: string;
-  manifest: PackageJson;
+  manifest: IPackageJson;
   parent: IPackageNode | undefined = void 0;
   path: string;
 
@@ -17,7 +16,7 @@ class PackageNode implements IPackageNode {
     [name: string]: string;
   };
 
-  constructor(manifest: PackageJson, path: string) {
+  constructor(manifest: IPackageJson, path: string) {
     const { optionalDependencies } = manifest;
     this.id = manifest.name + '/' + manifest.version;
     this.manifest = manifest;
