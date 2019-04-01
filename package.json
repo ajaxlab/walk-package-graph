@@ -1,18 +1,20 @@
 {
   "name": "walk-package-graph",
   "version": "0.1.0",
-  "description": "Traverse a Node.js package's dependency graph using Node.js module resolution algorithm",
+  "description": "High speed Node.js package dependency graph walker based on Node.js module resolution algorithm",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
   "scripts": {
-    "build": "npm run clean && npm run build:cjs && npm run build:esm",
+    "build": "npm run lint && npm run clean && npm run build:cjs && npm run build:esm",
     "build:cjs": "tsc -b config/tsconfig.cjs.json",
     "build:esm": "tsc -b config/tsconfig.esm.json",
     "clean": "rimraf dist",
     "dev:cjs": "tsc -b --watch config/tsconfig.cjs.json",
     "dev:esm": "tsc -b --watch config/tsconfig.esm.json",
     "lint": "tslint 'src/**/*.ts' 'test/**/*.ts'",
+    "real:publish": "npm run build && npm config set registry https://registry.npmjs.com/ && npm publish",
+    "test:publish": "npm run build && npm config set registry http://localhost:4873/ && npm publish --registry http://localhost:4873",
     "test": "mocha --opts mocha.opts",
     "test:dev": "mocha --opts mocha.opts -w"
   },
@@ -23,7 +25,10 @@
     "package",
     "node_modules",
     "dependency",
-    "graph"
+    "graph",
+    "package-graph",
+    "read-package-graph",
+    "read-package-tree"
   ],
   "author": "ajaxlab7@gmail.com",
   "license": "MIT",
