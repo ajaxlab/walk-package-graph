@@ -2,9 +2,9 @@ import { walkPackageGraph } from '../src/';
 
 walkPackageGraph('./', {
   onEnd(rootNode) {
-    console.log(rootNode);
+    console.info(rootNode);
   },
   onVisit(node) {
-    console.log(node.path);
+    console.info(node.path);
   }
 });
