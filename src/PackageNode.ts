@@ -1,3 +1,4 @@
+import semver from 'semver';
 import { IPackageJson, IPackageNode } from './types';
 
 class PackageNode implements IPackageNode {
@@ -66,8 +67,12 @@ class PackageNode implements IPackageNode {
     const { length } = unresolvedDepNames;
     for (let i = 0; i < length; i++) {
       const unresolvedDepName = unresolvedDepNames[i];
+      const unresolvedDepRange = unresolvedDeps[unresolvedDepName];
       const unresolvedDepNode = this.getDependency(unresolvedDepName);
-      if (unresolvedDepNode) {
+      if (unresolvedDepNode
+        && unresolvedDepNode.manifest.version
+        && semver.satisfies(unresolvedDepNode.manifest.version, unresolvedDepRange)
+      ) {
         this.dependencies.push(unresolvedDepNode);
         delete unresolvedDeps[unresolvedDepName];
       }

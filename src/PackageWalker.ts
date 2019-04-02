@@ -10,7 +10,7 @@ class PackageWalker {
   private _onEnd: ((rootNode?: IPackageNode) => void) | undefined;
   private _onError: ((error: NodeJS.ErrnoException, path: string) => void) | undefined;
   private _onResolve: ((node: IPackageNode) => void) | undefined;
-  private _onUnresolve: ((unresolvedNames: string[]) => void) | undefined;
+  private _onUnresolve: ((node: IPackageNode, unresolvedNames: string[]) => void) | undefined;
   private _onVisit: ((node: IPackageNode) => void) | undefined;
 
   constructor(walkHandlers: IWalkHandlers) {
@@ -91,11 +91,15 @@ class PackageWalker {
     while (stack.length) {
       const node = stack.pop();
       if (node) {
-        node.validate((resolvedNode, unresolvedNodeNames) => {
-          if (resolvedNode && this._onResolve) {
-            this._onResolve(node);
-          } else if (unresolvedNodeNames && this._onUnresolve) {
-            this._onUnresolve(unresolvedNodeNames);
+        node.validate((validatedNode, unresolvedNodeNames) => {
+          if (unresolvedNodeNames) {
+            if (this._onUnresolve) {
+              this._onUnresolve(validatedNode, unresolvedNodeNames);
+            }
+          } else {
+            if (this._onResolve) {
+              this._onResolve(validatedNode);
+            }
           }
         });
       }

@@ -89,10 +89,17 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
 
   it('throws an error with a nonexistent project path', function (done) {
     const rootPath = './test/pseudo-projects/not-exists';
+    let count = 0;
+    function resolve() {
+      if (++count === 2) done();
+    }
     walkPackageGraph(rootPath, {
+      onEnd(rootNode) {
+        resolve();
+      },
       onError(err, path) {
         if (path === p.resolve(rootPath) && err.code === 'ENOENT') {
-          done();
+          resolve();
         }
       }
     });
@@ -100,10 +107,35 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
 
   it('throws an error with an invalid project', function (done) {
     const rootPath = './test/pseudo-projects/invalid';
+    let count = 0;
+    function resolve() {
+      if (++count === 2) done();
+    }
     walkPackageGraph(rootPath, {
+      onEnd(rootNode) {
+        resolve();
+      },
       onError(err, path) {
         if (path === p.resolve(rootPath)) {
-          done();
+          resolve();
+        }
+      }
+    });
+  });
+
+  it('runs onUnresolve handler with an unmet dependency', function (done) {
+    const rootPath = './test/pseudo-projects/unmet';
+    let count = 0;
+    function resolve() {
+      if (++count === 2) done();
+    }
+    walkPackageGraph(rootPath, {
+      onUnresolve(unresolvedNode, unresolvedNames) {
+        if (
+          (unresolvedNode.id === 'unmet/0.1.0' && unresolvedNames[0] === 'julia')
+          || (unresolvedNode.id === 'olivia/0.1.0' && unresolvedNames[0] === 'amelia')
+        ) {
+          resolve();
         }
       }
     });
