@@ -1,9 +1,11 @@
 /* tslint:disable: max-line-length */
 
 import { expect, use } from 'chai';
+import os from 'os';
 import p from 'path';
 import { walkPackageGraph } from '../src/';
 import { visit } from './common';
+import { mkdir } from 'fs';
 
 describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
 
@@ -226,4 +228,50 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
     visit('./test/pseudo-projects/complex/', dirs, done);
   });
 
+  it('runs with empty handler', function (done) {
+    walkPackageGraph('./test/pseudo-projects/complex');
+    done();
+  });
+
+  it('passes a hidden directory', function (done) {
+    walkPackageGraph('./test/pseudo-projects/hidden', {
+      onEnd(rootNode) {
+        if (rootNode && rootNode.id === 'hidden/0.1.0') {
+          done();
+        }
+      }
+    });
+  });
+
+  it('throws an error with unpermitted directory', function (done) {
+    walkPackageGraph('./test/pseudo-projects/file', {
+      onError(err, path) {
+        if (err.code === 'ENOENT') {
+          done();
+        }
+      }
+    });
+  });
+
+  it('throws an error with abnormal manifest', function (done) {
+    walkPackageGraph('./test/pseudo-projects/abnormal', {
+      onError(err, path) {
+        if (err.code === 'EISDIR') {
+          done();
+        }
+      }
+    });
+  });
+
+  it('single', function (done) {
+    mkdir('./test/pseudo-projects/single/node_modules', (err) => {
+      walkPackageGraph('./test/pseudo-projects/single', {
+        onEnd(rootNode) {
+          if (rootNode) {
+            done();
+          }
+        }
+      });
+    });
+  });
 });

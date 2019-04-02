@@ -1,8 +1,10 @@
+.coverage
+.gitignore
+.nyc_output
 .vscode
 config
 node_modules
 test
-.gitignore
 mocha.opts
 tsconfig.json
 tslint.json
