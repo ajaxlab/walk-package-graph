@@ -1,4 +1,4 @@
-import { walkPackageGraph } from '../src/';
+import { walkPackageGraph } from '../../src/';
 
 walkPackageGraph('./test/pseudo-projects/parallel', {
   onEnd(rootNode) {

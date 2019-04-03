@@ -63,6 +63,7 @@ class PackageWalker {
     fs.readFile(abs + p.sep + 'package.json', 'utf8', (readFileErr, txt) => {
       if (readFileErr) {
         if (readFileErr.code === 'ENOENT') { return cb(); }
+        /* istanbul ignore next */
         return cb(readFileErr);
       }
       try {

@@ -1,4 +1,4 @@
-import { walkPackageGraph } from '../src/';
+import { walkPackageGraph } from '../../src/';
 
 let count = 0;
 const hrstart = process.hrtime();
