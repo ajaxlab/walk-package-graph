@@ -37,7 +37,9 @@ class PackageWalker {
   }
 
   private _handleError(path: string, err: Error) {
-    if (this._onError) this._onError(err, path);
+    if (this._onError) {
+      this._onError(err, path);
+    }
   }
 
   /*
@@ -60,7 +62,7 @@ class PackageWalker {
   private _readPackage(abs: string, cb: (err?: Error, manifest?: IPackageJson) => void) {
     fs.readFile(abs + p.sep + 'package.json', 'utf8', (readFileErr, txt) => {
       if (readFileErr) {
-        if (readFileErr.code === 'ENOENT') return cb();
+        if (readFileErr.code === 'ENOENT') { return cb(); }
         return cb(readFileErr);
       }
       try {
@@ -119,7 +121,9 @@ class PackageWalker {
     this._readPackage(abs, (e, manifest) => {
       if (manifest) {
         node = new PackageNode(manifest, abs);
-        if (this._onVisit) this._onVisit(node);
+        if (this._onVisit) {
+          this._onVisit(node);
+        }
       } else if (e) {
         this._handleError(abs, e);
       }
@@ -141,24 +145,24 @@ class PackageWalker {
         return cb();
       }
       const { length } = items;
-      if (!length) return cb();
+      if (!length) { return cb(); }
       let pending = length;
       const nodes: IPackageNode[] = [];
       for (let i = 0; i < length; i++) {
         const item = items[i];
         const itemPrefix = item[0];
         if (itemPrefix === '.') {
-          if (!--pending) cb(nodes);
+          if (!--pending) { cb(nodes); }
           continue;
         } else if (itemPrefix === '@') {
           this._visitScopedPackages(nmPath + p.sep + item, (snodes) => {
-            if (snodes) nodes.push(...snodes);
-            if (!--pending) cb(nodes);
+            if (snodes) { nodes.push(...snodes); }
+            if (!--pending) { cb(nodes); }
           });
         } else {
           this._visit(nmPath + p.sep + item, (node) => {
-            if (node) nodes.push(node);
-            if (!--pending) cb(nodes);
+            if (node) { nodes.push(node); }
+            if (!--pending) { cb(nodes); }
           });
         }
       }
@@ -176,14 +180,14 @@ class PackageWalker {
         return cb();
       }
       const { length } = items;
-      if (!length) return cb();
+      if (!length) { return cb(); }
       let pending = length;
       const nodes: IPackageNode[] = [];
       for (let i = 0; i < length; i++) {
         const item = items[i];
         this._visit(scopePath + p.sep + item, (node) => {
-          if (node) nodes.push(node);
-          if (!--pending) cb(nodes);
+          if (node) { nodes.push(node); }
+          if (!--pending) { cb(nodes); }
         });
       }
     });

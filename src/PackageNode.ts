@@ -79,10 +79,14 @@ class PackageNode implements IPackageNode {
     }
     const stillUnresolved = Object.keys(unresolvedDeps);
     if (stillUnresolved.length) {
-      if (cb) cb(this, stillUnresolved);
+      if (cb) {
+        cb(this, stillUnresolved);
+      }
     } else {
       this.dependencyResolved = true;
-      if (cb) cb(this);
+      if (cb) {
+        cb(this);
+      }
     }
   }
 }

@@ -1,10 +1,10 @@
 {
   "check-coverage": true,
   "per-file": true,
-  "lines": 99,
-  "statements": 99,
-  "functions": 99,
-  "branches": 99,
+  "lines": 98,
+  "statements": 98,
+  "functions": 100,
+  "branches": 100,
   "include": [
     "src/**/*.ts"
   ],

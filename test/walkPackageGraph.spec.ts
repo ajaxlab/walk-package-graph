@@ -1,11 +1,11 @@
 /* tslint:disable: max-line-length */
 
 import { expect, use } from 'chai';
+import fs from 'fs';
 import os from 'os';
 import p from 'path';
 import { walkPackageGraph } from '../src/';
 import { visit } from './common';
-import { mkdir } from 'fs';
 
 describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
 
@@ -23,20 +23,23 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
   });
 
   it('traverses scoped packages', function (done) {
-    const dirs = [
-      '',
-      '/node_modules/@birds/eagle',
-      '/node_modules/@birds/hawk',
-      '/node_modules/@birds/raven',
-      '/node_modules/@cats/norwegian',
-      '/node_modules/@cats/siamese',
-      '/node_modules/@cats/sphinx',
-      '/node_modules/amy',
-      '/node_modules/amy/node_modules/@birds/hawk',
-      '/node_modules/amy/node_modules/@cats/siamese',
-      '/node_modules/olive'
-    ];
-    visit('./test/pseudo-projects/scoped', dirs, done);
+    const root = './test/pseudo-projects/scoped';
+    fs.mkdir(root + '/node_modules/@empty', () => {
+      const dirs = [
+        '',
+        '/node_modules/@birds/eagle',
+        '/node_modules/@birds/hawk',
+        '/node_modules/@birds/raven',
+        '/node_modules/@cats/norwegian',
+        '/node_modules/@cats/siamese',
+        '/node_modules/@cats/sphinx',
+        '/node_modules/amy',
+        '/node_modules/amy/node_modules/@birds/hawk',
+        '/node_modules/amy/node_modules/@cats/siamese',
+        '/node_modules/olive'
+      ];
+      visit(root, dirs, done);
+    });
   });
 
   it('traverses heavy npm node_modules in 500ms', function (done) {
@@ -254,7 +257,7 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
   });
 
   it('throws an error with abnormal manifest', function (done) {
-    walkPackageGraph('./test/pseudo-projects/abnormal', {
+    walkPackageGraph('./test/pseudo-projects/abnormal-pkg', {
       onError(err, path) {
         if (err.code === 'EISDIR') {
           done();
@@ -263,8 +266,18 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
     });
   });
 
-  it('single', function (done) {
-    mkdir('./test/pseudo-projects/single/node_modules', (err) => {
+  it('throws an error with abnormal node_modules', function (done) {
+    walkPackageGraph('./test/pseudo-projects/abnormal-nm', {
+      onError(err, path) {
+        if (err.code === 'ENOTDIR') {
+          done();
+        }
+      }
+    });
+  });
+
+  it('traverses a project which has no dependency', function (done) {
+    fs.mkdir('./test/pseudo-projects/single/node_modules', (err) => {
       walkPackageGraph('./test/pseudo-projects/single', {
         onEnd(rootNode) {
           if (rootNode) {
