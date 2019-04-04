@@ -110,6 +110,24 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
     });
   });
 
+  it('throws an error with a project with no manifest', function (done) {
+    const rootPath = './test/pseudo-projects/empty';
+    let count = 0;
+    function resolve() {
+      if (++count === 2) done();
+    }
+    walkPackageGraph(rootPath, {
+      onEnd(rootNode) {
+        resolve();
+      },
+      onError(err, path) {
+        if (path === p.resolve(rootPath) && err.code === 'ENOENT') {
+          resolve();
+        }
+      }
+    });
+  });
+
   it('throws an error with an invalid project', function (done) {
     const rootPath = './test/pseudo-projects/invalid';
     let count = 0;
@@ -249,7 +267,7 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
   it('throws an error with unpermitted directory', function (done) {
     walkPackageGraph('./test/pseudo-projects/file', {
       onError(err, path) {
-        if (err.code === 'ENOENT') {
+        if (err.code === 'ENOENT' || err.code === 'ENOTDIR') {
           done();
         }
       }
