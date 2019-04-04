@@ -8,7 +8,7 @@ import {
 class PackageWalker {
 
   private _onEnd: ((rootNode?: IPackageNode) => void) | undefined;
-  private _onError: ((error: NodeJS.ErrnoException, path: string) => void) | undefined;
+  private _onError: ((error: NodeJS.ErrnoException) => void) | undefined;
   private _onResolve: ((node: IPackageNode) => void) | undefined;
   private _onUnresolve: ((node: IPackageNode, unresolvedNames: string[]) => void) | undefined;
   private _onVisit: ((node: IPackageNode) => void) | undefined;
@@ -25,7 +25,7 @@ class PackageWalker {
     const abs = p.resolve(path);
     fs.readFile(abs + p.sep + 'package.json', 'utf8', (readFileErr) => {
       if (readFileErr) {
-        this._handleError(abs, readFileErr);
+        this._handleError(readFileErr);
         if (this._onEnd) this._onEnd(void 0);
       } else {
         this._visit(abs, (rootNode) => {
@@ -36,9 +36,9 @@ class PackageWalker {
     });
   }
 
-  private _handleError(path: string, err: Error) {
+  private _handleError(err: NodeJS.ErrnoException) {
     if (this._onError) {
-      this._onError(err, path);
+      this._onError(err);
     }
   }
 
@@ -59,17 +59,19 @@ class PackageWalker {
     }
   }
 
-  private _readPackage(abs: string, cb: (err?: Error, manifest?: IPackageJson) => void) {
-    fs.readFile(abs + p.sep + 'package.json', 'utf8', (readFileErr, txt) => {
+  private _readPackage(abs: string, cb: (manifest?: IPackageJson) => void) {
+    const pkgPath = abs + p.sep + 'package.json';
+    fs.readFile(pkgPath, 'utf8', (readFileErr, txt) => {
       if (readFileErr) {
-        if (readFileErr.code === 'ENOENT') { return cb(); }
-        /* istanbul ignore next */
-        return cb(readFileErr);
+        this._handleError(readFileErr);
+        return cb();
       }
       try {
-        cb(void 0, JSON.parse(txt));
+        cb(JSON.parse(txt));
       } catch (jsonErr) {
-        cb(jsonErr);
+        jsonErr.path = pkgPath;
+        this._handleError(jsonErr);
+        cb();
       }
     });
   }
@@ -119,14 +121,12 @@ class PackageWalker {
         cb(node);
       }
     };
-    this._readPackage(abs, (e, manifest) => {
+    this._readPackage(abs, (manifest) => {
       if (manifest) {
         node = new PackageNode(manifest, abs);
         if (this._onVisit) {
           this._onVisit(node);
         }
-      } else if (e) {
-        this._handleError(abs, e);
       }
       resolve();
     });
@@ -141,7 +141,7 @@ class PackageWalker {
     fs.readdir(nmPath, (readdirErr, items) => {
       if (readdirErr) {
         if (readdirErr.code !== 'ENOENT') {
-          this._handleError(abs, readdirErr);
+          this._handleError(readdirErr);
         }
         return cb();
       }
@@ -177,7 +177,7 @@ class PackageWalker {
   private _visitScopedPackages(scopePath: string, cb: (nodes?: IPackageNode[]) => void) {
     fs.readdir(scopePath, (readdirErr, items) => {
       if (readdirErr) {
-        this._handleError(scopePath, readdirErr);
+        this._handleError(readdirErr);
         return cb();
       }
       const { length } = items;

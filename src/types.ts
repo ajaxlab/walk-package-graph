@@ -35,7 +35,7 @@ export interface IPackageJson {
 
 export interface IWalkHandlers {
   onEnd?: (rootNode?: IPackageNode) => void;
-  onError?: (error: NodeJS.ErrnoException, path: string) => void;
+  onError?: (error: NodeJS.ErrnoException) => void;
   onResolve?: (node: IPackageNode) => void;
   onUnresolve?: (node: IPackageNode, unresolvedNames: string[]) => void;
   onVisit?: (node: IPackageNode) => void;

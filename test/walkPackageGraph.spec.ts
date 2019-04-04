@@ -1,11 +1,11 @@
 /* tslint:disable: max-line-length */
 
-import { expect, use } from 'chai';
 import fs from 'fs';
-import os from 'os';
 import p from 'path';
 import { walkPackageGraph } from '../src/';
 import { visit } from './common';
+
+const PKG_JSON = 'package.json';
 
 describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
 
@@ -102,8 +102,11 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
       onEnd(rootNode) {
         resolve();
       },
-      onError(err, path) {
-        if (path === p.resolve(rootPath) && err.code === 'ENOENT') {
+      onError(err) {
+        if (
+          err.path === p.resolve(rootPath, PKG_JSON)
+          && err.code === 'ENOENT'
+        ) {
           resolve();
         }
       }
@@ -120,10 +123,29 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
       onEnd(rootNode) {
         resolve();
       },
-      onError(err, path) {
-        if (path === p.resolve(rootPath) && err.code === 'ENOENT') {
+      onError(err) {
+        if (err.path === p.resolve(rootPath, PKG_JSON) && err.code === 'ENOENT') {
           resolve();
         }
+      }
+    });
+  });
+
+  it('throws an error with an empty dependency', function (done) {
+    const rootPath = './test/pseudo-projects/empty-dep';
+    let count = 0;
+    function resolve() {
+      if (++count === 3) done();
+    }
+    walkPackageGraph(rootPath, {
+      onEnd(rootNode) {
+        resolve();
+      },
+      onError(err) {
+        resolve();
+      },
+      onUnresolve(node, unresolveds) {
+        resolve();
       }
     });
   });
@@ -138,8 +160,8 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
       onEnd(rootNode) {
         resolve();
       },
-      onError(err, path) {
-        if (path === p.resolve(rootPath)) {
+      onError(err) {
+        if (err.path === p.resolve(rootPath, PKG_JSON)) {
           resolve();
         }
       }
@@ -266,7 +288,7 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
 
   it('throws an error with unpermitted directory', function (done) {
     walkPackageGraph('./test/pseudo-projects/file', {
-      onError(err, path) {
+      onError(err) {
         if (err.code === 'ENOENT' || err.code === 'ENOTDIR') {
           done();
         }
@@ -276,7 +298,7 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
 
   it('throws an error with abnormal manifest', function (done) {
     walkPackageGraph('./test/pseudo-projects/abnormal-pkg', {
-      onError(err, path) {
+      onError(err) {
         if (err.code === 'EISDIR') {
           done();
         }
@@ -286,7 +308,7 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
 
   it('throws an error with abnormal node_modules', function (done) {
     walkPackageGraph('./test/pseudo-projects/abnormal-nm', {
-      onError(err, path) {
+      onError(err) {
         if (err.code === 'ENOTDIR') {
           done();
         }

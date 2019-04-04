@@ -1,0 +1,6 @@
+{
+  "name": "empty-dep",
+  "dependencies": {
+    "amelia": "^0.1.0"
+  }
+}
