@@ -1,4 +1,4 @@
-import semver from 'semver';
+import semver from './miniSemver';
 import { IPackageJson, IPackageNode } from './types';
 
 class PackageNode implements IPackageNode {

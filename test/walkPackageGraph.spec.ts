@@ -88,6 +88,9 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
       },
       onResolve() {
         count++;
+      },
+      onUnresolve(node, unresolveds) {
+        console.info(node.id, unresolveds, node.manifest.dependencies);
       }
     });
   });
