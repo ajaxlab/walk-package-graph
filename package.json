@@ -14,6 +14,8 @@
     "dev:cjs": "tsc -b --watch config/tsconfig.cjs.json",
     "dev:esm": "tsc -b --watch config/tsconfig.esm.json",
     "lint": "tslint 'src/**/*.ts' 'test/**/*.ts'",
+    "performance": "node -r ts-node/register ./test/usages/performance.ts",
+    "profile": "node -r ts-node/register --inspect ./test/usages/profile.ts",
     "real:publish": "npm run build && npm config set registry https://registry.npmjs.com/ && npm publish",
     "test:publish": "npm run build && npm config set registry http://localhost:4873/ && npm publish --registry http://localhost:4873",
     "test": "mocha --opts mocha.opts",

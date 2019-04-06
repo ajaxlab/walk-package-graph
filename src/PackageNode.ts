@@ -30,7 +30,7 @@ class PackageNode implements IPackageNode {
       const { length } = optionalNames;
       for (let i = 0; i < length; i++) {
         delete this._unresolvedDeps[optionalNames[i]];
-        // TODO warn
+        // TODO warn optionalDependencies
       }
     }
   }

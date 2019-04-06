@@ -5,8 +5,8 @@ walkPackageGraph('./test/pseudo-projects/error', {
   onEnd(rootNode) {
     console.info('onEnd', rootNode + '');
   },
-  onError(error, path) {
-    console.error('onError', path, error.message);
+  onError(error) {
+    console.error('onError', error.path, error.message);
   },
   onVisit(node) {
     console.info('onVisit', node.path);

@@ -3,18 +3,7 @@ import semver from 'semver';
 const reNum = /^[0-9]*$/;
 const miniSemver = Object.assign({}, semver);
 
-let count = 0;
-
-function isNum(str: string) {
-  const { length } = str;
-  for (let i = 0; i < length; i++) {
-    const code = str.charCodeAt(i);
-    if (code < 48 || code > 57) {
-      return false;
-    }
-  }
-  return true;
-}
+// let count = 0;
 
 miniSemver.satisfies = function satisfies (version, range, options) {
 

@@ -80,9 +80,7 @@ class PackageWalker {
    * DFS
    */
   private _resolve(root: IPackageNode) {
-    const stack: IPackageNode[] = [];
-    function traverse(node: IPackageNode) {
-      stack.push(node);
+    const traverse = (node: IPackageNode) => {
       const { children } = node;
       const childNames = Object.keys(children);
       const childrenLen = childNames.length;
@@ -91,24 +89,19 @@ class PackageWalker {
         const child = children[name];
         traverse(child);
       }
-    }
-    traverse(root);
-    while (stack.length) {
-      const node = stack.pop();
-      if (node) {
-        node.validate((validatedNode, unresolvedNodeNames) => {
-          if (unresolvedNodeNames) {
-            if (this._onUnresolve) {
-              this._onUnresolve(validatedNode, unresolvedNodeNames);
-            }
-          } else {
-            if (this._onResolve) {
-              this._onResolve(validatedNode);
-            }
+      node.validate((validatedNode, unresolvedNodeNames) => {
+        if (unresolvedNodeNames) {
+          if (this._onUnresolve) {
+            this._onUnresolve(validatedNode, unresolvedNodeNames);
           }
-        });
-      }
-    }
+        } else {
+          if (this._onResolve) {
+            this._onResolve(validatedNode);
+          }
+        }
+      });
+    };
+    traverse(root);
   }
 
   private _visit(abs: string, cb: (node?: IPackageNode) => void) {
