@@ -59,8 +59,7 @@
     "typescript": "^3.3.3"
   },
   "dependencies": {
-    "@types/semver": "^6.0.0",
-    "semver": "^6.0.0",
+    "mini-semver": "^0.1.0",
     "tslib": "^1.9.3"
   }
 }

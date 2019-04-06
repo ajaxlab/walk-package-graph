@@ -110,7 +110,7 @@
   resolved "https://registry.yarnpkg.com/@types/read-package-tree/-/read-package-tree-5.2.0.tgz#43bde8f7100caea502f3b3ac7f41249ecef982e6"
   integrity sha512-3EdU+Kf9PEPdBVjFNgEZRAOsjWX2kEL5aQmeDnTC0M86RIdG6ad+ssxdbZygZUc7O4OHkWnTR4RLmxV0B6Iygg==
 
-"@types/semver@^6.0.0":
+"@types/semver@6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-6.0.0.tgz#86ba89f02a414e39c68d02b351872e4ed31bd773"
   integrity sha512-OO0srjOGH99a4LUN2its3+r6CBYcplhJ466yLqs+zvAWgphCpS8hYZEZ797tRDP/QKcqTdb/YCN6ifASoAWkrQ==
@@ -786,6 +786,14 @@ mimic-fn@^2.0.0:
   resolved "https://registry.yarnpkg.com/mimic-fn/-/mimic-fn-2.1.0.tgz#7ed2c2ccccaf84d3ffcb7a69b57711fc2083401b"
   integrity sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==
 
+mini-semver@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/mini-semver/-/mini-semver-0.1.0.tgz#24964fd8cd5b3194900649f8db34f58855ea7cab"
+  integrity sha512-wR6etwWbMc6PvN+1bR1I0PGSKvBjIvVOdVCBOflyhHWqEOyhwtiYG4UQ3Sm6LjpErhDk1JoB07WOmJENIpnSrg==
+  dependencies:
+    "@types/semver" "6.0.0"
+    semver "6.0.0"
+
 minimatch@3.0.4, minimatch@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
@@ -1138,7 +1146,7 @@ safe-buffer@~5.1.1:
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.0.tgz#790a7cf6fea5459bac96110b29b60412dc8ff96b"
   integrity sha512-Ya52jSX2u7QKghxeoFGpLwCtGlt7j0oY9DYb5apt9nPlJ42ID+ulTXESnt/qAQcoSERyZ5sl3LDIOw0nAn/5DA==
 
-semver@^6.0.0:
+semver@6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.0.0.tgz#05e359ee571e5ad7ed641a6eec1e547ba52dea65"
   integrity sha512-0UewU+9rFapKFnlbirLi3byoOuhrSsli/z/ihNnvM24vgF+8sNBiI1LZPBSH9wJKUwaUbw+s3hToDLCXkrghrQ==

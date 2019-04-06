@@ -1,4 +1,3 @@
-import fs from 'fs';
 import { walkPackageGraph } from '../../src/';
 
 walkPackageGraph('./test/pseudo-projects/error', {
