@@ -34,6 +34,17 @@ export interface IPackageJson {
 }
 
 export interface IWalkHandlers {
+  /**
+   * onEnd?: (rootNode?: [[IPackageNode]]) => void;
+   *
+   * ```typescript
+   * walkPackageGraph('./some/root/path', {
+   *   onEnd(rootNode) {
+   *     console.info('rootNode', rootNode);
+   *   }
+   * });
+   * ```
+   */
   onEnd?: (rootNode?: IPackageNode) => void;
   onError?: (error: NodeJS.ErrnoException) => void;
   onResolve?: (node: IPackageNode) => void;

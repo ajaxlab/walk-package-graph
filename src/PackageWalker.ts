@@ -21,8 +21,13 @@ class PackageWalker {
     this._onVisit = walkHandlers.onVisit;
   }
 
-  start(path: string) {
-    const abs = p.resolve(path);
+  /**
+   * Starts walk. You don't need to call this method directly.
+   * [[walkPackageGraph]] calls this method instead.
+   * @param root A start path (a project root usually)
+   */
+  start(root: string) {
+    const abs = p.resolve(root);
     fs.readFile(abs + p.sep + 'package.json', 'utf8', (readFileErr) => {
       if (readFileErr) {
         this._handleError(readFileErr);

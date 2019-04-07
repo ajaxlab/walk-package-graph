@@ -1,11 +1,21 @@
 import semver from 'mini-semver';
 import { IPackageJson, IPackageNode } from './types';
 
+/**
+ * Represents a graph node for a package
+ */
 class PackageNode implements IPackageNode {
 
+  /**
+   * A physical children inside of a `node_modules` path under this package
+   */
   children: {
-    [name: string]: IPackageNode
+    [packageName: string]: IPackageNode
   } = Object.create(null);
+
+  /**
+   * An array of resolved dependencies of this package
+   */
   dependencies: IPackageNode[] = [];
   dependencyResolved: boolean = false;
   id: string;
@@ -14,7 +24,7 @@ class PackageNode implements IPackageNode {
   path: string;
 
   private _unresolvedDeps: {
-    [name: string]: string;
+    [packageName: string]: string;
   };
 
   constructor(manifest: IPackageJson, path: string) {
