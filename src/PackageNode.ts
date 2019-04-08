@@ -22,6 +22,7 @@ class PackageNode implements IPackageNode {
   manifest: IPackageJson;
   parent: IPackageNode | undefined = void 0;
   path: string;
+  validated: boolean = false;
 
   private _unresolvedDeps: {
     [packageName: string]: string;
@@ -39,7 +40,7 @@ class PackageNode implements IPackageNode {
       const optionalNames = Object.keys(optionalDependencies);
       const { length } = optionalNames;
       for (let i = 0; i < length; i++) {
-        delete this._unresolvedDeps[optionalNames[i]];
+        // delete this._unresolvedDeps[optionalNames[i]];
         // TODO warn optionalDependencies
       }
     }
@@ -55,6 +56,10 @@ class PackageNode implements IPackageNode {
     }
   }
 
+  hasCycle(node: IPackageNode) {
+    return true;
+  }
+
   hasDependency(name: string, version?: string): boolean {
     if (version) {
       const target = name + '/' + version;
@@ -67,11 +72,67 @@ class PackageNode implements IPackageNode {
     });
   }
 
+  resolve(cb: any, resolveDevDependency?: boolean) {
+    // this._linkDependencies();
+    // can check cycle
+    // this._validate(); -> onResolve, onUnresolve
+  }
+
+  resolveCycle(node: IPackageNode) {
+    //
+  }
+
   toString() {
     return '<PackageNode>' + this.id;
   }
 
-  validate(cb?: (node: IPackageNode, unresolved?: string[]) => void) {
+  validate(
+    cb?: (node: IPackageNode, unresolved?: string[]) => void,
+    resolveDevDependency?: boolean
+  ) {
+    this.validated = true;
+    if (resolveDevDependency) this._mergeDevDependency();
+    const unresolvedDeps = this._unresolvedDeps;
+    const unresolvedDepNames = Object.keys(unresolvedDeps);
+    const { length } = unresolvedDepNames;
+    for (let i = 0; i < length; i++) {
+      const unresolvedDepName = unresolvedDepNames[i];
+      const unresolvedDepRange = unresolvedDeps[unresolvedDepName];
+      const unresolvedDepNode = this.getDependency(unresolvedDepName);
+      if (unresolvedDepNode) {
+        if (!unresolvedDepNode.validated) {
+          unresolvedDepNode.validate(cb);
+        }
+        if (unresolvedDepNode.manifest.version
+          && semver.satisfies(unresolvedDepNode.manifest.version, unresolvedDepRange)
+        ) {
+          this.dependencies.push(unresolvedDepNode);
+          delete unresolvedDeps[unresolvedDepName];
+        }
+      }
+    }
+    if (Object.keys(unresolvedDeps) && this.manifest.optionalDependencies) {
+      const optionalNames = Object.keys(this.manifest.optionalDependencies);
+      const optsLength = optionalNames.length;
+      for (let i = 0; i < optsLength; i++) {
+        delete unresolvedDeps[optionalNames[i]];
+        // TODO warn optionalDependencies
+      }
+    }
+    const stillUnresolved = Object.keys(unresolvedDeps);
+    if (stillUnresolved.length) {
+      if (cb) {
+        cb(this, stillUnresolved);
+      }
+    } else {
+      this.dependencyResolved = true;
+      if (cb) {
+        cb(this);
+      }
+    }
+  }
+
+  validate0(cb?: (node: IPackageNode, unresolved?: string[]) => void) {
     const unresolvedDeps = this._unresolvedDeps;
     const unresolvedDepNames = Object.keys(unresolvedDeps);
     const { length } = unresolvedDepNames;
@@ -97,6 +158,12 @@ class PackageNode implements IPackageNode {
       if (cb) {
         cb(this);
       }
+    }
+  }
+
+  private _mergeDevDependency() {
+    if (this.manifest.devDependencies) {
+      Object.assign(this._unresolvedDeps, this.manifest.devDependencies);
     }
   }
 }

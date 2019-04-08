@@ -12,13 +12,15 @@ class PackageWalker {
   private _onResolve: ((node: IPackageNode) => void) | undefined;
   private _onUnresolve: ((node: IPackageNode, unresolvedNames: string[]) => void) | undefined;
   private _onVisit: ((node: IPackageNode) => void) | undefined;
+  private _resolveDevDependency: boolean;
 
-  constructor(walkHandlers: IWalkHandlers) {
+  constructor(walkHandlers: IWalkHandlers, resolveDevDependency: boolean) {
     this._onEnd = walkHandlers.onEnd;
     this._onError = walkHandlers.onError;
     this._onResolve = walkHandlers.onResolve;
     this._onUnresolve = walkHandlers.onUnresolve;
     this._onVisit = walkHandlers.onVisit;
+    this._resolveDevDependency = resolveDevDependency;
   }
 
   /**
@@ -85,6 +87,23 @@ class PackageWalker {
    * DFS
    */
   private _resolve(root: IPackageNode) {
+    root.validate((validatedNode, unresolvedNodeNames) => {
+      if (unresolvedNodeNames) {
+        if (this._onUnresolve) {
+          this._onUnresolve(validatedNode, unresolvedNodeNames);
+        }
+      } else {
+        if (this._onResolve) {
+          this._onResolve(validatedNode);
+        }
+      }
+    }, this._resolveDevDependency);
+  }
+
+  /*
+   * DFS
+   */
+  private _resolve0(root: IPackageNode) {
     const traverse = (node: IPackageNode) => {
       const { children } = node;
       const childNames = Object.keys(children);
@@ -94,7 +113,7 @@ class PackageWalker {
         const child = children[name];
         traverse(child);
       }
-      node.validate((validatedNode, unresolvedNodeNames) => {
+      node.validate0((validatedNode, unresolvedNodeNames) => {
         if (unresolvedNodeNames) {
           if (this._onUnresolve) {
             this._onUnresolve(validatedNode, unresolvedNodeNames);

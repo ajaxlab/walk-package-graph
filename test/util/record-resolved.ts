@@ -40,5 +40,8 @@ walkPackageGraph('./test/pseudo-projects/heavy/npm', {
     resolved[pkgPath] = true;
     delete notResolved[pkgPath];
     count++;
+  },
+  onVisit(node) {
+
   }
-});
+}, true);

@@ -92,7 +92,7 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
       onUnresolve(node, unresolveds) {
         console.info(node.id, unresolveds, node.manifest.dependencies);
       }
-    });
+    }, true);
   });
 
   it('throws an error with a nonexistent project path', function (done) {

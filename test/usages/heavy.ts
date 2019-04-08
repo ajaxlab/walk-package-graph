@@ -10,13 +10,13 @@ walkPackageGraph('./test/pseudo-projects/heavy/npm', {
     console.info('unresolved', unresolved);
   },
   onResolve(node) {
-    // console.info('onResolve', node.id);
+    // console.info('onResolve', ++count, node.id);
   },
   onUnresolve() {
     console.info('unresolved', ++unresolved);
   },
   onVisit(node) {
-    ++count;
+    // ++count;
     // console.info(count, node.path);
   }
-});
+}, true);

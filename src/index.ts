@@ -5,7 +5,9 @@ import { IWalkHandlers } from './types';
  * Starts to walk package dependency graph and runs walkHandlers
  *
  * ```typescript
- * walkPackageGraph('./path/to/walk', {
+ * import { walkPackageGraph } from 'walk-package-graph';
+ *
+ * walkPackageGraph('/path/to/start', {
  *   onEnd(rootNode) {
  *     console.info('onEnd', rootNode + '');
  *   },
@@ -37,7 +39,11 @@ import { IWalkHandlers } from './types';
  * }
  * ```
  */
-export function walkPackageGraph(root: string,  walkHandlers: IWalkHandlers = {}) {
-  const walker = new PackageWalker(walkHandlers);
+export function walkPackageGraph(
+  root: string,
+  walkHandlers: IWalkHandlers = {},
+  resolveDevDependency: boolean = false
+) {
+  const walker = new PackageWalker(walkHandlers, resolveDevDependency);
   walker.start(root);
 }
