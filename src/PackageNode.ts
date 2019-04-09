@@ -72,6 +72,21 @@ class PackageNode implements IPackageNode {
     });
   }
 
+  /**
+   * Pseudo Logic
+   * 1. link dependencies
+   *  1.1. loop dependencies
+   *  1.2.   if !dependency.linked dependency._link() first
+   *  1.3. if this.unlinked.length mark insufficientDependency
+   * 2. validate this
+   *  2.1. loop dependencies
+   *  2.2.   if !dependency.validated dependency._validate() first
+   *  2.3.   dependency._validate() returns whether it's dependencies are sufficient or not
+   *  2.4. if one of dependencies's _validate() returns false then returns false else true
+   *  2.5. before 2.4's return, execute onResolve, onUnresolve callback
+   * @param cb
+   * @param resolveDevDependency
+   */
   resolve(cb: any, resolveDevDependency?: boolean) {
     // this._linkDependencies();
     // can check cycle
