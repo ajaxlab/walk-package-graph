@@ -13,20 +13,17 @@ export interface IPackageNode {
   dependencies: IPackageNode[];
   dependencyResolved: boolean;  // TODO
   id: string;
+  linked: boolean;
   manifest: IPackageJson;
   parent: IPackageNode | undefined;
   path: string;
+  unresolvedDependencies: IDependencyMap;
   validated: boolean;
   getDependency(depName: string): IPackageNode | void;
   hasDependency(name: string, version?: string): boolean;
-  /**
-   * @returns Unresolved dependency names
-   */
-  validate(
-    cb?: (node: IPackageNode, unresolved?: string[]) => void,
-    resolveDevDependency?: boolean
-  ): void;
-  validate0(cb?: (node: IPackageNode, unresolved?: string[]) => void): void;
+  linkDependencies(): void;
+  resolve(cb?: (node: IPackageNode, unresolvedNodeNames?: string[]) => void, resolveDevDependency?: boolean): void;
+  validate(cb?: (node: IPackageNode, unresolved?: string[]) => void): boolean;
 }
 
 // TODO publish @types
