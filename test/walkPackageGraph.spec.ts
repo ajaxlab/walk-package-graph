@@ -88,9 +88,6 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
       },
       onResolve() {
         count++;
-      },
-      onUnresolve(node, unresolveds) {
-        console.info(node.id, unresolveds, node.manifest.dependencies);
       }
     }, true);
   });
@@ -179,9 +176,19 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
     }
     walkPackageGraph(rootPath, {
       onUnresolve(unresolvedNode, unresolvedNames) {
+        const { id } = unresolvedNode;
         if (
-          (unresolvedNode.id === 'unmet/0.1.0' && unresolvedNames[0] === 'julia')
-          || (unresolvedNode.id === 'olivia/0.1.0' && unresolvedNames[0] === 'amelia')
+          id === 'unmet/0.1.0'
+          && unresolvedNames.length === 2
+          && unresolvedNames.includes('julia')
+          && unresolvedNames.includes('olivia')
+        ) {
+          resolve();
+        }
+        if (
+          id === 'olivia/0.1.0'
+          && unresolvedNames.length === 1
+          && unresolvedNames.includes('amelia')
         ) {
           resolve();
         }

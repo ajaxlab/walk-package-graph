@@ -29,21 +29,12 @@ class PackageNode implements IPackageNode {
   validated: boolean = false;
 
   constructor(manifest: IPackageJson, path: string) {
-    const { optionalDependencies } = manifest;
     this.id = manifest.name + '/' + manifest.version;
     this.manifest = manifest;
     this.path = path;
     this.unresolvedDependencies = manifest.dependencies
       ? Object.assign(Object.create(null), manifest.dependencies)
       : Object.create(null);
-    if (optionalDependencies) {
-      const optionalNames = Object.keys(optionalDependencies);
-      const { length } = optionalNames;
-      for (let i = 0; i < length; i++) {
-        // delete this._unlinkedDeps[optionalNames[i]];
-        // TODO warn optionalDependencies
-      }
-    }
   }
 
   getDependency(depName: string): IPackageNode | void {
@@ -54,11 +45,6 @@ class PackageNode implements IPackageNode {
       }
       node = node.parent;
     }
-  }
-
-  hasCycle(node: IPackageNode) {
-    // TODO
-    return true;
   }
 
   hasDependency(name: string, version?: string): boolean {
@@ -92,7 +78,6 @@ class PackageNode implements IPackageNode {
           dependency.linkDependencies();
         }
         const { version } = dependency.manifest;
-        // TODO test file: protocol
         const depRange = unresolvedDeps[depName];
         if (version && satisfies(version, depRange)) {
           dependencies.push(dependency);
@@ -106,7 +91,6 @@ class PackageNode implements IPackageNode {
       const optsLength = optionalNames.length;
       for (let i = 0; i < optsLength; i++) {
         delete unresolvedDeps[optionalNames[i]];
-        // TODO warn optionalDependencies
       }
     }
   }
@@ -152,6 +136,7 @@ class PackageNode implements IPackageNode {
     }
     const unresolved = Object.keys(this.unresolvedDependencies).concat(invalidDeps);
     if (unresolved.length) {
+      valid = false;
       if (cb) { cb(this, unresolved); }
     } else {
       this.dependencyResolved = true;

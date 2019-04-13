@@ -11,7 +11,7 @@ export interface IPackageNode {
     [packageName: string]: IPackageNode
   };
   dependencies: IPackageNode[];
-  dependencyResolved: boolean;  // TODO
+  dependencyResolved: boolean;
   id: string;
   linked: boolean;
   manifest: IPackageJson;
@@ -26,7 +26,6 @@ export interface IPackageNode {
   validate(cb?: (node: IPackageNode, unresolved?: string[]) => void): boolean;
 }
 
-// TODO publish @types
 export interface IPackageJson {
   readonly bundledDependencies?: string[];
   readonly dependencies?: IDependencyMap;
