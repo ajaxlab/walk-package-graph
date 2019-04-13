@@ -1,0 +1,7 @@
+{
+  "name": "file-protocol",
+  "version": "1.0.0",
+  "dependencies": {
+    "amelia": "file:src/amelia"
+  }
+}
