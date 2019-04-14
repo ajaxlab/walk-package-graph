@@ -1,11 +1,11 @@
 import fs from 'fs';
 import { walkPackageGraph } from '../../src/';
-import { IBooleanRecord } from '../../src/types';
+import { IBooleanMap } from '../../src/types';
 import pkgs from '../json/visited.json';
 
 let count = 0;
-const notResolved: IBooleanRecord = Object.assign(Object.create(null), pkgs);
-const resolved: IBooleanRecord = {};
+const notResolved: IBooleanMap = Object.assign(Object.create(null), pkgs);
+const resolved: IBooleanMap = {};
 const cwd = process.cwd();
 const regSep = /\\/g;
 

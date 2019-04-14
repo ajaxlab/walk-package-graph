@@ -30,6 +30,7 @@
     "no-console": [true, "log"],
     "no-empty": [true],
     "no-string-literal": false,
+    "object-literal-sort-keys": true,
     "only-arrow-functions": false,
     "ordered-imports": true,
     "quotemark": [true, "single", "avoid-escape"],
