@@ -16,7 +16,7 @@ walkPackageGraph('./test/pseudo-projects/heavy/npm', {
     console.info('unresolved', ++unresolved);
   },
   onVisit(node) {
-    // ++count;
+    ++count;
     // console.info(count, node.path);
   }
 }, true);

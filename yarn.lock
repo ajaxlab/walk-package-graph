@@ -1462,6 +1462,11 @@ package-hash@^3.0.0:
     lodash.flattendeep "^4.4.0"
     release-zalgo "^1.0.0"
 
+package-json-type@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/package-json-type/-/package-json-type-1.0.0.tgz#8b0224c7dc9e51324db1c0aaf330b5d90f300931"
+  integrity sha512-IxFyPj/HQGqbSleQo6IxU3bOLyy5/xa88rIvrCPHxwXlP3Kwp3aI+tBbMMQ8cquQdhKpYxFYTiIp89zjZk2I2g==
+
 parse-json@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/parse-json/-/parse-json-4.0.0.tgz#be35f5425be1f7f6c747184f98a788cb99477ee0"

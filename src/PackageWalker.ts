@@ -1,9 +1,8 @@
 import fs from 'fs';
+import { IPackageJson } from 'package-json-type';
 import p from 'path';
 import PackageNode from './PackageNode';
-import {
-  IPackageJson, IPackageNode, IWalkHandlers
-} from './types';
+import { IPackageNode, IWalkHandlers } from './types';
 
 class PackageWalker {
 

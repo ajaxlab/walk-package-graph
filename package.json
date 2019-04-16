@@ -68,6 +68,7 @@
   },
   "dependencies": {
     "mini-semver": "^0.1.0",
+    "package-json-type": "^1.0.0",
     "tslib": "^1.9.3"
   }
 }

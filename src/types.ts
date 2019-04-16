@@ -1,9 +1,7 @@
+import { IDependencyMap, IPackageJson } from 'package-json-type';
+
 export interface IBooleanMap {
   [key: string]: boolean;
-}
-
-export interface IDependencyMap {
-  [packageName: string]: string;
 }
 
 export interface IPackageNode {
@@ -24,17 +22,6 @@ export interface IPackageNode {
   linkDependencies(): void;
   resolve(cb?: (node: IPackageNode, unresolvedNodeNames?: string[]) => void, resolveDevDependency?: boolean): void;
   validate(cb?: (node: IPackageNode, unresolved?: string[]) => void): boolean;
-}
-
-export interface IPackageJson {
-  readonly bundledDependencies?: string[];
-  readonly dependencies?: IDependencyMap;
-  readonly devDependencies?: IDependencyMap;
-  readonly name?: string;
-  readonly optionalDependencies?: IDependencyMap;
-  readonly peerDependencies?: IDependencyMap;
-  readonly private?: boolean;
-  readonly version?: string;
 }
 
 export interface IWalkHandlers {

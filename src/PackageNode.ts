@@ -1,5 +1,6 @@
 import { satisfies } from 'mini-semver';
-import { IPackageJson, IPackageNode } from './types';
+import { IPackageJson } from 'package-json-type';
+import { IPackageNode } from './types';
 
 /**
  * Represents a graph node for a package
