@@ -67,7 +67,7 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
     const rootPath = './test/pseudo-projects/heavy/npm';
     walkPackageGraph(rootPath, {
       onEnd() {
-        if (count === 1937) {
+        if (count === 1642) {
           done();
         }
       },
@@ -82,7 +82,7 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
     const rootPath = './test/pseudo-projects/heavy/npm';
     walkPackageGraph(rootPath, {
       onEnd() {
-        if (count === 1937) {
+        if (count === 1642) {
           done();
         }
       },
