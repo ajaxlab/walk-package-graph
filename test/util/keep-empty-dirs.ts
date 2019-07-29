@@ -6,7 +6,7 @@ let count = 0;
 
 readDir('./test/pseudo-projects/heavy/npm', {
   onDir(dirPath, item, stats) {
-    if (item !== 'node_modules') {
+    if (item !== 'node_modules' && item[0] !== '@') {
       fs.readFile(dirPath + p.sep + 'package.json', (readFileErr) => {
         if (readFileErr) {
           if (readFileErr.code === 'ENOENT') {

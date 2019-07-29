@@ -67,7 +67,7 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
     const rootPath = './test/pseudo-projects/heavy/npm';
     walkPackageGraph(rootPath, {
       onEnd() {
-        if (count === 1642) {
+        if (count === 1633) {
           done();
         }
       },
@@ -78,16 +78,24 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
   });
 
   it('resolves valid packages', function (done) {
-    let count = 0;
+    let resolved = 0;
+    let unresolved = 0;
     const rootPath = './test/pseudo-projects/heavy/npm';
     walkPackageGraph(rootPath, {
       onEnd() {
-        if (count === 1642) {
+        if (unresolved === 0 && resolved === 1633) {
           done();
         }
       },
+      onError(e) {
+        console.error(e);
+      },
       onResolve() {
-        count++;
+        resolved++;
+      },
+      onUnresolve(node, unresolveds) {
+        unresolved++;
+        console.info(node.id, unresolveds);
       }
     }, true);
   });
