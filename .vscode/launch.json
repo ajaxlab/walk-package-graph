@@ -48,6 +48,17 @@
         "./test/debug/resolve.ts"
       ],
       "internalConsoleOptions": "openOnSessionStart"
+    },
+
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Check Flow",
+      "program": "${workspaceFolder}/node_modules/ts-node/dist/bin",
+      "args": [
+        "./test/debug/check-flow.ts"
+      ],
+      "internalConsoleOptions": "openOnSessionStart"
     }
   ]
 }
