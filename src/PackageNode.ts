@@ -1,5 +1,5 @@
-import { satisfies } from 'mini-semver';
 import { IPackageJson } from 'package-json-type';
+import { matches } from './matches';
 import { IPackageNode } from './types';
 
 /**
@@ -79,8 +79,8 @@ class PackageNode implements IPackageNode {
           dependency.linkDependencies();
         }
         const { version } = dependency.manifest;
-        const depRange = unresolvedDeps[depName];
-        if (version && satisfies(version, depRange)) {
+        const depValue = unresolvedDeps[depName];
+        if (version && matches(version, depValue)) {
           dependencies.push(dependency);
           delete unresolvedDeps[depName];
         }

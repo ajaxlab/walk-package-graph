@@ -345,4 +345,36 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
       });
     });
   });
+
+  it('traverses a npm project which has a local dependency', function (done) {
+    let resolved = 0;
+    walkPackageGraph('./test/pseudo-projects/file-protocol', {
+      onEnd(rootNode) {
+        if (rootNode) {
+          if (resolved === 6) {
+            done();
+          }
+        }
+      },
+      onResolve(node) {
+        resolved++;
+      }
+    });
+  });
+
+  it('traverses a yarn project which has a local dependency', function (done) {
+    let resolved = 0;
+    walkPackageGraph('./test/pseudo-projects/file-protocol-yarn', {
+      onEnd(rootNode) {
+        if (rootNode) {
+          if (resolved === 6) {
+            done();
+          }
+        }
+      },
+      onResolve(node) {
+        resolved++;
+      }
+    });
+  });
 });

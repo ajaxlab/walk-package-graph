@@ -59,6 +59,28 @@
         "./test/debug/check-flow.ts"
       ],
       "internalConsoleOptions": "openOnSessionStart"
+    },
+
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug File Protocol",
+      "program": "${workspaceFolder}/node_modules/ts-node/dist/bin",
+      "args": [
+        "./test/usages/file-protocol.ts"
+      ],
+      "internalConsoleOptions": "openOnSessionStart"
+    },
+
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug File Protocol Yarn",
+      "program": "${workspaceFolder}/node_modules/ts-node/dist/bin",
+      "args": [
+        "./test/usages/file-protocol-yarn.ts"
+      ],
+      "internalConsoleOptions": "openOnSessionStart"
     }
   ]
 }
