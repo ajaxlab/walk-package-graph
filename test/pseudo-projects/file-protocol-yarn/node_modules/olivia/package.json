@@ -1,0 +1,8 @@
+{
+  "name": "olivia",
+  "version": "0.1.0",
+  "dependencies": {
+    "amelia": "file:../amelia2",
+    "oscar": "file:../oscar"
+  }
+}
