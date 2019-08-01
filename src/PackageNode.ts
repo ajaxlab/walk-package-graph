@@ -3,30 +3,70 @@ import { matches } from './matches';
 import { IPackageNode } from './types';
 
 /**
- * Represents a graph node for a package
+ * Represents a package as a graph node.
  */
 class PackageNode implements IPackageNode {
 
   /**
-   * A physical children inside of a `node_modules` path under this package
+   * A physical children inside of a `node_modules` path under this package.
    */
   children: {
     [packageName: string]: IPackageNode
   } = Object.create(null);
 
   /**
-   * An array of resolved dependencies of this package
+   * An array of resolved dependencies of this package.
    */
   dependencies: IPackageNode[] = [];
+
+  /**
+   * Indicate all dependencies are resolved or not.
+   * @see [[validate]]
+   */
   dependencyResolved: boolean = false;
+
+  /**
+   * A package's unique id as `{package name}/{package version}` format.
+   */
   id: string;
+
+  /**
+   * Indicate this node and it's dependencies are linked or not.
+   * @see [[linkDependencies]]
+   */
   linked: boolean = false;
+
+  /**
+   * Contents of the package.json file of this package.
+   * @see {@link https://ajaxlab.github.io/package-json-type/interfaces/ipackagejson.html | IPackageJson}
+   */
   manifest: IPackageJson;
+
+  /**
+   * An upper directory node of a child node in a `node_modules` directory.
+   * ```
+   * parent1/node_modules/child1
+   * ```
+   */
   parent: IPackageNode | undefined = void 0;
+
+  /**
+   * An absolute path of this node.
+   */
   path: string;
+
+  /**
+   * An array of dependencies which remain unresolved after dependency resolution.
+   * @see [[linkDependencies]]
+   */
   unresolvedDependencies: {
     [packageName: string]: string;
   };
+
+  /**
+   * Indicate this node is validated.
+   * @see [[validate]]
+   */
   validated: boolean = false;
 
   constructor(manifest: IPackageJson, path: string) {
@@ -38,6 +78,10 @@ class PackageNode implements IPackageNode {
       : Object.create(null);
   }
 
+  /**
+   * Returns a node with the given name which this node depends on.
+   * @param depName The name of a dependency.
+   */
   getDependency(depName: string): IPackageNode | void {
     let node: IPackageNode | void = this;
     while (node) {

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { walkPackageGraph } from '../../src/';
-import { IBooleanMap } from '../../src/types';
+import { IBooleanMap } from '../common/types';
 import pkgs from '../json/packages.json';
 
 console.info('pkgs0', pkgs);

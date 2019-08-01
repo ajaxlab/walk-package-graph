@@ -1,10 +1,10 @@
 import { IDependencyMap, IPackageJson } from 'package-json-type';
 
-export interface IBooleanMap {
-  [key: string]: boolean;
-}
-
 export interface IPackageNode {
+
+  /**
+   * A physical children inside of a `node_modules` path under this package.
+   */
   children: {
     [packageName: string]: IPackageNode
   };
@@ -31,7 +31,7 @@ export interface IWalkHandlers {
    * onEnd?: (rootNode?: IPackageNode) => void;
    * ```
    *
-   * Called when all nodes are visited and resolved.
+   * Called when all nodes are visited and tried resolving.
    *
    * ```typescript
    * walkPackageGraph('/path/to/start', {
@@ -65,7 +65,7 @@ export interface IWalkHandlers {
    * onResolve?: (resolvedNode: IPackageNode) => void;
    * ```
    *
-   * Called every time a package node has resolved it's dependencies.
+   * Called every time a package node resolves all of it's dependencies.
    *
    * ```typescript
    * walkPackageGraph('/path/to/start', {
@@ -96,15 +96,15 @@ export interface IWalkHandlers {
 
   /**
    * ```typescript
-   * onUnresolve?: (unresolvedNode: IPackageNode, unresolvedDependencyNames: string[]) => void;
+   * onVisit?: (visitedNode: IPackageNode) => void;
    * ```
    *
-   * Called every time a package node has failed resolving it's dependency.
+   * Called every time a package node has been visited.
    *
    * ```typescript
    * walkPackageGraph('/path/to/start', {
-   *   onUnresolve(node, unresolvedNames) {
-   *     console.info('onUnresolve', node.path, unresolvedNames);
+   *   onVisit(node) {
+   *     console.info(node.path, 'visited');
    *   }
    * });
    * ```
