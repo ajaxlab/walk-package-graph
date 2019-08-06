@@ -20,7 +20,7 @@ class PackageNode implements IPackageNode {
   dependencies: IPackageNode[] = [];
 
   /**
-   * Indicate all dependencies are resolved or not.
+   * Indicates all dependencies are resolved or not.
    * @see [[validate]]
    */
   dependencyResolved: boolean = false;
@@ -31,7 +31,7 @@ class PackageNode implements IPackageNode {
   id: string;
 
   /**
-   * Indicate this node and it's dependencies are linked or not.
+   * Indicates this node and it's dependencies are linked or not.
    * @see [[linkDependencies]]
    */
   linked: boolean = false;
@@ -64,7 +64,7 @@ class PackageNode implements IPackageNode {
   };
 
   /**
-   * Indicate this node is validated.
+   * Indicates this node is validated.
    * @see [[validate]]
    */
   validated: boolean = false;
@@ -92,6 +92,12 @@ class PackageNode implements IPackageNode {
     }
   }
 
+  /**
+   * Returns `true` if this node has a dependency with
+   * the given name and optional version.
+   * @param name The name of a dependency.
+   * @param version The version of the dependency.
+   */
   hasDependency(name: string, version?: string): boolean {
     if (version) {
       const target = name + '/' + version;
@@ -104,10 +110,19 @@ class PackageNode implements IPackageNode {
     });
   }
 
-  /**
+  /*
    *  1.1. loop dependencies
    *  1.2.   if !dependency.linked dependency.linkDependencies() first
    *  1.3. if this.unlinked.length mark insufficientDependency
+   */
+  /**
+   * For each unresolved dependencies, if there is a node with
+   * the unresolved dependency name, add the node to
+   * this nodes' dependencies and remove from the unresolved dependencies.
+   *
+   * If the `package.json` has the `optionalDependencies` and some of it also
+   * exists unresolved dependencies, this method will remove them from
+   * the unresolved dependencies.
    */
   linkDependencies() {
     this.linked = true;
@@ -140,7 +155,7 @@ class PackageNode implements IPackageNode {
     }
   }
 
-  /**
+  /*
    * Pseudo Logic
    * 1. link dependencies
    *  1.1. loop unresolvedDependencies
@@ -152,10 +167,16 @@ class PackageNode implements IPackageNode {
    *  2.3.   dependency.validate() returns whether it's dependencies are sufficient or not
    *  2.4. if one of dependencies's validate() returns false then returns false else true
    *  2.5. before 2.4's return, execute onResolve, onUnresolve callback
-   * @param cb
-   * @param resolveDevDependency
    */
-  resolve(cb: any, resolveDevDependency?: boolean) {
+  /**
+   * Calls [[linkDependencies]], then calls [[validate]]
+   * @param cb Called when the resolution process for this node has been ended.
+   * @param resolveDevDependency If this value is true this node will resolve `devDependencies` too.
+   */
+  resolve(
+    cb?: (node: IPackageNode, unresolvedNodeNames?: string[]) => void,
+    resolveDevDependency?: boolean
+  ) {
     if (resolveDevDependency) this._mergeDevDependency();
     this.linkDependencies();
     this.validate(cb);
@@ -165,7 +186,11 @@ class PackageNode implements IPackageNode {
     return '<PackageNode>' + this.id;
   }
 
-  validate(cb?: (node: IPackageNode, unresolved?: string[]) => void) {
+  /**
+   * Validates all of this node's dependencies recursively.
+   * @param cb
+   */
+  validate(cb?: (node: IPackageNode, unresolved?: string[]) => void): boolean {
     this.validated = true;
     const { dependencies } = this;
     const { length } = dependencies;

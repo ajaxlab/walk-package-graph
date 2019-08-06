@@ -8,19 +8,96 @@ export interface IPackageNode {
   children: {
     [packageName: string]: IPackageNode
   };
+
+  /**
+   * An array of resolved dependencies of this package.
+   */
   dependencies: IPackageNode[];
+
+  /**
+   * Indicates all dependencies are resolved or not.
+   * @see [[validate]]
+   */
   dependencyResolved: boolean;
+
+  /**
+   * A package's unique id as `{package name}/{package version}` format.
+   */
   id: string;
+
+  /**
+   * Indicates this node and it's dependencies are linked or not.
+   * @see [[linkDependencies]]
+   */
   linked: boolean;
+
+  /**
+   * Contents of the package.json file of this package.
+   * @see {@link https://ajaxlab.github.io/package-json-type/interfaces/ipackagejson.html | IPackageJson}
+   */
   manifest: IPackageJson;
+
+  /**
+   * An upper directory node of a child node in a `node_modules` directory.
+   * ```
+   * parent1/node_modules/child1
+   * ```
+   */
   parent: IPackageNode | undefined;
+
+  /**
+   * An absolute path of this node.
+   */
   path: string;
+
+  /**
+   * An array of dependencies which remain unresolved after dependency resolution.
+   * @see [[linkDependencies]]
+   */
   unresolvedDependencies: IDependencyMap;
+
+  /**
+   * Indicates this node is validated.
+   * @see [[validate]]
+   */
   validated: boolean;
+
+  /**
+   * Returns a node with the given name which this node depends on.
+   * @param depName The name of a dependency.
+   */
   getDependency(depName: string): IPackageNode | void;
+
+  /**
+   * Returns `true` if this node has a dependency with
+   * the given name and optional version.
+   * @param name The name of a dependency.
+   * @param version The version of the dependency.
+   */
   hasDependency(name: string, version?: string): boolean;
+
+  /**
+   * For each unresolved dependencies, if there is a node with
+   * the unresolved dependency name, add the node to
+   * this nodes' dependencies and remove from the unresolved dependencies.
+   *
+   * If the `package.json` has the `optionalDependencies` and some of it also
+   * exists unresolved dependencies, this method will remove them from
+   * the unresolved dependencies.
+   */
   linkDependencies(): void;
+
+  /**
+   * Calls [[linkDependencies]], then calls [[validate]]
+   * @param cb Called when the resolution process for this node has been ended.
+   * @param resolveDevDependency If this value is true this node will resolve `devDependencies` too.
+   */
   resolve(cb?: (node: IPackageNode, unresolvedNodeNames?: string[]) => void, resolveDevDependency?: boolean): void;
+
+  /**
+   * Validates all of this node's dependencies recursively.
+   * @param cb
+   */
   validate(cb?: (node: IPackageNode, unresolved?: string[]) => void): boolean;
 }
 
