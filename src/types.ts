@@ -3,7 +3,7 @@ import { IDependencyMap, IPackageJson } from 'package-json-type';
 export interface IPackageNode {
 
   /**
-   * A physical children inside of a `node_modules` path under this package.
+   * Child nodes inside of a `node_modules` path under this package.
    */
   children: {
     [packageName: string]: IPackageNode
@@ -27,6 +27,7 @@ export interface IPackageNode {
 
   /**
    * Indicates this node and it's dependencies are linked or not.
+   * This value is changed as `true` after [[linkDependencies]] call.
    * @see [[linkDependencies]]
    */
   linked: boolean;
@@ -38,7 +39,7 @@ export interface IPackageNode {
   manifest: IPackageJson;
 
   /**
-   * An upper directory node of a child node in a `node_modules` directory.
+   * An upper directory node of child nodes in a `node_modules` directory.
    * ```
    * parent1/node_modules/child1
    * ```
@@ -51,7 +52,7 @@ export interface IPackageNode {
   path: string;
 
   /**
-   * An array of dependencies which remain unresolved after dependency resolution.
+   * An array of dependencies which remain unresolved after dependency resolution try.
    * @see [[linkDependencies]]
    */
   unresolvedDependencies: IDependencyMap;
@@ -69,17 +70,17 @@ export interface IPackageNode {
   getDependency(depName: string): IPackageNode | void;
 
   /**
-   * Returns `true` if this node has a dependency with
-   * the given name and optional version.
+   * Returns `true` if this node depends on the package
+   * with the given name and optional version.
    * @param name The name of a dependency.
    * @param version The version of the dependency.
    */
   hasDependency(name: string, version?: string): boolean;
 
   /**
-   * For each unresolved dependencies, if there is a node with
-   * the unresolved dependency name, add the node to
-   * this nodes' dependencies and remove from the unresolved dependencies.
+   * For each unresolved dependencies, this method check if the dependency node exist,
+   * and if it exists and satisfies version then add to [[dependencies]]
+   * and remove from [[unresolvedDependencies]].
    *
    * If the `package.json` has the `optionalDependencies` and some of it also
    * exists unresolved dependencies, this method will remove them from
