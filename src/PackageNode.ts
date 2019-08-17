@@ -1,4 +1,5 @@
 import { IPackageJson } from 'package-json-type';
+import p from 'path';
 import { matches } from './matches';
 import { IPackageNode } from './types';
 
@@ -44,6 +45,14 @@ class PackageNode implements IPackageNode {
   manifest: IPackageJson;
 
   /**
+   * Name of the package.
+   * The name field of package.json.
+   * If the name field of package.json is empty,
+   * directory name of the package will be used.
+   */
+  name: string;
+
+  /**
    * An upper directory node of child nodes in a `node_modules` directory.
    * ```
    * parent1/node_modules/child1
@@ -71,7 +80,13 @@ class PackageNode implements IPackageNode {
   validated: boolean = false;
 
   constructor(manifest: IPackageJson, path: string) {
-    this.id = manifest.name + '/' + manifest.version;
+    if (manifest.name) {
+      this.name = manifest.name;
+    } else {
+      const paths = path.split(p.sep);
+      this.name = paths[paths.length - 1];
+    }
+    this.id = this.name + '/' + manifest.version;
     this.manifest = manifest;
     this.path = path;
     this.unresolvedDependencies = manifest.dependencies
@@ -107,7 +122,7 @@ class PackageNode implements IPackageNode {
       });
     }
     return this.dependencies.some((dep) => {
-      return dep.manifest.name === name;
+      return dep.name === name;
     });
   }
 
@@ -175,7 +190,7 @@ class PackageNode implements IPackageNode {
    * @param resolveDevDependency If this value is true this node will resolve `devDependencies` too.
    */
   resolve(
-    cb?: (node: IPackageNode, unresolvedNodeNames?: string[]) => void,
+    cb: (node: IPackageNode, unresolvedNodeNames?: string[]) => void,
     resolveDevDependency?: boolean
   ) {
     if (resolveDevDependency) this._mergeDevDependency();
@@ -191,7 +206,7 @@ class PackageNode implements IPackageNode {
    * Validates all of this node's dependencies recursively.
    * @param cb
    */
-  validate(cb?: (node: IPackageNode, unresolved?: string[]) => void): boolean {
+  validate(cb: (node: IPackageNode, unresolved?: string[]) => void): boolean {
     this.validated = true;
     const { dependencies } = this;
     const { length } = dependencies;
@@ -200,18 +215,17 @@ class PackageNode implements IPackageNode {
     for (let i = 0; i < length; i++) {
       const dep = dependencies[i];
       if (!dep.validated && !dep.validate(cb)) {
-        const { name } = dep.manifest;
-        if (name) { invalidDeps.push(name); }
+        invalidDeps.push(dep.name);
         valid = false;
       }
     }
     const unresolved = Object.keys(this.unresolvedDependencies).concat(invalidDeps);
     if (unresolved.length) {
       valid = false;
-      if (cb) { cb(this, unresolved); }
+      cb(this, unresolved);
     } else {
       this.dependencyResolved = true;
-      if (cb) { cb(this); }
+      cb(this);
     }
     return valid;
   }

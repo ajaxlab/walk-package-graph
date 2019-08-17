@@ -62,6 +62,15 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
     });
   });
 
+  it('walks devDependencies', function (done) {
+    const rootPath = './test/pseudo-projects/heavy/npm';
+    walkPackageGraph(rootPath, {
+      onEnd() {
+        done();
+      }
+    }, true);
+  });
+
   it('visits valid packages', function (done) {
     let count = 0;
     const rootPath = './test/pseudo-projects/heavy/npm';
@@ -376,5 +385,22 @@ describe('walkPackageGraph(root, walkHandlers, walkOptions)', function () {
         resolved++;
       }
     });
+  });
+
+  it('resolves a package with no name field', function (done) {
+    const rootPath = './test/pseudo-projects/noname';
+    let resolved = 0;
+    walkPackageGraph(rootPath, {
+      onEnd(rootNode) {
+        if (rootNode) {
+          if (resolved === 3) {
+            done();
+          }
+        }
+      },
+      onResolve(node) {
+        resolved++;
+      }
+    }, true);
   });
 });

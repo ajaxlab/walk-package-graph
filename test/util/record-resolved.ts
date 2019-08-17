@@ -42,6 +42,6 @@ walkPackageGraph('./test/pseudo-projects/heavy/npm', {
     count++;
   },
   onUnresolve(node, unresolveds) {
-    console.log('unresolved', unresolveds);
+    console.info('unresolved', unresolveds);
   }
 }, true);

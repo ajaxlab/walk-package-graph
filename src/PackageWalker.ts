@@ -57,11 +57,8 @@ class PackageWalker {
     const { length } = childNodes;
     for (let i = 0; i < length; i++) {
       const childNode = childNodes[i];
-      const { name } = childNode.manifest;
-      if (name) {
-        children[name] = childNode;
-        childNode.parent = parentNode;
-      }
+      children[childNode.name] = childNode;
+      childNode.parent = parentNode;
     }
   }
 

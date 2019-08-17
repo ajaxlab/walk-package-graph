@@ -39,6 +39,14 @@ export interface IPackageNode {
   manifest: IPackageJson;
 
   /**
+   * Name of the package.
+   * The name field of package.json.
+   * If the name field of package.json is empty,
+   * directory name of the package will be used.
+   */
+  name: string;
+
+  /**
    * An upper directory node of child nodes in a `node_modules` directory.
    * ```
    * parent1/node_modules/child1
@@ -99,7 +107,7 @@ export interface IPackageNode {
    * Validates all of this node's dependencies recursively.
    * @param cb
    */
-  validate(cb?: (node: IPackageNode, unresolved?: string[]) => void): boolean;
+  validate(cb?: (node: IPackageNode, unresolvedNodeNames?: string[]) => void): boolean;
 }
 
 export interface IWalkHandlers {
