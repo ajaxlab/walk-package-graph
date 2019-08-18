@@ -1,6 +1,7 @@
 # walk-package-graph
 
 [![npm](https://img.shields.io/npm/v/walk-package-graph.svg)](https://www.npmjs.com/package/walk-package-graph)
+[![Build Status][badge-build-status]][link-build-status]
 [![Coverage Status][badge-coverage]][link-coverage]
 
 Traverse a Node.js package's dependency graph using [Node.JS module resolution algorithm](https://nodejs.org/api/modules.html#modules_loading_from_node_modules_folders)
@@ -48,7 +49,9 @@ walkPackageGraph('/path/to/start', {
 This project is licensed under [MIT](./LICENSE) license.
 
 <!-- badges -->
+[badge-build-status]: https://travis-ci.org/ajaxlab/walk-package-graph.svg?branch=master
 [badge-coverage]: https://coveralls.io/repos/github/ajaxlab/walk-package-graph/badge.svg
 
 <!-- links -->
 [link-coverage]: https://coveralls.io/github/ajaxlab/walk-package-graph
+[link-build-status]: https://travis-ci.org/ajaxlab/walk-package-graph
