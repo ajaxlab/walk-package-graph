@@ -22,7 +22,7 @@
 
 ▸ **walkPackageGraph**(`root`: string, `walkHandlers`: [IWalkHandlers](interfaces/iwalkhandlers.md), `resolveDevDependency`: boolean): *void*
 
-*Defined in [index.ts:33](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/index.ts#L33)*
+*Defined in [index.ts:33](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/index.ts#L33)*
 
 Starts to walk package dependency graph and runs walkHandlers
 

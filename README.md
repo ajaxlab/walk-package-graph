@@ -4,14 +4,20 @@
 [![Build Status][badge-build-status]][link-build-status]
 [![Coverage Status][badge-coverage]][link-coverage]
 
-Traverse a Node.js package's dependency graph using [Node.JS module resolution algorithm](https://nodejs.org/api/modules.html#modules_loading_from_node_modules_folders)
+`walk-package-graph` traverses a Node.js package's dependency graph using [Node.js module resolution algorithm](https://nodejs.org/api/modules.html#modules_loading_from_node_modules_folders)
 
 ## Performances
 
-Traverses 1,633 packages within average 130ms with core-i5 8GB ram.
+Traverses 1,633 packages within average 130ms with a core-i5 8GB ram machine.
 
 ```
 npm run test
+```
+
+## Installation
+
+```
+npm install walk-package-graph
 ```
 
 ## Usages
@@ -38,7 +44,7 @@ walkPackageGraph('/path/to/start', {
 });
 ```
 
-## API Docs
+## API
 
 * [TS Doc](http://ajaxlab.github.io/walk-package-graph/0.1.0)
 

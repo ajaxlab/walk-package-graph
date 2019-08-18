@@ -38,7 +38,7 @@
 
 • **children**: *object*
 
-*Defined in [types.ts:8](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L8)*
+*Defined in [types.ts:8](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L8)*
 
 Child nodes inside of a `node_modules` path under this package.
 
@@ -52,7 +52,7 @@ ___
 
 • **dependencies**: *[IPackageNode](ipackagenode.md)[]*
 
-*Defined in [types.ts:15](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L15)*
+*Defined in [types.ts:15](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L15)*
 
 An array of resolved dependencies of this package.
 
@@ -62,7 +62,7 @@ ___
 
 • **dependencyResolved**: *boolean*
 
-*Defined in [types.ts:21](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L21)*
+*Defined in [types.ts:21](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L21)*
 
 Indicates all dependencies are resolved or not.
 
@@ -74,7 +74,7 @@ ___
 
 • **id**: *string*
 
-*Defined in [types.ts:26](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L26)*
+*Defined in [types.ts:26](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L26)*
 
 A package's unique id as `{package name}/{package version}` format.
 
@@ -84,7 +84,7 @@ ___
 
 • **linked**: *boolean*
 
-*Defined in [types.ts:33](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L33)*
+*Defined in [types.ts:33](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L33)*
 
 Indicates this node and it's dependencies are linked or not.
 This value is changed as `true` after [linkDependencies](ipackagenode.md#linkdependencies) call.
@@ -97,7 +97,7 @@ ___
 
 • **manifest**: *`IPackageJson`*
 
-*Defined in [types.ts:39](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L39)*
+*Defined in [types.ts:39](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L39)*
 
 Contents of the package.json file of this package.
 
@@ -109,7 +109,7 @@ ___
 
 • **name**: *string*
 
-*Defined in [types.ts:47](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L47)*
+*Defined in [types.ts:47](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L47)*
 
 Name of the package.
 The name field of package.json.
@@ -122,7 +122,7 @@ ___
 
 • **parent**: *[IPackageNode](ipackagenode.md) | undefined*
 
-*Defined in [types.ts:55](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L55)*
+*Defined in [types.ts:55](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L55)*
 
 An upper directory node of child nodes in a `node_modules` directory.
 ```
@@ -135,7 +135,7 @@ ___
 
 • **path**: *string*
 
-*Defined in [types.ts:60](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L60)*
+*Defined in [types.ts:60](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L60)*
 
 An absolute path of this node.
 
@@ -145,7 +145,7 @@ ___
 
 • **unresolvedDependencies**: *`IDependencyMap`*
 
-*Defined in [types.ts:66](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L66)*
+*Defined in [types.ts:66](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L66)*
 
 An array of dependencies which remain unresolved after dependency resolution try.
 
@@ -157,7 +157,7 @@ ___
 
 • **validated**: *boolean*
 
-*Defined in [types.ts:72](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L72)*
+*Defined in [types.ts:72](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L72)*
 
 Indicates this node is validated.
 
@@ -169,7 +169,7 @@ Indicates this node is validated.
 
 ▸ **getDependency**(`depName`: string): *[IPackageNode](ipackagenode.md) | void*
 
-*Defined in [types.ts:78](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L78)*
+*Defined in [types.ts:78](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L78)*
 
 Returns a node with the given name which this node depends on.
 
@@ -187,7 +187,7 @@ ___
 
 ▸ **hasDependency**(`name`: string, `version?`: undefined | string): *boolean*
 
-*Defined in [types.ts:86](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L86)*
+*Defined in [types.ts:86](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L86)*
 
 Returns `true` if this node depends on the package
 with the given name and optional version.
@@ -207,7 +207,7 @@ ___
 
 ▸ **linkDependencies**(): *void*
 
-*Defined in [types.ts:97](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L97)*
+*Defined in [types.ts:97](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L97)*
 
 For each unresolved dependencies, this method check if the dependency node exist,
 and if it exists and satisfies version then add to [dependencies](ipackagenode.md#dependencies)
@@ -225,7 +225,7 @@ ___
 
 ▸ **resolve**(`cb?`: undefined | function, `resolveDevDependency?`: undefined | false | true): *void*
 
-*Defined in [types.ts:104](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L104)*
+*Defined in [types.ts:104](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L104)*
 
 Calls [linkDependencies](ipackagenode.md#linkdependencies), then calls [validate](ipackagenode.md#validate)
 
@@ -244,7 +244,7 @@ ___
 
 ▸ **validate**(`cb?`: undefined | function): *boolean*
 
-*Defined in [types.ts:110](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L110)*
+*Defined in [types.ts:110](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L110)*
 
 Validates all of this node's dependencies recursively.
 

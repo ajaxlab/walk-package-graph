@@ -46,7 +46,7 @@ Represents a package as a graph node.
 
 \+ **new PackageNode**(`manifest`: `IPackageJson`, `path`: string): *[PackageNode](packagenode.md)*
 
-*Defined in [PackageNode.ts:80](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageNode.ts#L80)*
+*Defined in [PackageNode.ts:80](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageNode.ts#L80)*
 
 **Parameters:**
 
@@ -65,7 +65,7 @@ Name | Type |
 
 *Implementation of [IPackageNode](../interfaces/ipackagenode.md).[children](../interfaces/ipackagenode.md#children)*
 
-*Defined in [PackageNode.ts:14](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageNode.ts#L14)*
+*Defined in [PackageNode.ts:14](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageNode.ts#L14)*
 
 Child nodes inside of a `node_modules` path under this package.
 
@@ -81,7 +81,7 @@ ___
 
 *Implementation of [IPackageNode](../interfaces/ipackagenode.md).[dependencies](../interfaces/ipackagenode.md#dependencies)*
 
-*Defined in [PackageNode.ts:21](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageNode.ts#L21)*
+*Defined in [PackageNode.ts:21](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageNode.ts#L21)*
 
 An array of resolved dependencies of this package.
 
@@ -93,7 +93,7 @@ ___
 
 *Implementation of [IPackageNode](../interfaces/ipackagenode.md).[dependencyResolved](../interfaces/ipackagenode.md#dependencyresolved)*
 
-*Defined in [PackageNode.ts:27](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageNode.ts#L27)*
+*Defined in [PackageNode.ts:27](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageNode.ts#L27)*
 
 Indicates all dependencies are resolved or not.
 
@@ -107,7 +107,7 @@ ___
 
 *Implementation of [IPackageNode](../interfaces/ipackagenode.md).[id](../interfaces/ipackagenode.md#id)*
 
-*Defined in [PackageNode.ts:32](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageNode.ts#L32)*
+*Defined in [PackageNode.ts:32](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageNode.ts#L32)*
 
 A package's unique id as `{package name}/{package version}` format.
 
@@ -119,7 +119,7 @@ ___
 
 *Implementation of [IPackageNode](../interfaces/ipackagenode.md).[linked](../interfaces/ipackagenode.md#linked)*
 
-*Defined in [PackageNode.ts:39](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageNode.ts#L39)*
+*Defined in [PackageNode.ts:39](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageNode.ts#L39)*
 
 Indicates this node and it's dependencies are linked or not.
 This value is changed as `true` after [linkDependencies](packagenode.md#linkdependencies) call.
@@ -134,7 +134,7 @@ ___
 
 *Implementation of [IPackageNode](../interfaces/ipackagenode.md).[manifest](../interfaces/ipackagenode.md#manifest)*
 
-*Defined in [PackageNode.ts:45](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageNode.ts#L45)*
+*Defined in [PackageNode.ts:45](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageNode.ts#L45)*
 
 Contents of the package.json file of this package.
 
@@ -148,7 +148,7 @@ ___
 
 *Implementation of [IPackageNode](../interfaces/ipackagenode.md).[name](../interfaces/ipackagenode.md#name)*
 
-*Defined in [PackageNode.ts:53](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageNode.ts#L53)*
+*Defined in [PackageNode.ts:53](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageNode.ts#L53)*
 
 Name of the package.
 The name field of package.json.
@@ -163,7 +163,7 @@ ___
 
 *Implementation of [IPackageNode](../interfaces/ipackagenode.md).[parent](../interfaces/ipackagenode.md#parent)*
 
-*Defined in [PackageNode.ts:61](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageNode.ts#L61)*
+*Defined in [PackageNode.ts:61](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageNode.ts#L61)*
 
 An upper directory node of child nodes in a `node_modules` directory.
 ```
@@ -178,7 +178,7 @@ ___
 
 *Implementation of [IPackageNode](../interfaces/ipackagenode.md).[path](../interfaces/ipackagenode.md#path)*
 
-*Defined in [PackageNode.ts:66](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageNode.ts#L66)*
+*Defined in [PackageNode.ts:66](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageNode.ts#L66)*
 
 An absolute path of this node.
 
@@ -190,7 +190,7 @@ ___
 
 *Implementation of [IPackageNode](../interfaces/ipackagenode.md).[unresolvedDependencies](../interfaces/ipackagenode.md#unresolveddependencies)*
 
-*Defined in [PackageNode.ts:72](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageNode.ts#L72)*
+*Defined in [PackageNode.ts:72](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageNode.ts#L72)*
 
 An array of dependencies which remain unresolved after dependency resolution try.
 
@@ -208,7 +208,7 @@ ___
 
 *Implementation of [IPackageNode](../interfaces/ipackagenode.md).[validated](../interfaces/ipackagenode.md#validated)*
 
-*Defined in [PackageNode.ts:80](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageNode.ts#L80)*
+*Defined in [PackageNode.ts:80](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageNode.ts#L80)*
 
 Indicates this node is validated.
 
@@ -220,7 +220,7 @@ Indicates this node is validated.
 
 ▸ **_mergeDevDependency**(): *void*
 
-*Defined in [PackageNode.ts:233](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageNode.ts#L233)*
+*Defined in [PackageNode.ts:233](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageNode.ts#L233)*
 
 **Returns:** *void*
 
@@ -232,7 +232,7 @@ ___
 
 *Implementation of [IPackageNode](../interfaces/ipackagenode.md)*
 
-*Defined in [PackageNode.ts:101](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageNode.ts#L101)*
+*Defined in [PackageNode.ts:101](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageNode.ts#L101)*
 
 Returns a node with the given name which this node depends on.
 
@@ -252,7 +252,7 @@ ___
 
 *Implementation of [IPackageNode](../interfaces/ipackagenode.md)*
 
-*Defined in [PackageNode.ts:117](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageNode.ts#L117)*
+*Defined in [PackageNode.ts:117](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageNode.ts#L117)*
 
 Returns `true` if this node depends on the package
 with the given name and optional version.
@@ -274,7 +274,7 @@ ___
 
 *Implementation of [IPackageNode](../interfaces/ipackagenode.md)*
 
-*Defined in [PackageNode.ts:143](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageNode.ts#L143)*
+*Defined in [PackageNode.ts:143](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageNode.ts#L143)*
 
 For each unresolved dependencies, this method check if the dependency node exist,
 and if it exists and satisfies version then add to [dependencies](packagenode.md#dependencies)
@@ -292,7 +292,7 @@ ___
 
 ▸ **resolve**(`cb`: function, `resolveDevDependency?`: undefined | false | true): *void*
 
-*Defined in [PackageNode.ts:192](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageNode.ts#L192)*
+*Defined in [PackageNode.ts:192](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageNode.ts#L192)*
 
 Calls [linkDependencies](packagenode.md#linkdependencies), then calls [validate](packagenode.md#validate)
 
@@ -323,7 +323,7 @@ ___
 
 ▸ **toString**(): *string*
 
-*Defined in [PackageNode.ts:201](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageNode.ts#L201)*
+*Defined in [PackageNode.ts:201](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageNode.ts#L201)*
 
 **Returns:** *string*
 
@@ -333,7 +333,7 @@ ___
 
 ▸ **validate**(`cb`: function): *boolean*
 
-*Defined in [PackageNode.ts:209](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageNode.ts#L209)*
+*Defined in [PackageNode.ts:209](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageNode.ts#L209)*
 
 Validates all of this node's dependencies recursively.
 

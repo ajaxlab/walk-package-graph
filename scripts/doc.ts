@@ -24,7 +24,7 @@ fs.readFile('./package.json', 'utf8', (errFs, pkgJson) => {
     const pkg = JSON.parse(pkgJson);
     const exe = ['.', 'node_modules', '.bin', 'typedoc'].join(path.sep);
     execute(`${exe} --excludePrivate --mode file --out docs/${pkg.version} src`);
-    // execute(`${exe} --mode file --theme markdown --mdEngine gitbook --out md/${pkg.version} src`);
+    execute(`${exe} --mode file --theme markdown --mdEngine gitbook --out md/${pkg.version} src`);
   } catch (errJson) {
     console.error(errJson);
   }

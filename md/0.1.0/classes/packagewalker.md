@@ -36,7 +36,7 @@
 
 \+ **new PackageWalker**(`walkHandlers`: [IWalkHandlers](../interfaces/iwalkhandlers.md), `resolveDevDependency`: boolean): *[PackageWalker](packagewalker.md)*
 
-*Defined in [PackageWalker.ts:14](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageWalker.ts#L14)*
+*Defined in [PackageWalker.ts:14](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageWalker.ts#L14)*
 
 **Parameters:**
 
@@ -53,7 +53,7 @@ Name | Type |
 
 • **_onEnd**: *function | undefined*
 
-*Defined in [PackageWalker.ts:9](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageWalker.ts#L9)*
+*Defined in [PackageWalker.ts:9](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageWalker.ts#L9)*
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 • **_onError**: *function | undefined*
 
-*Defined in [PackageWalker.ts:10](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageWalker.ts#L10)*
+*Defined in [PackageWalker.ts:10](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageWalker.ts#L10)*
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 • **_onResolve**: *function | undefined*
 
-*Defined in [PackageWalker.ts:11](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageWalker.ts#L11)*
+*Defined in [PackageWalker.ts:11](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageWalker.ts#L11)*
 
 ___
 
@@ -77,7 +77,7 @@ ___
 
 • **_onUnresolve**: *function | undefined*
 
-*Defined in [PackageWalker.ts:12](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageWalker.ts#L12)*
+*Defined in [PackageWalker.ts:12](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageWalker.ts#L12)*
 
 ___
 
@@ -85,7 +85,7 @@ ___
 
 • **_onVisit**: *function | undefined*
 
-*Defined in [PackageWalker.ts:13](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageWalker.ts#L13)*
+*Defined in [PackageWalker.ts:13](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageWalker.ts#L13)*
 
 ___
 
@@ -93,7 +93,7 @@ ___
 
 • **_resolveDevDependency**: *boolean*
 
-*Defined in [PackageWalker.ts:14](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageWalker.ts#L14)*
+*Defined in [PackageWalker.ts:14](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageWalker.ts#L14)*
 
 ## Methods
 
@@ -101,7 +101,7 @@ ___
 
 ▸ **_handleError**(`err`: `ErrnoException`): *void*
 
-*Defined in [PackageWalker.ts:45](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageWalker.ts#L45)*
+*Defined in [PackageWalker.ts:45](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageWalker.ts#L45)*
 
 **Parameters:**
 
@@ -117,7 +117,7 @@ ___
 
 ▸ **_linkFamilyTree**(`parentNode`: [IPackageNode](../interfaces/ipackagenode.md), `childNodes`: [IPackageNode](../interfaces/ipackagenode.md)[]): *void*
 
-*Defined in [PackageWalker.ts:55](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageWalker.ts#L55)*
+*Defined in [PackageWalker.ts:55](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageWalker.ts#L55)*
 
 **Parameters:**
 
@@ -134,7 +134,7 @@ ___
 
 ▸ **_readPackage**(`abs`: string, `cb`: function): *void*
 
-*Defined in [PackageWalker.ts:65](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageWalker.ts#L65)*
+*Defined in [PackageWalker.ts:65](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageWalker.ts#L65)*
 
 **Parameters:**
 
@@ -158,7 +158,7 @@ ___
 
 ▸ **_resolve**(`root`: [IPackageNode](../interfaces/ipackagenode.md)): *void*
 
-*Defined in [PackageWalker.ts:85](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageWalker.ts#L85)*
+*Defined in [PackageWalker.ts:85](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageWalker.ts#L85)*
 
 **Parameters:**
 
@@ -174,7 +174,7 @@ ___
 
 ▸ **_visit**(`abs`: string, `cb`: function): *void*
 
-*Defined in [PackageWalker.ts:99](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageWalker.ts#L99)*
+*Defined in [PackageWalker.ts:99](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageWalker.ts#L99)*
 
 **Parameters:**
 
@@ -198,7 +198,7 @@ ___
 
 ▸ **_visitNodeModules**(`abs`: string, `cb`: function): *void*
 
-*Defined in [PackageWalker.ts:124](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageWalker.ts#L124)*
+*Defined in [PackageWalker.ts:124](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageWalker.ts#L124)*
 
 **Parameters:**
 
@@ -222,7 +222,7 @@ ___
 
 ▸ **_visitScopedPackages**(`scopePath`: string, `cb`: function): *void*
 
-*Defined in [PackageWalker.ts:162](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageWalker.ts#L162)*
+*Defined in [PackageWalker.ts:162](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageWalker.ts#L162)*
 
 **Parameters:**
 
@@ -246,7 +246,7 @@ ___
 
 ▸ **start**(`root`: string): *void*
 
-*Defined in [PackageWalker.ts:30](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/PackageWalker.ts#L30)*
+*Defined in [PackageWalker.ts:30](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/PackageWalker.ts#L30)*
 
 Starts walk. You don't need to call this method directly.
 [walkPackageGraph](../globals.md#walkpackagegraph) calls this method instead.

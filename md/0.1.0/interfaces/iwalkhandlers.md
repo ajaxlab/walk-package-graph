@@ -20,7 +20,7 @@
 
 • **onEnd**? : *undefined | function*
 
-*Defined in [types.ts:130](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L130)*
+*Defined in [types.ts:130](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L130)*
 
 ```typescript
 onEnd?: (rootNode?: IPackageNode) => void;
@@ -42,7 +42,7 @@ ___
 
 • **onError**? : *undefined | function*
 
-*Defined in [types.ts:147](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L147)*
+*Defined in [types.ts:147](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L147)*
 
 ```typescript
 onError?: (error: NodeJS.ErrnoException) => void;
@@ -64,7 +64,7 @@ ___
 
 • **onResolve**? : *undefined | function*
 
-*Defined in [types.ts:164](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L164)*
+*Defined in [types.ts:164](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L164)*
 
 ```typescript
 onResolve?: (resolvedNode: IPackageNode) => void;
@@ -86,7 +86,7 @@ ___
 
 • **onUnresolve**? : *undefined | function*
 
-*Defined in [types.ts:181](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L181)*
+*Defined in [types.ts:181](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L181)*
 
 ```typescript
 onUnresolve?: (unresolvedNode: IPackageNode, unresolvedDependencyNames: string[]) => void;
@@ -108,7 +108,7 @@ ___
 
 • **onVisit**? : *undefined | function*
 
-*Defined in [types.ts:198](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L198)*
+*Defined in [types.ts:198](https://github.com/ajaxlab/walk-package-graph/blob/7dcbf7e/src/types.ts#L198)*
 
 ```typescript
 onVisit?: (visitedNode: IPackageNode) => void;
