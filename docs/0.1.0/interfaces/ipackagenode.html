@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>PackageNode | walk-package-graph</title>
+	<title>IPackageNode | walk-package-graph</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,35 +56,28 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="packagenode.html">PackageNode</a>
+					<a href="ipackagenode.html">IPackageNode</a>
 				</li>
 			</ul>
-			<h1>Class PackageNode</h1>
+			<h1>Interface IPackageNode</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Represents a package as a graph node.</p>
-					</div>
-				</div>
-			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">PackageNode</span>
+						<span class="target">IPackageNode</span>
 					</li>
 				</ul>
 			</section>
 			<section class="tsd-panel">
-				<h3>Implements</h3>
+				<h3>Implemented by</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../interfaces/ipackagenode.html" class="tsd-signature-type">IPackageNode</a></li>
+					<li><a href="../classes/packagenode.html" class="tsd-signature-type">PackageNode</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -92,79 +85,43 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Constructors</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="packagenode.html#constructor" class="tsd-kind-icon">constructor</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="packagenode.html#children" class="tsd-kind-icon">children</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="packagenode.html#dependencies" class="tsd-kind-icon">dependencies</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="packagenode.html#dependencyresolved" class="tsd-kind-icon">dependency<wbr>Resolved</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="packagenode.html#id" class="tsd-kind-icon">id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="packagenode.html#linked" class="tsd-kind-icon">linked</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="packagenode.html#manifest" class="tsd-kind-icon">manifest</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="packagenode.html#parent" class="tsd-kind-icon">parent</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="packagenode.html#path" class="tsd-kind-icon">path</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="packagenode.html#unresolveddependencies" class="tsd-kind-icon">unresolved<wbr>Dependencies</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="packagenode.html#validated" class="tsd-kind-icon">validated</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipackagenode.html#children" class="tsd-kind-icon">children</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipackagenode.html#dependencies" class="tsd-kind-icon">dependencies</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipackagenode.html#dependencyresolved" class="tsd-kind-icon">dependency<wbr>Resolved</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipackagenode.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipackagenode.html#linked" class="tsd-kind-icon">linked</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipackagenode.html#manifest" class="tsd-kind-icon">manifest</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipackagenode.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipackagenode.html#parent" class="tsd-kind-icon">parent</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipackagenode.html#path" class="tsd-kind-icon">path</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipackagenode.html#unresolveddependencies" class="tsd-kind-icon">unresolved<wbr>Dependencies</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ipackagenode.html#validated" class="tsd-kind-icon">validated</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="packagenode.html#getdependency" class="tsd-kind-icon">get<wbr>Dependency</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="packagenode.html#hasdependency" class="tsd-kind-icon">has<wbr>Dependency</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="packagenode.html#linkdependencies" class="tsd-kind-icon">link<wbr>Dependencies</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="packagenode.html#resolve" class="tsd-kind-icon">resolve</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="packagenode.html#tostring" class="tsd-kind-icon">to<wbr>String</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="packagenode.html#validate" class="tsd-kind-icon">validate</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="ipackagenode.html#getdependency" class="tsd-kind-icon">get<wbr>Dependency</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="ipackagenode.html#hasdependency" class="tsd-kind-icon">has<wbr>Dependency</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="ipackagenode.html#linkdependencies" class="tsd-kind-icon">link<wbr>Dependencies</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="ipackagenode.html#resolve" class="tsd-kind-icon">resolve</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="ipackagenode.html#validate" class="tsd-kind-icon">validate</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Constructors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
-					<a name="constructor" class="tsd-anchor"></a>
-					<h3>constructor</h3>
-					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Package<wbr>Node<span class="tsd-signature-symbol">(</span>manifest<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IPackageJson</span>, path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="packagenode.html" class="tsd-signature-type">PackageNode</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/7807f2f/src/PackageNode.ts#L71">PackageNode.ts:71</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>manifest: <span class="tsd-signature-type">IPackageJson</span></h5>
-								</li>
-								<li>
-									<h5>path: <span class="tsd-signature-type">string</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="packagenode.html" class="tsd-signature-type">PackageNode</a></h4>
-						</li>
-					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="children" class="tsd-anchor"></a>
 					<h3>children</h3>
-					<div class="tsd-signature tsd-kind-icon">children<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;Object.create(null)</span></div>
+					<div class="tsd-signature tsd-kind-icon">children<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/ipackagenode.html">IPackageNode</a>.<a href="../interfaces/ipackagenode.html#children">children</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/7807f2f/src/PackageNode.ts#L13">PackageNode.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L8">types.ts:8</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -176,19 +133,18 @@
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-index-signature">
-								<h5><span class="tsd-signature-symbol">[</span>packageName: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="../interfaces/ipackagenode.html" class="tsd-signature-type">IPackageNode</a></h5>
+								<h5><span class="tsd-signature-symbol">[</span>packageName: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="ipackagenode.html" class="tsd-signature-type">IPackageNode</a></h5>
 							</li>
 						</ul>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="dependencies" class="tsd-anchor"></a>
 					<h3>dependencies</h3>
-					<div class="tsd-signature tsd-kind-icon">dependencies<span class="tsd-signature-symbol">:</span> <a href="../interfaces/ipackagenode.html" class="tsd-signature-type">IPackageNode</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
+					<div class="tsd-signature tsd-kind-icon">dependencies<span class="tsd-signature-symbol">:</span> <a href="ipackagenode.html" class="tsd-signature-type">IPackageNode</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/ipackagenode.html">IPackageNode</a>.<a href="../interfaces/ipackagenode.html#dependencies">dependencies</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/7807f2f/src/PackageNode.ts#L20">PackageNode.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L15">types.ts:15</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -197,14 +153,13 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="dependencyresolved" class="tsd-anchor"></a>
 					<h3>dependency<wbr>Resolved</h3>
-					<div class="tsd-signature tsd-kind-icon">dependency<wbr>Resolved<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
+					<div class="tsd-signature tsd-kind-icon">dependency<wbr>Resolved<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/ipackagenode.html">IPackageNode</a>.<a href="../interfaces/ipackagenode.html#dependencyresolved">dependencyResolved</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/7807f2f/src/PackageNode.ts#L26">PackageNode.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L21">types.ts:21</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -213,19 +168,18 @@
 						</div>
 						<dl class="tsd-comment-tags">
 							<dt>see</dt>
-							<dd><p><a href="packagenode.html#validate">validate</a></p>
+							<dd><p><a href="ipackagenode.html#validate">validate</a></p>
 							</dd>
 						</dl>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="id" class="tsd-anchor"></a>
 					<h3>id</h3>
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/ipackagenode.html">IPackageNode</a>.<a href="../interfaces/ipackagenode.html#id">id</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/7807f2f/src/PackageNode.ts#L31">PackageNode.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L26">types.ts:26</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -234,36 +188,34 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="linked" class="tsd-anchor"></a>
 					<h3>linked</h3>
-					<div class="tsd-signature tsd-kind-icon">linked<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
+					<div class="tsd-signature tsd-kind-icon">linked<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/ipackagenode.html">IPackageNode</a>.<a href="../interfaces/ipackagenode.html#linked">linked</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/7807f2f/src/PackageNode.ts#L38">PackageNode.ts:38</a></li>
+							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L33">types.ts:33</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Indicates this node and it&#39;s dependencies are linked or not.
-							This value is changed as <code>true</code> after <a href="packagenode.html#linkdependencies">linkDependencies</a> call.</p>
+							This value is changed as <code>true</code> after <a href="ipackagenode.html#linkdependencies">linkDependencies</a> call.</p>
 						</div>
 						<dl class="tsd-comment-tags">
 							<dt>see</dt>
-							<dd><p><a href="packagenode.html#linkdependencies">linkDependencies</a></p>
+							<dd><p><a href="ipackagenode.html#linkdependencies">linkDependencies</a></p>
 							</dd>
 						</dl>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="manifest" class="tsd-anchor"></a>
 					<h3>manifest</h3>
 					<div class="tsd-signature tsd-kind-icon">manifest<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">IPackageJson</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/ipackagenode.html">IPackageNode</a>.<a href="../interfaces/ipackagenode.html#manifest">manifest</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/7807f2f/src/PackageNode.ts#L44">PackageNode.ts:44</a></li>
+							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L39">types.ts:39</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -277,14 +229,31 @@
 						</dl>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="name" class="tsd-anchor"></a>
+					<h3>name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L47">types.ts:47</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Name of the package.
+								The name field of package.json.
+								If the name field of package.json is empty,
+							directory name of the package will be used.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="parent" class="tsd-anchor"></a>
 					<h3>parent</h3>
-					<div class="tsd-signature tsd-kind-icon">parent<span class="tsd-signature-symbol">:</span> <a href="../interfaces/ipackagenode.html" class="tsd-signature-type">IPackageNode</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> =&nbsp;void 0</span></div>
+					<div class="tsd-signature tsd-kind-icon">parent<span class="tsd-signature-symbol">:</span> <a href="ipackagenode.html" class="tsd-signature-type">IPackageNode</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/ipackagenode.html">IPackageNode</a>.<a href="../interfaces/ipackagenode.html#parent">parent</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/7807f2f/src/PackageNode.ts#L52">PackageNode.ts:52</a></li>
+							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L55">types.ts:55</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -294,14 +263,13 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="path" class="tsd-anchor"></a>
 					<h3>path</h3>
 					<div class="tsd-signature tsd-kind-icon">path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/ipackagenode.html">IPackageNode</a>.<a href="../interfaces/ipackagenode.html#path">path</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/7807f2f/src/PackageNode.ts#L57">PackageNode.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L60">types.ts:60</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -310,14 +278,13 @@
 						</div>
 					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="unresolveddependencies" class="tsd-anchor"></a>
 					<h3>unresolved<wbr>Dependencies</h3>
-					<div class="tsd-signature tsd-kind-icon">unresolved<wbr>Dependencies<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
+					<div class="tsd-signature tsd-kind-icon">unresolved<wbr>Dependencies<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">IDependencyMap</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/ipackagenode.html">IPackageNode</a>.<a href="../interfaces/ipackagenode.html#unresolveddependencies">unresolvedDependencies</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/7807f2f/src/PackageNode.ts#L63">PackageNode.ts:63</a></li>
+							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L66">types.ts:66</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -326,27 +293,18 @@
 						</div>
 						<dl class="tsd-comment-tags">
 							<dt>see</dt>
-							<dd><p><a href="packagenode.html#linkdependencies">linkDependencies</a></p>
+							<dd><p><a href="ipackagenode.html#linkdependencies">linkDependencies</a></p>
 							</dd>
 						</dl>
 					</div>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-index-signature">
-								<h5><span class="tsd-signature-symbol">[</span>packageName: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">string</span></h5>
-							</li>
-						</ul>
-					</div>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="validated" class="tsd-anchor"></a>
 					<h3>validated</h3>
-					<div class="tsd-signature tsd-kind-icon">validated<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></div>
+					<div class="tsd-signature tsd-kind-icon">validated<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/ipackagenode.html">IPackageNode</a>.<a href="../interfaces/ipackagenode.html#validated">validated</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/7807f2f/src/PackageNode.ts#L71">PackageNode.ts:71</a></li>
+							<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L72">types.ts:72</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -355,7 +313,7 @@
 						</div>
 						<dl class="tsd-comment-tags">
 							<dt>see</dt>
-							<dd><p><a href="packagenode.html#validate">validate</a></p>
+							<dd><p><a href="ipackagenode.html#validate">validate</a></p>
 							</dd>
 						</dl>
 					</div>
@@ -363,18 +321,17 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
 					<a name="getdependency" class="tsd-anchor"></a>
 					<h3>get<wbr>Dependency</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Dependency<span class="tsd-signature-symbol">(</span>depName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/ipackagenode.html" class="tsd-signature-type">IPackageNode</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Dependency<span class="tsd-signature-symbol">(</span>depName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="ipackagenode.html" class="tsd-signature-type">IPackageNode</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/ipackagenode.html">IPackageNode</a>.<a href="../interfaces/ipackagenode.html#getdependency">getDependency</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/7807f2f/src/PackageNode.ts#L86">PackageNode.ts:86</a></li>
+									<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L78">types.ts:78</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -391,25 +348,24 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/ipackagenode.html" class="tsd-signature-type">IPackageNode</a>
+							<h4 class="tsd-returns-title">Returns <a href="ipackagenode.html" class="tsd-signature-type">IPackageNode</a>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">void</span>
 							</h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
 					<a name="hasdependency" class="tsd-anchor"></a>
 					<h3>has<wbr>Dependency</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
 						<li class="tsd-signature tsd-kind-icon">has<wbr>Dependency<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, version<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/ipackagenode.html">IPackageNode</a>.<a href="../interfaces/ipackagenode.html#hasdependency">hasDependency</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/7807f2f/src/PackageNode.ts#L102">PackageNode.ts:102</a></li>
+									<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L86">types.ts:86</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -437,25 +393,24 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
 					<a name="linkdependencies" class="tsd-anchor"></a>
 					<h3>link<wbr>Dependencies</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
 						<li class="tsd-signature tsd-kind-icon">link<wbr>Dependencies<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/ipackagenode.html">IPackageNode</a>.<a href="../interfaces/ipackagenode.html#linkdependencies">linkDependencies</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/7807f2f/src/PackageNode.ts#L128">PackageNode.ts:128</a></li>
+									<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L97">types.ts:97</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>For each unresolved dependencies, this method check if the dependency node exist,
-										and if it exists and satisfies version then add to <a href="packagenode.html#dependencies">dependencies</a>
-									and remove from <a href="packagenode.html#unresolveddependencies">unresolvedDependencies</a>.</p>
+										and if it exists and satisfies version then add to <a href="ipackagenode.html#dependencies">dependencies</a>
+									and remove from <a href="ipackagenode.html#unresolveddependencies">unresolvedDependencies</a>.</p>
 								</div>
 								<p>If the <code>package.json</code> has the <code>optionalDependencies</code> and some of it also
 									exists unresolved dependencies, this method will remove them from
@@ -465,22 +420,22 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
 					<a name="resolve" class="tsd-anchor"></a>
 					<h3>resolve</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
 						<li class="tsd-signature tsd-kind-icon">resolve<span class="tsd-signature-symbol">(</span>cb<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span>, resolveDevDependency<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/7807f2f/src/PackageNode.ts#L177">PackageNode.ts:177</a></li>
+									<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L104">types.ts:104</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Calls <a href="packagenode.html#linkdependencies">linkDependencies</a>, then calls <a href="packagenode.html#validate">validate</a></p>
+									<p>Calls <a href="ipackagenode.html#linkdependencies">linkDependencies</a>, then calls <a href="ipackagenode.html#validate">validate</a></p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -502,34 +457,17 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="tostring" class="tsd-anchor"></a>
-					<h3>to<wbr>String</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>String<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/7807f2f/src/PackageNode.ts#L186">PackageNode.ts:186</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
 					<a name="validate" class="tsd-anchor"></a>
 					<h3>validate</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
 						<li class="tsd-signature tsd-kind-icon">validate<span class="tsd-signature-symbol">(</span>cb<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/7807f2f/src/PackageNode.ts#L194">PackageNode.ts:194</a></li>
+									<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L110">types.ts:110</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -561,74 +499,71 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="../classes/packagenode.html" class="tsd-kind-icon">Package<wbr>Node</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="../classes/packagewalker.html" class="tsd-kind-icon">Package<wbr>Walker</a>
+					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class">
-						<a href="packagenode.html" class="tsd-kind-icon">Package<wbr>Node</a>
+					<li class="current tsd-kind-interface">
+						<a href="ipackagenode.html" class="tsd-kind-icon">IPackage<wbr>Node</a>
 						<ul>
-							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="packagenode.html#constructor" class="tsd-kind-icon">constructor</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipackagenode.html#children" class="tsd-kind-icon">children</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="packagenode.html#children" class="tsd-kind-icon">children</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipackagenode.html#dependencies" class="tsd-kind-icon">dependencies</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="packagenode.html#dependencies" class="tsd-kind-icon">dependencies</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipackagenode.html#dependencyresolved" class="tsd-kind-icon">dependency<wbr>Resolved</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="packagenode.html#dependencyresolved" class="tsd-kind-icon">dependency<wbr>Resolved</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipackagenode.html#id" class="tsd-kind-icon">id</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="packagenode.html#id" class="tsd-kind-icon">id</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipackagenode.html#linked" class="tsd-kind-icon">linked</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="packagenode.html#linked" class="tsd-kind-icon">linked</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipackagenode.html#manifest" class="tsd-kind-icon">manifest</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="packagenode.html#manifest" class="tsd-kind-icon">manifest</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipackagenode.html#name" class="tsd-kind-icon">name</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="packagenode.html#parent" class="tsd-kind-icon">parent</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipackagenode.html#parent" class="tsd-kind-icon">parent</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="packagenode.html#path" class="tsd-kind-icon">path</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipackagenode.html#path" class="tsd-kind-icon">path</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="packagenode.html#unresolveddependencies" class="tsd-kind-icon">unresolved<wbr>Dependencies</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipackagenode.html#unresolveddependencies" class="tsd-kind-icon">unresolved<wbr>Dependencies</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="packagenode.html#validated" class="tsd-kind-icon">validated</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ipackagenode.html#validated" class="tsd-kind-icon">validated</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="packagenode.html#getdependency" class="tsd-kind-icon">get<wbr>Dependency</a>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="ipackagenode.html#getdependency" class="tsd-kind-icon">get<wbr>Dependency</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="packagenode.html#hasdependency" class="tsd-kind-icon">has<wbr>Dependency</a>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="ipackagenode.html#hasdependency" class="tsd-kind-icon">has<wbr>Dependency</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="packagenode.html#linkdependencies" class="tsd-kind-icon">link<wbr>Dependencies</a>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="ipackagenode.html#linkdependencies" class="tsd-kind-icon">link<wbr>Dependencies</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="packagenode.html#resolve" class="tsd-kind-icon">resolve</a>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="ipackagenode.html#resolve" class="tsd-kind-icon">resolve</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="packagenode.html#tostring" class="tsd-kind-icon">to<wbr>String</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="packagenode.html#validate" class="tsd-kind-icon">validate</a>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="ipackagenode.html#validate" class="tsd-kind-icon">validate</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class">
-						<a href="packagewalker.html" class="tsd-kind-icon">Package<wbr>Walker</a>
-					</li>
 					<li class=" tsd-kind-interface">
-						<a href="../interfaces/ipackagenode.html" class="tsd-kind-icon">IPackage<wbr>Node</a>
-					</li>
-					<li class=" tsd-kind-interface">
-						<a href="../interfaces/iwalkhandlers.html" class="tsd-kind-icon">IWalk<wbr>Handlers</a>
+						<a href="iwalkhandlers.html" class="tsd-kind-icon">IWalk<wbr>Handlers</a>
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="../globals.html#walkpackagegraph" class="tsd-kind-icon">walk<wbr>Package<wbr>Graph</a>
@@ -650,6 +585,7 @@
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
@@ -698,7 +634,7 @@
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>

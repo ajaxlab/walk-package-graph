@@ -102,7 +102,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/7807f2f/src/index.ts#L42">index.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/index.ts#L33">index.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -141,17 +141,13 @@ walkPackageGraph(<span class="hljs-string">'/path/to/start'</span>, {
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> walkHandlers: <a href="interfaces/iwalkhandlers.html" class="tsd-signature-type">IWalkHandlers</a><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Event handlers</p>
-										<pre><code class="language-typescript"><span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> IWalkHandlers {
-  onEnd?: <span class="hljs-function">(<span class="hljs-params">rootNode?: IPackageNode</span>) =&gt;</span> <span class="hljs-built_in">void</span>;
-  onError?: <span class="hljs-function">(<span class="hljs-params">error: NodeJS.ErrnoException</span>) =&gt;</span> <span class="hljs-built_in">void</span>;
-  onResolve?: <span class="hljs-function">(<span class="hljs-params">node: IPackageNode</span>) =&gt;</span> <span class="hljs-built_in">void</span>;
-  onUnresolve?: <span class="hljs-function">(<span class="hljs-params">node: IPackageNode, unresolvedNames: <span class="hljs-built_in">string</span>[]</span>) =&gt;</span> <span class="hljs-built_in">void</span>;
-  onVisit?: <span class="hljs-function">(<span class="hljs-params">node: IPackageNode</span>) =&gt;</span> <span class="hljs-built_in">void</span>;
-}</code></pre>
 									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> resolveDevDependency: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;false</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Resolve <code>devDependencies</code> or not.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -202,6 +198,7 @@ walkPackageGraph(<span class="hljs-string">'/path/to/start'</span>, {
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
@@ -250,7 +247,7 @@ walkPackageGraph(<span class="hljs-string">'/path/to/start'</span>, {
 	</div>
 </footer>
 <div class="container tsd-generator">
-	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
 </div>
 <div class="overlay"></div>
 <script src="assets/js/main.js"></script>

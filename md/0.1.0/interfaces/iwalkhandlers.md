@@ -1,18 +1,26 @@
+> # Interface: IWalkHandlers
 
+## Hierarchy
 
-# Hierarchy
+* **IWalkHandlers**
 
-**IWalkHandlers**
+## Index
 
-# Properties
+### Properties
 
-<a id="onend"></a>
+* [onEnd](iwalkhandlers.md#optional-onend)
+* [onError](iwalkhandlers.md#optional-onerror)
+* [onResolve](iwalkhandlers.md#optional-onresolve)
+* [onUnresolve](iwalkhandlers.md#optional-onunresolve)
+* [onVisit](iwalkhandlers.md#optional-onvisit)
 
-## `<Optional>` onEnd
+## Properties
 
-**● onEnd**: *`undefined` \| `function`*
+### `Optional` onEnd
 
-*Defined in [types.ts:122](https://github.com/ajaxlab/walk-package-graph/blob/bd8527d/src/types.ts#L122)*
+• **onEnd**? : *undefined | function*
+
+*Defined in [types.ts:130](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L130)*
 
 ```typescript
 onEnd?: (rootNode?: IPackageNode) => void;
@@ -29,13 +37,12 @@ walkPackageGraph('/path/to/start', {
 ```
 
 ___
-<a id="onerror"></a>
 
-## `<Optional>` onError
+### `Optional` onError
 
-**● onError**: *`undefined` \| `function`*
+• **onError**? : *undefined | function*
 
-*Defined in [types.ts:139](https://github.com/ajaxlab/walk-package-graph/blob/bd8527d/src/types.ts#L139)*
+*Defined in [types.ts:147](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L147)*
 
 ```typescript
 onError?: (error: NodeJS.ErrnoException) => void;
@@ -52,13 +59,12 @@ walkPackageGraph('/path/to/start', {
 ```
 
 ___
-<a id="onresolve"></a>
 
-## `<Optional>` onResolve
+### `Optional` onResolve
 
-**● onResolve**: *`undefined` \| `function`*
+• **onResolve**? : *undefined | function*
 
-*Defined in [types.ts:156](https://github.com/ajaxlab/walk-package-graph/blob/bd8527d/src/types.ts#L156)*
+*Defined in [types.ts:164](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L164)*
 
 ```typescript
 onResolve?: (resolvedNode: IPackageNode) => void;
@@ -75,13 +81,12 @@ walkPackageGraph('/path/to/start', {
 ```
 
 ___
-<a id="onunresolve"></a>
 
-## `<Optional>` onUnresolve
+### `Optional` onUnresolve
 
-**● onUnresolve**: *`undefined` \| `function`*
+• **onUnresolve**? : *undefined | function*
 
-*Defined in [types.ts:173](https://github.com/ajaxlab/walk-package-graph/blob/bd8527d/src/types.ts#L173)*
+*Defined in [types.ts:181](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L181)*
 
 ```typescript
 onUnresolve?: (unresolvedNode: IPackageNode, unresolvedDependencyNames: string[]) => void;
@@ -98,13 +103,12 @@ walkPackageGraph('/path/to/start', {
 ```
 
 ___
-<a id="onvisit"></a>
 
-## `<Optional>` onVisit
+### `Optional` onVisit
 
-**● onVisit**: *`undefined` \| `function`*
+• **onVisit**? : *undefined | function*
 
-*Defined in [types.ts:190](https://github.com/ajaxlab/walk-package-graph/blob/bd8527d/src/types.ts#L190)*
+*Defined in [types.ts:198](https://github.com/ajaxlab/walk-package-graph/blob/9273b65/src/types.ts#L198)*
 
 ```typescript
 onVisit?: (visitedNode: IPackageNode) => void;
@@ -119,6 +123,3 @@ walkPackageGraph('/path/to/start', {
   }
 });
 ```
-
-___
-
