@@ -1,6 +1,6 @@
 {
   "name": "walk-package-graph",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "High speed Node.js package dependency graph walker based on Node.js module resolution algorithm",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

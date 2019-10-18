@@ -1,5 +1,6 @@
 import PackageWalker from './PackageWalker';
-import { IWalkHandlers } from './types';
+import { IPackageNode, IWalkHandlers } from './types';
+export { IPackageNode, IWalkHandlers };
 
 /**
  * Starts to walk package dependency graph and runs walkHandlers
